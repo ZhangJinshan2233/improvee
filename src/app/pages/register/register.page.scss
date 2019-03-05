@@ -20,21 +20,6 @@
  ion-header {
      --background: var(--ion-color-primary)
  }
-
- @keyframes loader {
-     0% {
-         transform: rotateZ(0);
-     }
-
-     100% {
-         transform: rotateZ(360deg);
-     }
- }
-
- ion-button[type="submit"] {
-    border-right: 2px solid #ffffff;
-    // animation: loader .4s linear infinite;
- }
  .process{
      position: relative;
      width:100%

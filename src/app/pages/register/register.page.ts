@@ -48,7 +48,9 @@ export class RegisterPage implements OnInit {
     this.submitted = true;
     if (this.registerForm.invalid) return
     this.callAnime();
-   
+   setTimeout(() => {
+     this.router.navigateByUrl('/login')
+   }, 1500);
     console.log(this.registerForm.value);
   }
 
