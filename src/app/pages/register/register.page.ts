@@ -26,6 +26,8 @@ export class RegisterPage implements OnInit {
   createFormGroup() {
     this.registerForm = this.formBuilder.group(
       {
+        firstName: ["", Validators.required],
+        lastName: ["", Validators.required],
         email: ["", [Validators.required, Validators.email]],
         password: ["", [Validators.required, Validators.minLength(6)]],
         confirmPassword: ["", Validators.required]
@@ -35,15 +37,6 @@ export class RegisterPage implements OnInit {
       }
     );
   }
-
-  // convenience getter for easy access to form fields
-//  ngOnChanges(){
-//    this.registerForm.reset({
-//     email: "",
-//     password: "",
-//     confirmPassword: ""
-//    })
-//  }
   onSubmit() {
     this.submitted = true;
     if (this.registerForm.invalid) return
@@ -60,7 +53,7 @@ export class RegisterPage implements OnInit {
     });
     basicTimeline
       .add({
-        targets: 'ion-button[type="submit"]',
+        targets: '.register-submit-button',
         duration: 500,
         opacity:0
       })
@@ -70,7 +63,6 @@ export class RegisterPage implements OnInit {
         width: '100%',
         easing: "linear"
       })
-     
 
     basicTimeline.play();
   }

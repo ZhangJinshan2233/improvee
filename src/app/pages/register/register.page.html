@@ -1,17 +1,32 @@
-<ion-toolbar color='primary'>
-  <ion-buttons slot="start">
-    <ion-button>
-      <ion-back-button defaultHref="login"></ion-back-button>
-    </ion-button>
-  </ion-buttons>
-  <ion-title color='light'>Sign up</ion-title>
-</ion-toolbar>
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-buttons slot="start">
+      <ion-button>
+        <ion-back-button defaultHref="login"></ion-back-button>
+      </ion-button>
+    </ion-buttons>
+    <ion-title color='light'>Sign up</ion-title>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
   <ion-grid>
     <ion-row>
       <ion-col align-self-center>
         <form novalidate [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-
+          <ion-item>
+            <ion-label position="floating">First name</ion-label>
+            <ion-input type="text" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && registerForm.controls['firstName'].errors }"></ion-input>
+          </ion-item>
+          <div *ngIf="submitted && registerForm.controls['firstName'].errors" padding class="invalid-feedback">
+            <div *ngIf="registerForm.controls['firstName'].errors.required">First name is required</div>
+          </div>
+          <ion-item>
+            <ion-label position="floating">Last name</ion-label>
+            <ion-input type="text" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && registerForm.controls['lastName'].errors }"></ion-input>
+          </ion-item>
+          <div *ngIf="submitted && registerForm.controls['lastName'].errors" padding class="invalid-feedback">
+            <div *ngIf="registerForm.controls['lastName'].errors.required">Last name is required</div>
+          </div>
           <ion-item>
             <ion-label position="floating">Email</ion-label>
             <ion-input type="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && registerForm.controls['email'].errors }"></ion-input>
@@ -38,7 +53,7 @@
             <div *ngIf="registerForm.controls['confirmPassword'].errors.mustMatch">Passwords must match</div>
           </div>
           <div padding class="process">
-            <ion-button color='primary' size='large' expand="full" type="submit">SIGN UP</ion-button>
+            <ion-button color='primary' size='large' expand="block" type="submit" class="register-submit-button">SIGN UP</ion-button>
             <div class="progress-bar"></div>
           </div>
         </form>

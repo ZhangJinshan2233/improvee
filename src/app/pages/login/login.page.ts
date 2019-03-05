@@ -7,7 +7,7 @@ import {
 } from "@angular/forms";
 
 import anime from "animejs";
-
+import { Router } from "@angular/router";
 @Component({
   selector: "app-login",
   templateUrl: "./login.page.html",
@@ -17,10 +17,21 @@ export class LoginPage implements OnInit {
   xMax = 16;
   loginForm: FormGroup;
   submitted = false;
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder,private router:Router) {}
 
   ngOnInit() {
     this.createLoginForm();
+    anime ({
+      targets: ['.logo'],
+      rotate: 180,
+      duration: 1500,
+      loop: true,
+      elasticity: 600,
+      easing: 'easeOutElastic',
+      delay: function(el, index) {
+        return index * 80;
+      },
+    });
   }
 
   createLoginForm() {
@@ -39,6 +50,9 @@ export class LoginPage implements OnInit {
     }
   }
 
+  signup(){
+    this.router.navigateByUrl('/register')
+  }
   callAnime() {
     let shake=anime({
       targets: "form",
@@ -62,8 +76,6 @@ export class LoginPage implements OnInit {
         }
       ]
     });
-    
-    // shake.restart()
   }
 
 }
