@@ -1,0 +1,37 @@
+<ion-grid>
+	<div padding-horizontal text-center class="animated fadeInDown">
+		<div class="logo"></div>
+		<h3 no-margin>
+			<ion-text class="fw700 text-primary">
+				Improvee
+			</ion-text>
+		</h3>
+	</div>
+	<ion-row justify-content-center>
+		<ion-col align-self-center>
+			<form novalidate [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+				<ion-item>
+					<ion-label position="floating">Email</ion-label>
+					<ion-input type="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }"></ion-input>
+				</ion-item>
+				<div *ngIf="submitted && loginForm.controls['email'].errors" padding class="invalid-feedback">
+					<div *ngIf="loginForm.controls['email'].errors.required">Email is required</div>
+					<div *ngIf="loginForm.controls['email'].errors.email">Email must be a valid email address</div>
+				</div>
+				<ion-item>
+					<ion-label position="floating">Password</ion-label>
+					<ion-input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"></ion-input>
+				</ion-item>
+				<div *ngIf="submitted && loginForm.controls['password'].errors" padding class="invalid-feedback">
+					<div *ngIf="loginForm.controls['password'].errors.required">Password is required</div>
+					<div *ngIf="loginForm.controls['password'].errors.minlength">Password must be at least 6 characters</div>
+				</div>
+				<div padding>
+					<ion-button color='primary' size='large' expand="block" type="submit">login</ion-button>
+				</div>
+			
+			</form>
+		</ion-col>
+	</ion-row>
+</ion-grid>

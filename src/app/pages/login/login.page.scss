@@ -1,0 +1,56 @@
+// ion-header ion-toolbar ion-title{
+
+//     background:var(--ion-color-primary);
+// }
+
+// :host {
+//     ion-content {
+//     --background: url('../../../assets/img/loginbackground.jpeg') ;
+//     background-size: cover;
+//     background-repeat: no-repeat;
+//     background-position: center;
+//     }
+//   }
+.fw700 {
+    font-weight: 700 !important;
+    font-family: 'Courier New', Courier, monospace
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    margin: 40px auto 8px;
+    border-radius: 10%;
+    background: url("/assets/img/improvee.png") no-repeat;
+    background-size: 100%;
+}
+
+// $white-color: #fff;
+$height100: 100%;
+
+ion-grid {
+    width: 100%;
+    height: $height100;
+
+}
+
+ion-row {
+  height:70%
+}
+
+
+// ion-col {
+//     border: 1px solid #488aff;
+
+// }
+
+// ion-button {
+//     font-weight: 300;
+// }
+
+// @media (min-width: 240px) and (max-width: 768px) {
+
+//     ion-col {
+//         border: none;
+//     }
+// }
