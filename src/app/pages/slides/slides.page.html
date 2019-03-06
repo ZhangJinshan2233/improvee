@@ -1,12 +1,10 @@
 
-<ion-content>
-  <div padding>
+<ion-content padding>
     <ion-slides [options]="slideOptions" pager="true">
       <ion-slide *ngFor="let slide of imageSlides">
         <img [src]="slide.mediaUrl" alt="">
       </ion-slide>
     </ion-slides>
-  </div>
 </ion-content>
 <ion-footer>
     <ion-toolbar>
