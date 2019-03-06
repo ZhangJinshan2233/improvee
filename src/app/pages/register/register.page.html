@@ -12,7 +12,7 @@
   <ion-grid>
     <ion-row>
       <ion-col align-self-center>
-        <form novalidate [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <form novalidate [formGroup]="registerForm" (ngSubmit)="onSubmit()" #registerFormCtrls class="animated">
           <ion-item>
             <ion-label position="floating">First name</ion-label>
             <ion-input type="text" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && registerForm.controls['firstName'].errors }"></ion-input>

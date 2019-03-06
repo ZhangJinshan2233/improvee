@@ -1,0 +1,10 @@
+
+ion-slide img {
+    height: 85vh !important;
+    width: 100% !important;
+}
+ion-slides {
+    padding-top: 20px;
+    --bullet-background:var( --ion-color-secondary);
+    --bullet-background-active: yellow;
+ }

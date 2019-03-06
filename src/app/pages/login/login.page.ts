@@ -8,30 +8,50 @@ import {
 
 import anime from "animejs";
 import { Router } from "@angular/router";
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
+
+const SHAKE_DISTANCE = 16;
 @Component({
   selector: "app-login",
   templateUrl: "./login.page.html",
   styleUrls: ["./login.page.scss"]
 })
 export class LoginPage implements OnInit {
-  xMax = 16;
+
   loginForm: FormGroup;
   submitted = false;
-  constructor(private formBuilder: FormBuilder,private router:Router) {}
+  constructor(private formBuilder: FormBuilder,
+    private router: Router,
+    private nativePageTransitions: NativePageTransitions) { }
 
   ngOnInit() {
     this.createLoginForm();
-    anime ({
-      targets: ['.logo'],
-      rotate: 180,
-      duration: 1500,
-      loop: true,
-      elasticity: 600,
-      easing: 'easeOutElastic',
-      delay: function(el, index) {
-        return index * 80;
-      },
-    });
+    this.roateLogo();
+  }
+
+  ionViewWillLeave() {
+
+    /** set transtition when page leave */
+
+    let options: NativeTransitionOptions = {
+      direction: 'up',
+      duration: 1000,
+      slowdownfactor: 3,
+      slidePixels: 20,
+      iosdelay: 100,
+      androiddelay: 150,
+      fixedPixelsTop: 0,
+      fixedPixelsBottom: 60
+    }
+
+    this.nativePageTransitions.curl(options)
+      .then(() => {
+        console.log("successed")
+      })
+      .catch(() => {
+        console.log("error")
+      });
+
   }
 
   createLoginForm() {
@@ -40,36 +60,57 @@ export class LoginPage implements OnInit {
       password: ["", Validators.required]
     });
   }
-  get f() {
-    return this.loginForm.controls;
-  }
+
   onSubmit() {
     this.submitted = true;
     if (!this.loginForm.valid) {
-      this.callAnime();
+      this.shakeForm();
+    } else {
+      this.router.navigateByUrl('/slides')
     }
   }
 
-  signup(){
+  signup() {
     this.router.navigateByUrl('/register')
   }
-  callAnime() {
-    let shake=anime({
+  /*
+     * make logo rorate
+  */
+  roateLogo() {
+    anime({
+      targets: ['.logo'],
+      rotate: 180,
+      duration: 1500,
+      loop: true,
+      elasticity: 600,
+      easing: 'easeOutElastic',
+      delay: function (el, index) {
+        return index * 80;
+      },
+    });
+  }
+
+  /*
+   * shake form when form has error
+  */
+
+  shakeForm() {
+    let shake = anime({
       targets: "form",
       easing: "easeInOutSine",
       duration: 550,
       translateX: [
         {
-          value: this.xMax * -1
+          value: SHAKE_DISTANCE * -1
         },
         {
-          value: this.xMax
+          value: SHAKE_DISTANCE
         },
         {
-          value: this.xMax / -2
+          value: SHAKE_DISTANCE / -2
         },
         {
-          value: this.xMax / 2
+          value: SHAKE_DISTANCE / 2
         },
         {
           value: 0

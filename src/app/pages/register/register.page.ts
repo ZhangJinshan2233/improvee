@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from "@angular/core";
+import { Component, OnInit,ViewChild,ElementRef} from "@angular/core";
 import {
   FormGroup,
   FormBuilder,
@@ -16,13 +16,16 @@ import anime from "animejs";
   styleUrls: ["./register.page.scss"]
 })
 export class RegisterPage implements OnInit {
+  @ViewChild('registerFormCtrls') registerFormCtrls:ElementRef;
   registerForm: FormGroup;
   submitted = false;
   constructor(private formBuilder: FormBuilder, private router:Router) {}
 
   ngOnInit() {
+    this.registerFormCtrls.nativeElement.classList.add('zoomInUp')
     this.createFormGroup();
   }
+
   createFormGroup() {
     this.registerForm = this.formBuilder.group(
       {
@@ -37,33 +40,16 @@ export class RegisterPage implements OnInit {
       }
     );
   }
+
   onSubmit() {
     this.submitted = true;
     if (this.registerForm.invalid) return
-    this.callAnime();
+    this.registerFormCtrls.nativeElement.classList.add('zoomOutRight')
    setTimeout(() => {
      this.router.navigateByUrl('/login')
-   }, 1500);
+   }, 500);
     console.log(this.registerForm.value);
   }
 
-  callAnime() {
-    let basicTimeline = anime.timeline({
-      
-    });
-    basicTimeline
-      .add({
-        targets: '.register-submit-button',
-        duration: 500,
-        opacity:0
-      })
-      .add({
-        targets: ".progress-bar",
-        duration: 1000,
-        width: '100%',
-        easing: "linear"
-      })
-
-    basicTimeline.play();
-  }
+  
 }
