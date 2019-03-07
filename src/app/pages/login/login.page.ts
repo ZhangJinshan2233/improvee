@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit ,ViewChild,ElementRef} from "@angular/core";
 import {
   FormGroup,
   FormBuilder,
@@ -17,7 +17,7 @@ const SHAKE_DISTANCE = 16;
   styleUrls: ["./login.page.scss"]
 })
 export class LoginPage implements OnInit {
-
+@ViewChild('logo') logo:ElementRef
   loginForm: FormGroup;
   submitted = false;
   constructor(private formBuilder: FormBuilder,
@@ -26,9 +26,13 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.createLoginForm();
-    this.roateLogo();
+    this.logo.nativeElement.classList.add('lightSpeedIn')
   }
-
+  ionViewDidEnter(){
+    setTimeout(() => {
+     
+    }, 500);  
+  }
   ionViewWillLeave() {
 
     /** set transtition when page leave */

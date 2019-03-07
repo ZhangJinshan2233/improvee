@@ -28,7 +28,7 @@ export function jwtOptionsFactory(storage) {
   entryComponents: [],
   imports: [BrowserModule,
             HttpClientModule,
-            IonicModule.forRoot(),
+            IonicModule.forRoot({swipeBackEnabled:false}),
             IonicStorageModule.forRoot(),
             JwtModule.forRoot({
               jwtOptionsProvider: {

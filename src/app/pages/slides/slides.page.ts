@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,ViewChild} from '@angular/core';
 import { Router } from "@angular/router";
+import {  IonSlides} from "@ionic/angular";
 @Component({
   selector: 'app-slides',
   templateUrl: './slides.page.html',
@@ -7,16 +8,13 @@ import { Router } from "@angular/router";
 })
 
 export class SlidesPage implements OnInit {
-
+@ViewChild('') slides:IonSlides
   imageSlides: any[] = [
     {
       mediaUrl: '../../../assets/img/image2.jpg'
     },
     {
       mediaUrl: '../../../assets/img/image1.jpg'
-    },
-    {
-      mediaUrl: '../../../assets/img/image3.jpg'
     }
   ];
   slidesOptions = {
@@ -30,13 +28,13 @@ export class SlidesPage implements OnInit {
     }
 
   }
-
   constructor(private router: Router) { }
 
   ngOnInit() {
+    console.log(this.slides)
   }
 
   skip() {
-    this.router.navigateByUrl('/home')
+    this.router.navigateByUrl('/coachee-tabs')
   }
 }
