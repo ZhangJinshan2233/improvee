@@ -9,14 +9,16 @@ import { environment } from "../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 
 const TOKEN_KEY = "access_token";
-
+export interface User {
+  userType: String,
+  role: String,
+}
 @Injectable({
   providedIn: "root"
 })
 export class UserService {
   url = environment.url;
-  user = null;
-  authenticationState = new BehaviorSubject(false);
+  currentUser = new BehaviorSubject<User>(null);
 
   constructor(
     private http: HttpClient,
@@ -30,10 +32,48 @@ export class UserService {
     });
   }
 
-  checkToken() {}
+  checkToken() { }
 
-  register(userInfo){
-    return this.http.post(`${this.url}/api/user/register`,userInfo)
+  register(userInfo) {
+    return this.http.post(`${this.url}/api/user/register`, userInfo)
   }
 
+  login(credentialInfo) {
+
+    if (credentialInfo === "freeCoachee") {
+      this.currentUser.next({
+        userType: 'freeCoachee',
+        role: 'free'
+      })
+    } else if (credentialInfo === "premiumCoachee") {
+      this.currentUser.next({
+        userType: 'premiumCoachee',
+        role: 'premium'
+      })
+    } else if (credentialInfo === "coach") {
+      this.currentUser.next({
+        userType: 'coach',
+        role: 'coach'
+      })
+    } else if (credentialInfo === 'coachAdmin') {
+      this.currentUser.next({
+        userType: "coachAdmin",
+        role: 'coachAdmin'
+      })
+    }
+  }
+
+  getUserSubject(){
+    return this.currentUser.asObservable();
+  }
+
+  hasRoles(roles:String[]){
+
+    
+      if(!this.currentUser.value||!roles.includes(this.currentUser.value.role)){
+        return false
+      }
+      return true;
+   
+  }
 }

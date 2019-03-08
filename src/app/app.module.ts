@@ -14,6 +14,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { JWT_OPTIONS, JwtModule } from "@auth0/angular-jwt";
 import { HttpClientModule } from "@angular/common/http";
 import { Storage, IonicStorageModule } from "@ionic/storage";
+import { ShareDirectiveModule } from "./directives/share-directive.module";
 
 export function jwtOptionsFactory(storage) {
   return {
@@ -28,6 +29,7 @@ export function jwtOptionsFactory(storage) {
   entryComponents: [],
   imports: [BrowserModule,
             HttpClientModule,
+            ShareDirectiveModule,
             IonicModule.forRoot({swipeBackEnabled:false}),
             IonicStorageModule.forRoot(),
             JwtModule.forRoot({

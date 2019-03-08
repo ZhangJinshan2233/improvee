@@ -9,7 +9,7 @@ import {
 import anime from "animejs";
 import { Router } from "@angular/router";
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
-
+import { UserService } from "../../services/user.service";
 const SHAKE_DISTANCE = 16;
 @Component({
   selector: "app-login",
@@ -22,7 +22,8 @@ export class LoginPage implements OnInit {
   submitted = false;
   constructor(private formBuilder: FormBuilder,
     private router: Router,
-    private nativePageTransitions: NativePageTransitions) { }
+    private nativePageTransitions: NativePageTransitions,
+    private userService:UserService) { }
 
   ngOnInit() {
     this.createLoginForm();
@@ -67,10 +68,21 @@ export class LoginPage implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+
     if (!this.loginForm.valid) {
       this.shakeForm();
     } else {
-      this.router.navigateByUrl('/slides')
+      this.userService.login('premiumCoachee');
+      this.userService.getUserSubject().subscribe(User=>{
+        if(User.userType==='freeCoachee'||User.userType==='premiumCoachee'){
+          this.router.navigateByUrl('/slides')
+        }else if(User.userType==='coach'){
+          this.router.navigateByUrl('/coach-tabs')
+        }else if(User.userType==='coachAdmin'){
+          this.router.navigateByUrl('/coach-admin-tabs')
+        }
+      })
+      
     }
   }
 
