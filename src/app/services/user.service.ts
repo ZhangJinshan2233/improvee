@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Platform, AlertController } from "@ionic/angular";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Storage } from "@ionic/storage";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { tap, catchError } from "rxjs/operators";
 import { environment } from "../../environments/environment";
 import { HttpClient } from "@angular/common/http";
@@ -34,8 +34,14 @@ export class UserService {
 
   checkToken() { }
 
-  register(userInfo) {
-    return this.http.post(`${this.url}/api/user/register`, userInfo)
+  register(credentials){
+    return this.http.post(`${this.url}/api/user/register`, credentials).pipe(
+      catchError(e => {
+        console.log("enderr")
+        throw new Error(e);
+      })
+    );
+
   }
 
   login(credentialInfo) {
