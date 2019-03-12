@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { CoachAdminTabsPage } from './coach-admin-tabs.page';
-
+import { UserType } from "../../model/userType";
 const routes: Routes = [
   {
     path: '',
@@ -14,11 +14,12 @@ const routes: Routes = [
     children:[
       { 
         path: 'coach-admin-home', 
-        loadChildren: '../coach-admin-tabs/coach-admin-home/coach-admin-home.module#CoachAdminHomePageModule' 
-    },
+        loadChildren: '../coach-admin-tabs/coach-admin-home/coach-admin-home.module#CoachAdminHomePageModule',
+        data:{allowUserType:[UserType.admin]}, 
+      },
     {
       path: '',
-      redirectTo: '/coach-admin-tabs/coach-admin-home',
+      redirectTo: '/adminCoach/coach-admin-home',
       pathMatch: 'full'
     }
     ]

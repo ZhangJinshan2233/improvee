@@ -1,4 +1,4 @@
-import { Component, OnInit ,ViewChild,ElementRef} from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import {
   FormGroup,
   FormBuilder,
@@ -8,39 +8,44 @@ import {
 
 import anime from "animejs";
 import { Router } from "@angular/router";
-import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions/ngx';
-import { UserService } from "../../services/user.service";
+import {
+  NativePageTransitions,
+  NativeTransitionOptions
+} from '@ionic-native/native-page-transitions/ngx';
+
+import { AuthService } from "../../services/auth.service";
+
 const SHAKE_DISTANCE = 16;
+
 @Component({
   selector: "app-login",
   templateUrl: "./login.page.html",
   styleUrls: ["./login.page.scss"]
 })
 export class LoginPage implements OnInit {
-@ViewChild('logo') logo:ElementRef
+  @ViewChild('logo') logo: ElementRef
+
   loginForm: FormGroup;
-  submitted = false;
+
+  isSubmitted = false;
+
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private nativePageTransitions: NativePageTransitions,
-    private userService:UserService) { }
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.createLoginForm();
     this.logo.nativeElement.classList.add('lightSpeedIn')
   }
-  ionViewDidEnter(){
-    setTimeout(() => {
-     
-    }, 500);  
-  }
+
   ionViewWillLeave() {
 
     /** set transtition when page leave */
 
     let options: NativeTransitionOptions = {
       direction: 'up',
-      duration: 1000,
+      duration: 500,
       slowdownfactor: 3,
       slidePixels: 20,
       iosdelay: 100,
@@ -67,26 +72,36 @@ export class LoginPage implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
+    this.isSubmitted = true;
 
     if (!this.loginForm.valid) {
-      this.shakeForm();
+
+      this.shakeForm(); return
+
     } else {
-      this.userService.login('premiumCoachee');
-      this.userService.getUserSubject().subscribe(User=>{
-        if(User.userType==='freeCoachee'||User.userType==='premiumCoachee'){
+
+      this.authService.login(this.loginForm.value).subscribe(res => {
+
+        let user = this.authService.currentUserValue;
+
+        if (user.userType === 'freeCoachee' || user.userType === 'premiumCoachee') {
+
           this.router.navigateByUrl('/slides')
-        }else if(User.userType==='coach'){
-          this.router.navigateByUrl('/coach-tabs')
-        }else if(User.userType==='coachAdmin'){
-          this.router.navigateByUrl('/coach-admin-tabs')
+
+        } else if (user.userType === 'coach') {
+
+          this.router.navigateByUrl('/coach')
+
+        } else if (user.userType === 'adminCoach') {
+
+          this.router.navigateByUrl('/adminCoach')
         }
-      })
-      
+
+      });
     }
   }
 
-  signup() {
+  register() {
     this.router.navigateByUrl('/register')
   }
   /*

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { CoacheeTabsPage } from './coachee-tabs.page';
 import { ShareDirectiveModule } from "../../directives/share-directive.module";
+import { UserType } from "../../model/userType";
 const routes: Routes = [
   {
     path: '',
@@ -15,31 +16,35 @@ const routes: Routes = [
 
       {
         path: 'timeline',
-        loadChildren: '../coachee-tabs/timeline/timeline.module#TimelinePageModule'
+        loadChildren: '../coachee-tabs/timeline/timeline.module#TimelinePageModule',
+        data:{allowUserType:[UserType.free,UserType.premium]},
       },
       {
         path: 'dashboard',
-        loadChildren: '../coachee-tabs/dashboard/dashboard.module#DashboardPageModule'
+        loadChildren: '../coachee-tabs/dashboard/dashboard.module#DashboardPageModule',
+        data:{allowUserType:[UserType.free,UserType.premium]},
       },
       {
         path: 'message',
         loadChildren: '../coachee-tabs/message/message.module#MessagePageModule',
+        data:{allowUserType:[UserType.premium]},
       },
       {
         path: 'profile',
-        loadChildren: '../coachee-tabs/profile/profile.module#ProfilePageModule'
+        loadChildren: '../coachee-tabs/profile/profile.module#ProfilePageModule',
+        data:{allowUserType:[UserType.free,UserType.premium]},
       },
       {
         path: '',
-        redirectTo: '/coachee-tabs/timeline',
+        redirectTo: '/coachee/timeline',
         pathMatch: 'full'
       }
     ]
 
   },
   {
-    path: '',
-    redirectTo: '/coachee-tabs/timeline',
+    path: 'coachee',
+    redirectTo: '/coachee/timeline',
     pathMatch: 'full'
   }
 ];

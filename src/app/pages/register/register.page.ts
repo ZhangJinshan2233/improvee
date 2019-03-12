@@ -8,19 +8,22 @@ import {
 
 import { MatchValidator } from "../../_helper/match-validator";
 import { Router } from "@angular/router";
-import { UserService } from "../../services/user.service";
+import { AuthService } from "../../services/auth.service";
 @Component({
   selector: "app-register",
   templateUrl: "./register.page.html",
   styleUrls: ["./register.page.scss"]
 })
 export class RegisterPage implements OnInit {
+
   @ViewChild('registerFormCtrls') registerFormCtrls: ElementRef;
+
   registerForm: FormGroup;
-  submitted = false;
+
+  isSubmitted = false;
   constructor(private formBuilder: FormBuilder,
     private router: Router,
-    private userService: UserService) { }
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.registerFormCtrls.nativeElement.classList.add('zoomInUp')
@@ -43,15 +46,15 @@ export class RegisterPage implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
+    this.isSubmitted = true;
     if (this.registerForm.invalid) return
-    this.userService.register(this.registerForm.value).subscribe(res=>{
-      console.log(res)
+    this.authService.register(this.registerForm.value).subscribe(res => {
+      this.registerFormCtrls.nativeElement.classList.add('zoomOutRight')
+      setTimeout(() => {
+        this.router.navigateByUrl('/login')
+      }, 500);
     })
-    // this.registerFormCtrls.nativeElement.classList.add('zoomOutRight')
-    // setTimeout(() => {
-    //   this.router.navigateByUrl('/login')
-    // }, 500);
+
   }
 
 

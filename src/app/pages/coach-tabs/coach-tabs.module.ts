@@ -2,11 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-
 import { IonicModule } from '@ionic/angular';
-
 import { CoachTabsPage } from './coach-tabs.page';
-
+import { UserType } from "../../model/userType";
 const routes: Routes = [
   {
     path: '',
@@ -14,11 +12,12 @@ const routes: Routes = [
     children: [
       {
         path: 'coach-home',
-        loadChildren: '../coach-tabs/coach-home/coach-home.module#CoachHomePageModule'
+        loadChildren: '../coach-tabs/coach-home/coach-home.module#CoachHomePageModule',
+        data:{allowUserType:[UserType.coach]},
       },
       {
         path: '',
-        redirectTo: '/coach-tabs/coach-home',
+        redirectTo: '/coach/coach-home',
         pathMatch: 'full'
         
       }

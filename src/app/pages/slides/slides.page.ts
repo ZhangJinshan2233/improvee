@@ -31,10 +31,10 @@ export class SlidesPage implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    console.log(this.slides)
+   
   }
 
   skip() {
-    this.router.navigateByUrl('/coachee-tabs')
+    this.router.navigateByUrl('/coachee')
   }
 }
