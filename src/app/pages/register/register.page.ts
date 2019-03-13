@@ -57,5 +57,9 @@ export class RegisterPage implements OnInit {
 
   }
 
-
+back(){
+  setTimeout(() => {
+    this.router.navigateByUrl('/login')
+  }, 1000);
+}
 }

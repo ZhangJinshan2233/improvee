@@ -49,8 +49,10 @@ export class AuthService {
   register(credentialInfo) {
     return this.http.post(`${this.url}/api/coachee/signup`, credentialInfo).pipe(
       catchError(e => {
-        this.showAlert(e.error['error']);
-        throw e.error;
+
+        let error=e.error['error']?e.error['error']:"fail to sign up"
+        this.showAlert(error);
+        throw error;
       })
     );
 
@@ -82,7 +84,9 @@ export class AuthService {
   hasRoles(roles: String[]) {
 
     if (!this.currentUserSubject.value || !roles.includes(this.currentUserSubject.value.userType)) {
-      return false
+      
+      return false;
+      
     }
     return true;
 

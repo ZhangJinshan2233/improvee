@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import {
   FormGroup,
   FormBuilder,
-  FormControl,
   Validators
 } from "@angular/forms";
 
@@ -36,9 +35,12 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.createLoginForm();
-    this.logo.nativeElement.classList.add('lightSpeedIn')
+    
   }
 
+  ionViewDidEnter(){
+    this.logo.nativeElement.classList.add('lightSpeedIn')
+  }
   ionViewWillLeave() {
 
     /** set transtition when page leave */
@@ -48,9 +50,6 @@ export class LoginPage implements OnInit {
       duration: 500,
       slowdownfactor: 3,
       slidePixels: 20,
-      iosdelay: 100,
-      androiddelay: 150,
-      fixedPixelsTop: 0,
       fixedPixelsBottom: 60
     }
 
