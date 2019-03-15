@@ -1,6 +1,7 @@
-import { Component, OnInit ,ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from "@angular/router";
-import {  IonSlides} from "@ionic/angular";
+import { IonSlides } from "@ionic/angular";
+import { AuthService } from "../../services/auth.service";
 @Component({
   selector: 'app-slides',
   templateUrl: './slides.page.html',
@@ -8,7 +9,8 @@ import {  IonSlides} from "@ionic/angular";
 })
 
 export class SlidesPage implements OnInit {
-@ViewChild('') slides:IonSlides
+  @ViewChild('') slides: IonSlides
+  constructor(private router: Router, private authService: AuthService) { }
   imageSlides: any[] = [
     {
       mediaUrl: '../../../assets/img/image2.jpg'
@@ -28,10 +30,10 @@ export class SlidesPage implements OnInit {
     }
 
   }
-  constructor(private router: Router) { }
+
 
   ngOnInit() {
-   
+
   }
 
   skip() {

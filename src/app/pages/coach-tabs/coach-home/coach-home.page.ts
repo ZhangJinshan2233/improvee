@@ -10,6 +10,7 @@ export class CoachHomePage implements OnInit {
   constructor() { }
 
   ngOnInit() {
+ 
   }
 
 }

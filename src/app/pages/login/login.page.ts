@@ -88,7 +88,7 @@ export class LoginPage implements OnInit {
           this.router.navigateByUrl('/slides')
 
         } else if (user.userType === 'coach') {
-
+         
           this.router.navigateByUrl('/coach')
 
         } else if (user.userType === 'adminCoach') {

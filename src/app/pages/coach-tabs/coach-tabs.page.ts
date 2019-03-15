@@ -10,6 +10,7 @@ export class CoachTabsPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  
   }
 
 }

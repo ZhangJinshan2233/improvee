@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-coach-admin-tabs',
   templateUrl: './coach-admin-tabs.page.html',
@@ -10,6 +11,7 @@ export class CoachAdminTabsPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

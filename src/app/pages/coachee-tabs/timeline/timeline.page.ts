@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
+import { AuthService } from "../../../services/auth.service";
+
 @Component({
   selector: 'app-timeline',
   templateUrl: './timeline.page.html',
@@ -7,6 +9,7 @@ import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
 export class TimelinePage implements OnInit {
   @ViewChild('content')
   content: ElementRef;
+  
   constructor() { }
 
   ngOnInit() {
