@@ -31,6 +31,9 @@ export class SlidesPage implements OnInit {
 
   }
 
+  async slidesDidLoad(slides: IonSlides) {
+   await slides.startAutoplay();
+  }
 
   ngOnInit() {
 

@@ -24,31 +24,35 @@ const routes: Routes = [
     path: 'slides',
     loadChildren: './pages/slides/slides.module#SlidesPageModule',
     data:{allowUserType:[UserType.free,UserType.premium]},
-    canActivateChild:[AuthGuardService],
-    canLoad:[AuthGuardService],
+    // canActivateChild:[AuthGuardService],
+    // canLoad:[AuthGuardService],
   },
   {
     path: 'coachee',
     loadChildren: './pages/coachee-tabs/coachee-tabs.module#CoacheeTabsPageModule',
     data:{allowUserType:[UserType.free,UserType.premium]},
-    canActivateChild:[AuthGuardService],
-    canLoad:[AuthGuardService],
+    // canActivateChild:[AuthGuardService],
+    // canLoad:[AuthGuardService],
   },
   {
     path: 'coach',
     loadChildren: './pages/coach-tabs/coach-tabs.module#CoachTabsPageModule',
     data:{allowUserType:[UserType.coach]},
-    canActivateChild:[AuthGuardService],
-    canLoad:[AuthGuardService]
+    // canActivateChild:[AuthGuardService],
+    // canLoad:[AuthGuardService]
   },
   {
     path: 'adminCoach',
     loadChildren: './pages/coach-admin-tabs/coach-admin-tabs.module#CoachAdminTabsPageModule',
     data:{allowUserType:[UserType.admin]},
-    canActivateChild:[AuthGuardService],
-    canLoad:[AuthGuardService]
+    // canActivateChild:[AuthGuardService],
+    // canLoad:[AuthGuardService]
   },
-
+  {
+    path:"coachee/timeline/new-post",
+    loadChildren:'./pages/coachee-tabs/new-post/new-post.module#NewPostPageModule',
+    data:{allowUserType:[UserType.admin]},
+  }
 ];
 
 @NgModule({

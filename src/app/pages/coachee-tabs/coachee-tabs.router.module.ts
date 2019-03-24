@@ -14,7 +14,6 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: '../coachee-tabs/timeline/timeline.module#TimelinePageModule',
-
           }
         ]
       },
@@ -56,7 +55,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'coachee',
+    path: '',
     redirectTo: '/coachee/timeline',
     pathMatch: 'full'
   }

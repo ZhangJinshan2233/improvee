@@ -28,18 +28,19 @@ export function jwtOptionsFactory(storage) {
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule,
-            HttpClientModule,
-            ShareDirectiveModule,
-            IonicModule.forRoot({swipeBackEnabled:false}),
-            IonicStorageModule.forRoot(),
-            JwtModule.forRoot({
-              jwtOptionsProvider: {
-                provide: JWT_OPTIONS,
-                useFactory: jwtOptionsFactory,
-                deps: [Storage]
-              }
-            }),
-            AppRoutingModule],
+    HttpClientModule,
+    ShareDirectiveModule,
+    IonicModule.forRoot({ swipeBackEnabled: false }),
+    IonicStorageModule.forRoot(),
+    JwtModule.forRoot({
+      jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
+        useFactory: jwtOptionsFactory,
+        deps: [Storage]
+      }
+    }),
+    AppRoutingModule
+  ],
 
   providers: [
     StatusBar,
@@ -49,4 +50,4 @@ export function jwtOptionsFactory(storage) {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

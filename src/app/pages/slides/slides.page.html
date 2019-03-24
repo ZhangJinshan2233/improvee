@@ -1,6 +1,6 @@
 
 <ion-content padding>
-    <ion-slides [options]="slideOptions" pager="true">
+    <ion-slides [options]="slideOptions" pager="true" #tipsSlider (ionSlidesDidLoad)="slidesDidLoad(tipsSlider)">
       <ion-slide *ngFor="let slide of imageSlides">
         <img [src]="slide.mediaUrl" alt="">
       </ion-slide>
