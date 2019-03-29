@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { TimelinePage } from './timeline.page';
-
+import { NewPostPageModule } from "../new-post/new-post.module";
 const routes: Routes = [
   {
     path: '',
@@ -19,8 +19,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    NewPostPageModule,
     RouterModule.forChild(routes)
   ],
   declarations: [TimelinePage]
 })
-export class TimelinePageModule {}
+export class TimelinePageModule { }

@@ -1,7 +1,38 @@
-<ion-header>
-</ion-header>
 <ion-content>
-  <ion-fab  slot="fixed" vertical="bottom" horizontal="end">
+  <ion-list>
+    <ion-item-group *ngFor="let timelinePost of timelinePosts">
+      <ion-item-divider sticky='true' class="ion-text-start animated fadeInLeft">
+        {{timelinePost.createdDate}}
+      </ion-item-divider>
+      <ion-card *ngFor='let post of timelinePost.posts'>
+        <ion-card-content>
+          <ion-card-title>{{post.description}}</ion-card-title>
+        </ion-card-content>
+        <div>
+          <ion-img src="data:image/jpeg;base64,{{post.postImage.data}}" alt=""></ion-img>
+        </div>
+      </ion-card>
+    </ion-item-group>
+  </ion-list>
+
+  <!-- <ion-virtual-scroll [items]="timelinePosts" approxItemHeight="320px" [headerFn]="getHeaderFn">
+    <ion-item-divider *virtualHeader="let header">
+      {{ header }}
+    </ion-item-divider>
+    <ion-card *virtualItem="let item">
+      <ion-card-header>
+        <ion-card-title>{{item.description}}</ion-card-title>
+      </ion-card-header>
+      <div>
+        <ion-img src="data:image/jpeg;base64,{{item.postImage.data}}" alt=""></ion-img>
+      </div>
+    </ion-card>
+  </ion-virtual-scroll> -->
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMorePosts($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="gotoNewPostPage()">
       <ion-icon name="create"></ion-icon>
     </ion-fab-button>

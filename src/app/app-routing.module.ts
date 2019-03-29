@@ -47,11 +47,6 @@ const routes: Routes = [
     data:{allowUserType:[UserType.admin]},
     // canActivateChild:[AuthGuardService],
     // canLoad:[AuthGuardService]
-  },
-  {
-    path:"coachee/timeline/new-post",
-    loadChildren:'./pages/coachee-tabs/new-post/new-post.module#NewPostPageModule',
-    data:{allowUserType:[UserType.admin]},
   }
 ];
 

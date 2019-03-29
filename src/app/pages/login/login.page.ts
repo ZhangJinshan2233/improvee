@@ -35,12 +35,14 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.createLoginForm();
-    
+
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     this.logo.nativeElement.classList.add('lightSpeedIn')
   }
+
+
   ionViewWillLeave() {
 
     /** set transtition when page leave */
@@ -69,8 +71,12 @@ export class LoginPage implements OnInit {
       password: ["", Validators.required]
     });
   }
-
+  /**
+   * login
+   * @function onSubmit
+   */
   onSubmit() {
+
     this.isSubmitted = true;
 
     if (!this.loginForm.valid) {
@@ -88,7 +94,7 @@ export class LoginPage implements OnInit {
           this.router.navigateByUrl('/slides')
 
         } else if (user.userType === 'coach') {
-         
+
           this.router.navigateByUrl('/coach')
 
         } else if (user.userType === 'adminCoach') {

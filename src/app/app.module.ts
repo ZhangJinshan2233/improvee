@@ -16,6 +16,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { Storage, IonicStorageModule } from "@ionic/storage";
 import { ShareDirectiveModule } from "./directives/share-directive.module";
 import { Camera } from '@ionic-native/Camera/ngx';
+
 export function jwtOptionsFactory(storage) {
   return {
     tokenGetter: () => {

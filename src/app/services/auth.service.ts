@@ -14,7 +14,7 @@ const TOKEN_KEY = "access_token";
   providedIn: "root"
 })
 export class AuthService {
-  url = environment.url;
+  url = `${environment.url}/api`;
 
   currentUserSubject = new BehaviorSubject<User>(null);
 
@@ -31,7 +31,11 @@ export class AuthService {
       this.checkToken();
     });
   }
-
+  /**
+   * @function checkToken
+   * @param 
+   * @returns Subject<User>
+   */
   checkToken() {
     this.storage.get(TOKEN_KEY).then(token => {
       if (token) {
@@ -46,11 +50,23 @@ export class AuthService {
     });
   }
 
-  register(credentialInfo) {
-    return this.http.post(`${this.url}/api/coachee/signup`, credentialInfo).pipe(
+  /**
+   * @function register
+   * @param credentialInfo 
+   * @returns Observable
+   */
+  register(credentialInfo?: {
+    email: String,
+    password: String,
+    firstName: String,
+    lastName: String
+  }) {
+
+    return this.http.post(`${this.url}/coachee/signup`, credentialInfo).pipe(
+      
       catchError(e => {
 
-        let error=e.error['error']?e.error['error']:"fail to sign up"
+        let error = e.error['error'] ? e.error['error'] : "fail to sign up"
         this.showAlert(error);
         throw error;
       })
@@ -58,8 +74,17 @@ export class AuthService {
 
   }
 
-  login(credentialInfo) {
-    return this.http.post(`${this.url}/api/signin`, credentialInfo)
+  /**
+   * @function login
+   * @param credentialInfo
+   * @returns string
+   */
+
+  login(credentialInfo?: {
+    email: String,
+    password: String
+  }) {
+    return this.http.post(`${this.url}/signin`, credentialInfo)
       .pipe(
         tap(res => {
           this.storage.set(TOKEN_KEY, res['token']);
@@ -75,6 +100,7 @@ export class AuthService {
       );
   }
 
+
   public get currentUserValue(): User {
 
     return this.currentUserSubject.value;
@@ -84,9 +110,9 @@ export class AuthService {
   hasRoles(roles: String[]) {
 
     if (!this.currentUserSubject.value || !roles.includes(this.currentUserSubject.value.userType)) {
-      
+
       return false;
-      
+
     }
     return true;
 

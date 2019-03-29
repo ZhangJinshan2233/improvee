@@ -1,4 +1,10 @@
-
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button color='primary' size='large' expand="full" (click)="skip()">SKIP</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 <ion-content padding>
     <ion-slides [options]="slideOptions" pager="true" #tipsSlider (ionSlidesDidLoad)="slidesDidLoad(tipsSlider)">
       <ion-slide *ngFor="let slide of imageSlides">
@@ -6,10 +12,3 @@
       </ion-slide>
     </ion-slides>
 </ion-content>
-<ion-footer>
-    <ion-toolbar>
-      <ion-buttons slot="end">
-        <ion-button color='primary' size='large' expand="full" (click)="skip()">SKIP</ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-footer>

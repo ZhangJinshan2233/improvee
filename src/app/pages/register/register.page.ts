@@ -31,6 +31,7 @@ export class RegisterPage implements OnInit {
   }
 
   createFormGroup() {
+    
     this.registerForm = this.formBuilder.group(
       {
         firstName: ["", Validators.required],
@@ -45,6 +46,10 @@ export class RegisterPage implements OnInit {
     );
   }
 
+  /**
+   * register
+   * @function onSubmit
+   */
   onSubmit() {
     this.isSubmitted = true;
     if (this.registerForm.invalid) return
@@ -56,10 +61,4 @@ export class RegisterPage implements OnInit {
     })
 
   }
-
-back(){
-  setTimeout(() => {
-    this.router.navigateByUrl('/login')
-  }, 1000);
-}
 }
