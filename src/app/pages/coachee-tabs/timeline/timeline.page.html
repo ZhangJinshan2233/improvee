@@ -1,4 +1,14 @@
+
 <ion-content no-padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)" padding>
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+  </ion-refresher-content>
+  </ion-refresher>
+
   <ion-list *ngIf="timelinePosts.length">
     <ion-item-group *ngFor="let timelinePost of timelinePosts; index as i">
       <ion-item-divider sticky='true' class="text-primary" padding>

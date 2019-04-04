@@ -66,7 +66,7 @@ export class AuthService {
       
       catchError(e => {
 
-        let error = e.error['error'] ? e.error['error'] : "fail to sign up"
+        let error = e.error['error'] ? e.error['error'] : e
         this.showAlert(error);
         throw error;
       })

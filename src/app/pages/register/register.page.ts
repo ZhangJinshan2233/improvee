@@ -31,7 +31,7 @@ export class RegisterPage implements OnInit {
   }
 
   createFormGroup() {
-    
+
     this.registerForm = this.formBuilder.group(
       {
         firstName: ["", Validators.required],
