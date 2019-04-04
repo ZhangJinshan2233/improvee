@@ -38,11 +38,15 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'profile',
+        path: 'menu',
         data: { allowUserType: [UserType.free, UserType.premium] },
         children: [
           {
             path: '',
+            loadChildren: '../coachee-tabs/menu/menu.module#MenuPageModule',
+          },
+          {
+            path: 'profile',
             loadChildren: '../coachee-tabs/profile/profile.module#ProfilePageModule',
           }
         ]
