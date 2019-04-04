@@ -4,11 +4,11 @@ import { TimelineService } from "../../../services/timeline.service";
 import { AlertController, ModalController } from "@ionic/angular";
 
 @Component({
-  selector: 'app-new-post',
-  templateUrl: './new-post.page.html',
-  styleUrls: ['./new-post.page.scss'],
+  selector: 'app-timeline-create',
+  templateUrl: './timeline-create.page.html',
+  styleUrls: ['./timeline-create.page.scss'],
 })
-export class NewPostPage implements OnInit {
+export class TimelineCreatePage implements OnInit {
 
   newPost = {
     description: '',
@@ -52,11 +52,11 @@ export class NewPostPage implements OnInit {
 
     //set options of camera
     const caremaOptions: CameraOptions = {
-      quality: 100,
+      quality: 50,
       saveToPhotoAlbum: false,
       correctOrientation: true,
-      targetHeight: 2000,
-      targetWidth: 2000,
+      targetHeight: 1000,
+      targetWidth: 1000,
       destinationType: this.camera.DestinationType.DATA_URL,//
       encodingType: this.camera.EncodingType.JPEG,
       sourceType: sourceType,
@@ -67,7 +67,7 @@ export class NewPostPage implements OnInit {
 
       this.newPost.imgData = await this.camera.getPicture(caremaOptions);
       let imageSizeInByte = 4 * Math.ceil((this.newPost.imgData.length) / 3) * 0.5624896334383812;
-      
+
       if (imageSizeInByte / (1024 * 1024) >= 8)
         this.showAlert("the size of image is too big")
 
@@ -96,7 +96,7 @@ export class NewPostPage implements OnInit {
   }) {
 
     this.timelineService.createNewPost(newPost).subscribe(res => {
-      
+
       this.modalCtrl.dismiss({
         timelinePost: res['timelinePost']
       })
@@ -115,4 +115,5 @@ export class NewPostPage implements OnInit {
     });
     alert.then(alert => alert.present());
   }
+
 }

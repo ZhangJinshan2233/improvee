@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)=' closeCommentModal()' color='primary'>
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title color='primary'>Comments</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list *ngIf="comments.length">
+    <ion-item *ngFor="let comment of comments; index as i">
+      <ion-label text-wrap>
+        <h5>
+          {{comment.content}}
+        </h5>
+        <ion-note style="font-size: 0.7em">
+          {{comment.createdDate | timeAgo}}
+        </ion-note>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-item>
+      <ion-textarea clear-on-edit="true" rows="2" name="content" [(ngModel)]='comment.content'
+        placeholder="Add a comment"></ion-textarea>
+    </ion-item>
+    <ion-buttons slot="end">
+      <ion-button color='primary' (click)="createComment()">
+        <ion-icon name="send" mode="ios"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

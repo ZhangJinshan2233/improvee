@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { TimelineService } from "../../../services/timeline.service";
-import { IonInfiniteScroll, IonContent } from '@ionic/angular';
+import { IonContent } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
-import { NewPostPage } from '../new-post/new-post.page'
-import * as moment from 'moment'
+import { TimelineCreatePage } from '../timeline-create/timeline-create.page'
+import { TimelineCommentPage } from "../timeline-comment/timeline-comment.page";
+import { format, isYesterday, isToday } from 'date-fns';
 import * as _ from 'lodash';
 
 @Component({
@@ -12,7 +13,6 @@ import * as _ from 'lodash';
   styleUrls: ['./timeline.page.scss'],
 })
 export class TimelinePage implements OnInit {
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonContent) content: IonContent;
   skipNum: number;
   orignalTimelinePosts: any
@@ -27,48 +27,26 @@ export class TimelinePage implements OnInit {
 
   ngOnInit() {
 
-    this.getPosts(this.skipNum);
-    this.content.scrollEvents = true
+    this.timelineService.getTimelinePost(this.skipNum).subscribe(res => {
+      this.skipNum += res.timelinePosts.length
+      this.orignalTimelinePosts = _.concat(this.orignalTimelinePosts, res.timelinePosts);
+      this.timelinePosts = this.convertTimelinePosts(this.orignalTimelinePosts);
+    })
 
-    // hid tab bar when user scroll
-    let tabBar = document.querySelector('ion-tab-bar')
+    let tabBar = document.querySelector('ion-tab-bar');
+    let fab = document.querySelector('ion-fab');
     this.content.ionScrollStart.subscribe(() => {
-      tabBar.style.display = 'none'
+      tabBar.style.display = 'none';
+      fab.style.display = 'none'
     })
 
     this.content.ionScrollEnd.subscribe(() => {
-      tabBar.style.display = 'flex'
+      tabBar.style.display = 'flex';
+      fab.style.display = 'flex';
     })
 
   }
 
-  /**
-   * @function getPosts
-   * @param skipNum 
-   * @param infiniteScroll 
-   * @return void
-   */
-  getPosts(skipNum: number, infiniteScroll?) {
-
-    this.timelineService.getTimelinePost(skipNum).subscribe(res => {
-
-      if (res.timelinePosts.length >= 1) {
-
-        this.skipNum += res.timelinePosts.length
-        this.orignalTimelinePosts = _.concat(this.orignalTimelinePosts, res.timelinePosts);
-        this.timelinePosts = this.convertTimelinePosts(this.orignalTimelinePosts);
-        if (!infiniteScroll.disabled) {
-          infiniteScroll.complete();
-        }
-        this.content.scrollToBottom()
-      } else {
-
-        infiniteScroll.disabled = true
-        this.content.scrollToBottom();
-      }
-
-    })
-  }
   /**
    * get more posts when scroll down 
    * @function loadMorePosts
@@ -76,9 +54,19 @@ export class TimelinePage implements OnInit {
    * @returns Array
    */
   loadMorePosts(infiniteScrollEvent) {
+    this.timelineService.getTimelinePost(this.skipNum).subscribe(res => {
+      
+      infiniteScrollEvent.target.complete();
+      if (res.timelinePosts.length >= 1) {
+        this.skipNum += res.timelinePosts.length
+        this.orignalTimelinePosts = _.concat(this.orignalTimelinePosts, res.timelinePosts);
+        this.timelinePosts = this.convertTimelinePosts(this.orignalTimelinePosts);
+        this.content.scrollToBottom(100);
+      } else {
+        infiniteScrollEvent.target.disabled = true;    
+      }
 
-    this.getPosts(this.skipNum, this.infiniteScroll);
-
+    })
   }
 
   /**
@@ -96,7 +84,7 @@ export class TimelinePage implements OnInit {
   async gotoNewPostPage() {
 
     const postModal = await this.modalCtrl.create({
-      component: NewPostPage
+      component: TimelineCreatePage
     });
 
     await postModal.present();
@@ -105,15 +93,14 @@ export class TimelinePage implements OnInit {
 
     if (data.timelinePost) {
       this.orignalTimelinePosts.push(data.timelinePost);
-
+      this.skipNum += 1;
 
       this.orignalTimelinePosts = _.sortBy(this.orignalTimelinePosts, function (timelinePost) {
         return -new Date(timelinePost.createdDate)
       })
       this.timelinePosts = this.convertTimelinePosts(this.orignalTimelinePosts)
-      this.skipNum += 1;
-      this.infiniteScroll.disabled = false
-      this.content.scrollToTop();
+
+      this.content.scrollToTop()
     }
 
   }
@@ -128,15 +115,16 @@ export class TimelinePage implements OnInit {
     if (originalTimelinePosts.length === 0) return
 
     let posts = originalTimelinePosts.map(post => {
-      let tempPost = {
-        _id: post._id,
-        description: post.description,
-        _coachee: post._coachee,
-        postImage: post.postImage,
-        rating: post.rating,
-        comments: post.comments,
-        createdDate: moment(post.createdDate).format('ddd,MMM Do YYYY')
+
+      let createdDate = format(post.createdDate, 'ddd,MMM Do YYYY')
+      if (isToday(post.createdDate)) {
+        createdDate = "Today"
       }
+      if (isYesterday(post.createdDate)) {
+        createdDate = "Yesterday"
+      }
+      let { _id, description, _coachee, postImage, rating, comments } = post
+      let tempPost = { _id, description, _coachee, postImage, rating, comments, createdDate }
       return tempPost
     })
 
@@ -146,6 +134,20 @@ export class TimelinePage implements OnInit {
       .map(item => _.zipObject(['createdDate', 'posts'], item))
       .value()
     return posts
+  }
+  /**
+   * 
+   */
+  async gotoCommentPage(postId, i, j) {
+    const commentModal = await this.modalCtrl.create({
+      component: TimelineCommentPage,
+      componentProps: { postId: postId }
+    });
+
+    await commentModal.present();
+    let { data } = await commentModal.onWillDismiss();
+    if (data.comments)
+      this.timelinePosts[i].posts[j].comments = data.comments
   }
 }
 

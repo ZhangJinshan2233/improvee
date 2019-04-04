@@ -56,10 +56,10 @@ export class AuthService {
    * @returns Observable
    */
   register(credentialInfo?: {
-    email: String,
-    password: String,
-    firstName: String,
-    lastName: String
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string
   }) {
 
     return this.http.post(`${this.url}/coachee/signup`, credentialInfo).pipe(
@@ -81,8 +81,8 @@ export class AuthService {
    */
 
   login(credentialInfo?: {
-    email: String,
-    password: String
+    email: string,
+    password: string
   }) {
     return this.http.post(`${this.url}/signin`, credentialInfo)
       .pipe(

@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-
+import { TimelineCommentPageModule } from "../timeline-comment/timeline-comment.module";
 import { IonicModule } from '@ionic/angular';
-
+import { IonicRatingModule } from 'ionic4-rating';
 import { TimelinePage } from './timeline.page';
-import { NewPostPageModule } from "../new-post/new-post.module";
+import { TimelineCreatePageModule } from "../timeline-create/timeline-create.module";
 const routes: Routes = [
   {
     path: '',
@@ -19,7 +19,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    NewPostPageModule,
+    IonicRatingModule,
+    TimelineCreatePageModule,
+    TimelineCommentPageModule,
     RouterModule.forChild(routes)
   ],
   declarations: [TimelinePage]

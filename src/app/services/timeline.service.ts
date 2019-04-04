@@ -8,16 +8,16 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class TimelineService  {
+export class TimelineService {
 
-  timelineUrl:String
+  timelineUrl: String
   currentUser: any;
-  
+
   constructor(private auth: AuthService,
     private http: HttpClient,
     private alertController: AlertController
   ) {
-  
+
     this.currentUser = this.auth.currentUserValue;
     this.timelineUrl = `${environment.url}/api/timelinePost/${this.currentUser._id}`;
   }
@@ -27,7 +27,7 @@ export class TimelineService  {
    * @returns Observable
    */
   createNewPost(timelinePost?: { imgData: any, description: any }) {
-    
+
     return this.http.post(`${this.timelineUrl}`, timelinePost).pipe(
       catchError(e => {
         let error = e.error['error'] ? e.error['error'] : "fail to sign up"
@@ -36,14 +36,14 @@ export class TimelineService  {
       })
     )
   }
-  
+
   /**
    * @function getTimelinePost
    * @param skipNum
    * @returns Array[timelinePost]
    */
   getTimelinePost(skipNum?: number): Observable<any> {
-    
+
     return this.http.get(`${this.timelineUrl}?skipNum=${skipNum}`).pipe(
       catchError(e => {
         let error = e.error['error'] ? e.error['error'] : "fail to sign up"
@@ -52,7 +52,35 @@ export class TimelineService  {
       })
     )
   }
-
+  /**
+   * @function createComment
+   * @param postId 
+   * @param comment 
+   * @returns 
+   */
+  createComment(postId: string, comment?: { _coach?: string, isCoach?: boolean, content?: string }) {
+    return this.http.post(`${this.timelineUrl}/${postId}`, comment).pipe(
+      catchError(e => {
+        let error = e.error['error']
+        this.showAlert(error);
+        throw error;
+      })
+    )
+  }
+  /**
+   * @function getComments
+   * @param postId 
+   * @returns Obserable<timelinePost>
+   */
+  getComments(postId) {
+    return this.http.get(`${this.timelineUrl}/${postId}`).pipe(
+      catchError(e => {
+        let error = e.error['error']
+        this.showAlert(error);
+        throw error;
+      })
+    )
+  }
   showAlert(msg) {
     let alert = this.alertController.create({
       message: msg,
