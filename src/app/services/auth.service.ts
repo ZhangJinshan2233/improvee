@@ -98,6 +98,7 @@ export class AuthService {
   public get currentUser() {
     return this.currentUserSubject.asObservable();
   }
+  
   hasRoles(roles: String[]) {
 
     if (!this.currentUserSubject.value || !roles.includes(this.currentUserSubject.value.userType)) {
@@ -108,7 +109,7 @@ export class AuthService {
     return true;
 
   }
-  
+
   showAlert(msg) {
     let alert = this.alertController.create({
       message: msg,

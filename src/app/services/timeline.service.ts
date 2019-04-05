@@ -11,18 +11,12 @@ import { Observable } from 'rxjs';
 export class TimelineService {
 
   timelineUrl: String
-  currentUser: any;
 
   constructor(private auth: AuthService,
     private http: HttpClient,
     private alertController: AlertController
   ) {
-
-    this.auth.currentUser.subscribe(user=>{
-      this.currentUser=user;
-      this.timelineUrl = `${environment.url}/api/timelinePost/${this.currentUser._id}`;
-    })
-   
+    this.timelineUrl = `${environment.url}/api/timelinePost`;
   }
   /**
    * @function createNewPost
@@ -61,7 +55,7 @@ export class TimelineService {
    * @param comment 
    * @returns 
    */
-  createComment(postId: string, comment?: { _coach?: string, isCoach?: boolean, content?: string }) {
+  createComment(postId: string, comment?: {content?: string }) {
     return this.http.post(`${this.timelineUrl}/${postId}`, comment).pipe(
       catchError(e => {
         let error = e.error['error']
