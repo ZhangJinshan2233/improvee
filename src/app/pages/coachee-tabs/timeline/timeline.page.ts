@@ -6,6 +6,7 @@ import { TimelineCreatePage } from '../timeline-create/timeline-create.page'
 import { TimelineCommentPage } from "../timeline-comment/timeline-comment.page";
 import { format, isYesterday, isToday } from 'date-fns';
 import * as _ from 'lodash';
+import { temporaryAllocator } from '@angular/compiler/src/render3/view/util';
 
 @Component({
   selector: 'app-timeline',
@@ -117,7 +118,6 @@ export class TimelinePage implements OnInit {
     await postModal.present();
 
     let { data } = await postModal.onWillDismiss();
-
     if (data.timelinePost) {
       this.skipNum += 1;
       let createdDate = format(data.timelinePost.createdDate, 'ddd,MMM Do YYYY')
@@ -129,7 +129,7 @@ export class TimelinePage implements OnInit {
       }
       let { _id, description, _coachee, postImage, rating, comments } = data.timelinePost
       let tempPost = { createdDate: createdDate, posts: [{ _id, description, _coachee, postImage, rating, comments }] }
-      if (this.timelinePosts[0].createdDate = tempPost.createdDate) {
+      if (this.timelinePosts[0].createdDate === tempPost.createdDate) {
         this.timelinePosts[0].posts.unshift(tempPost.posts[0])
       } else {
         this.timelinePosts.unshift(tempPost)

@@ -20,15 +20,16 @@ export class AuthGuardService implements CanActivate, CanActivateChild, CanLoad 
   currentUser: User;
 
   constructor(private authService: AuthService) {
+    this.authService.currentUser.subscribe(user=>{
+    this.currentUser=user
+    })
   }
 
   check(route, _state?: RouterStateSnapshot) {
 
-    let currentUser = this.authService.currentUserValue;
+    if (this.currentUser) {
 
-    if (currentUser) {
-
-      if (route.data.allowUserType.includes(currentUser['userType']))
+      if (route.data.allowUserType.includes(this.currentUser['userType']))
 
         return true;
     }

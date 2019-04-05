@@ -18,8 +18,11 @@ export class TimelineService {
     private alertController: AlertController
   ) {
 
-    this.currentUser = this.auth.currentUserValue;
-    this.timelineUrl = `${environment.url}/api/timelinePost/${this.currentUser._id}`;
+    this.auth.currentUser.subscribe(user=>{
+      this.currentUser=user;
+      this.timelineUrl = `${environment.url}/api/timelinePost/${this.currentUser._id}`;
+    })
+   
   }
   /**
    * @function createNewPost

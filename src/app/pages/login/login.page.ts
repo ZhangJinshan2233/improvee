@@ -13,6 +13,7 @@ import {
 } from '@ionic-native/native-page-transitions/ngx';
 
 import { AuthService } from "../../services/auth.service";
+import { User } from 'src/app/model/user';
 
 const SHAKE_DISTANCE = 16;
 
@@ -23,7 +24,7 @@ const SHAKE_DISTANCE = 16;
 })
 export class LoginPage implements OnInit {
   @ViewChild('logo') logo: ElementRef
-
+  user: User
   loginForm: FormGroup;
 
   isSubmitted = false;
@@ -87,21 +88,21 @@ export class LoginPage implements OnInit {
 
       this.authService.login(this.loginForm.value).subscribe(res => {
 
-        let user = this.authService.currentUserValue;
+        this.authService.currentUser.subscribe(user => {
 
-        if (user.userType === 'freeCoachee' || user.userType === 'premiumCoachee') {
+          if (user.userType === 'freeCoachee' || user.userType === 'premiumCoachee') {
 
-          this.router.navigateByUrl('/slides')
+            this.router.navigateByUrl('/slides')
 
-        } else if (user.userType === 'coach') {
+          } else if (user.userType === 'coach') {
 
-          this.router.navigateByUrl('/coach')
+            this.router.navigateByUrl('/coach')
 
-        } else if (user.userType === 'adminCoach') {
+          } else if (user.userType === 'adminCoach') {
 
-          this.router.navigateByUrl('/adminCoach')
-        }
-
+            this.router.navigateByUrl('/adminCoach')
+          }
+        })
       });
     }
   }

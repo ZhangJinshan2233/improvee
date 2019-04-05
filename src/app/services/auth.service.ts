@@ -15,11 +15,7 @@ const TOKEN_KEY = "access_token";
 })
 export class AuthService {
   url = `${environment.url}/api`;
-
   currentUserSubject = new BehaviorSubject<User>(null);
-
-  currentUser = this.currentUserSubject.asObservable();
-
   constructor(
     private http: HttpClient,
     private helper: JwtHelperService,
@@ -63,7 +59,7 @@ export class AuthService {
   }) {
 
     return this.http.post(`${this.url}/coachee/signup`, credentialInfo).pipe(
-      
+
       catchError(e => {
 
         let error = e.error['error'] ? e.error['error'] : e
@@ -90,7 +86,6 @@ export class AuthService {
           this.storage.set(TOKEN_KEY, res['token']);
           let user = this.helper.decodeToken(res['token']);
           this.currentUserSubject.next(user)
-          console.log(user)
         }),
         catchError(e => {
           console.log(e.error)
@@ -100,13 +95,9 @@ export class AuthService {
       );
   }
 
-
-  public get currentUserValue(): User {
-
-    return this.currentUserSubject.value;
-
+  public get currentUser() {
+    return this.currentUserSubject.asObservable();
   }
-
   hasRoles(roles: String[]) {
 
     if (!this.currentUserSubject.value || !roles.includes(this.currentUserSubject.value.userType)) {
@@ -117,6 +108,7 @@ export class AuthService {
     return true;
 
   }
+  
   showAlert(msg) {
     let alert = this.alertController.create({
       message: msg,
