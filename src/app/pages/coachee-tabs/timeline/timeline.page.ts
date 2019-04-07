@@ -17,7 +17,6 @@ export class TimelinePage implements OnInit {
   @ViewChild(IonContent) content: IonContent;
   skipNum: number;
   timelinePosts: any;
-
   constructor(
     private timelineService: TimelineService,
     private loadingCtrl: LoadingController,
@@ -52,9 +51,12 @@ export class TimelinePage implements OnInit {
     await loading.present();
 
     this.timelineService.getTimelinePost(this.skipNum).subscribe(res => {
-      this.skipNum += res.timelinePosts.length
-      let convertedTimelinePosts = this.convertTimelinePosts(res.timelinePosts)
-      this.timelinePosts = _.concat(this.timelinePosts, convertedTimelinePosts);
+      if (res.timelinePosts.length >= 1) {
+        this.skipNum += res.timelinePosts.length
+        let convertedTimelinePosts = this.convertTimelinePosts(res.timelinePosts)
+        this.timelinePosts = _.concat(this.timelinePosts, convertedTimelinePosts);
+      }
+
       loading.dismiss();
     })
   }
@@ -66,9 +68,8 @@ export class TimelinePage implements OnInit {
    */
   loadMorePosts(infiniteScrollEvent) {
     this.timelineService.getTimelinePost(this.skipNum).subscribe(res => {
-
-      this.skipNum += res.timelinePosts.length
       if (res.timelinePosts.length >= 1) {
+        this.skipNum += res.timelinePosts.length
         let convertedTimelinePosts = this.convertTimelinePosts(res.timelinePosts)
         let length = this.timelinePosts.length
         for (let i of convertedTimelinePosts) {
@@ -95,13 +96,12 @@ export class TimelinePage implements OnInit {
     this.skipNum = 0;
     this.timelinePosts = [];
     this.timelineService.getTimelinePost(this.skipNum).subscribe(res => {
-      this.skipNum += res.timelinePosts.length
-      let convertedTimelinePosts = this.convertTimelinePosts(res.timelinePosts)
-      this.timelinePosts = _.concat(this.timelinePosts, convertedTimelinePosts);
-
+      if (res.timelinePosts.length >= 1) {
+        this.skipNum += res.timelinePosts.length
+        let convertedTimelinePosts = this.convertTimelinePosts(res.timelinePosts)
+        this.timelinePosts = _.concat(this.timelinePosts, convertedTimelinePosts);
+      }
       refreshEvent.target.complete()
-
-
     })
   }
   /**
@@ -129,11 +129,17 @@ export class TimelinePage implements OnInit {
       }
       let { _id, description, _coachee, postImage, rating, comments } = data.timelinePost
       let tempPost = { createdDate: createdDate, posts: [{ _id, description, _coachee, postImage, rating, comments }] }
-      if (this.timelinePosts[0].createdDate === tempPost.createdDate) {
-        this.timelinePosts[0].posts.unshift(tempPost.posts[0])
+
+      if (this.timelinePosts.length === 0) {
+        this.timelinePosts.push(tempPost)
       } else {
-        this.timelinePosts.unshift(tempPost)
+        if (this.timelinePosts[0].createdDate === tempPost.createdDate) {
+          this.timelinePosts[0].posts.unshift(tempPost.posts[0])
+        } else {
+          this.timelinePosts.unshift(tempPost)
+        }
       }
+
       this.content.scrollToTop()
     }
 

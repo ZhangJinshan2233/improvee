@@ -23,7 +23,8 @@ export function jwtOptionsFactory(storage) {
       return storage.get("access_token");
       
     },
-    whitelistedDomains: ["192.168.1.235:3000"]
+    // whitelistedDomains: ["192.168.1.235:3000"]
+    whitelistedDomains: ["192.168.1.123:3000"]
   };
 }
 @NgModule({

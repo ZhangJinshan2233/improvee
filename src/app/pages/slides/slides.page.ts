@@ -13,10 +13,10 @@ export class SlidesPage implements OnInit {
   constructor(private router: Router, private authService: AuthService) { }
   imageSlides: any[] = [
     {
-      mediaUrl: '../../../assets/img/image2.jpg'
+      mediaUrl: '/assets/img/image2.jpg'
     },
     {
-      mediaUrl: '../../../assets/img/image1.jpg'
+      mediaUrl: '/assets/img/image1.jpg'
     }
   ];
   slidesOptions = {

@@ -1,5 +1,4 @@
 import { Injectable, OnInit } from '@angular/core';
-import { AuthService } from './auth.service';
 import { environment } from "../../environments/environment";
 import { HttpClient } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
@@ -10,14 +9,11 @@ import { Observable } from 'rxjs';
 })
 export class TimelineService {
 
-  timelineUrl: String
+  timelineUrl = `${environment.url}/api/timelinePost`;
 
-  constructor(private auth: AuthService,
-    private http: HttpClient,
+  constructor(private http: HttpClient,
     private alertController: AlertController
-  ) {
-    this.timelineUrl = `${environment.url}/api/timelinePost`;
-  }
+  ) {}
   /**
    * @function createNewPost
    * @param timelinePost
@@ -55,7 +51,7 @@ export class TimelineService {
    * @param comment 
    * @returns 
    */
-  createComment(postId: string, comment?: {content?: string }) {
+  createComment(postId: string, comment?: { content?: string }) {
     return this.http.post(`${this.timelineUrl}/${postId}`, comment).pipe(
       catchError(e => {
         let error = e.error['error']
@@ -78,6 +74,7 @@ export class TimelineService {
       })
     )
   }
+  
   showAlert(msg) {
     let alert = this.alertController.create({
       message: msg,

@@ -1,12 +1,8 @@
-
 <ion-content no-padding>
   <ion-refresher (ionRefresh)="doRefresh($event)" padding>
-    <ion-refresher-content
-      pullingIcon="arrow-dropdown"
-      pullingText="Pull to refresh"
-      refreshingSpinner="circles"
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
       refreshingText="Refreshing...">
-  </ion-refresher-content>
+    </ion-refresher-content>
   </ion-refresher>
 
   <ion-list *ngIf="timelinePosts.length">
@@ -19,7 +15,7 @@
           <ion-text class="ion-padding">
             {{post.description}}
           </ion-text>
-          <ion-img src="data:image/jpeg;base64,{{post.postImage.data}}" alt=""></ion-img>
+          <ion-img [src]="post?.postImage?.data"></ion-img>
           <ion-grid>
             <ion-row class="ion-justify-content-start">
               <ion-col class="ion-no-padding">
