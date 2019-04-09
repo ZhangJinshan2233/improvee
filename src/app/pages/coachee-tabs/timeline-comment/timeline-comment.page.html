@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-list *ngIf="comments.length">
+  <ion-list *ngIf="comments?.length">
     <ion-item *ngFor="let comment of comments; index as i">
       <ion-label text-wrap>
         <h5>
@@ -25,7 +25,7 @@
 <ion-footer>
   <ion-toolbar>
     <ion-item>
-      <ion-textarea clear-on-edit="true" rows="2" name="content" [(ngModel)]='comment.content'
+      <ion-textarea clear-on-edit="true" rows="1" name="content" [(ngModel)]='comment.content'
         placeholder="Add a comment"></ion-textarea>
     </ion-item>
     <ion-buttons slot="end">

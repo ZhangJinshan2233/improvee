@@ -1,7 +1,7 @@
-import { Component, OnInit ,ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AlertController, ModalController, NavParams } from "@ionic/angular";
 import { TimelineService } from "../../../services/timeline.service";
-import { IonContent } from '@ionic/angular';
+import { IonContent, IonList } from '@ionic/angular';
 
 @Component({
   selector: 'app-timeline-comment',
@@ -9,8 +9,10 @@ import { IonContent } from '@ionic/angular';
   styleUrls: ['./timeline-comment.page.scss'],
 })
 export class TimelineCommentPage implements OnInit {
-  @ViewChild(IonContent) content: IonContent;
-  comments: any
+  @ViewChild(IonContent) modalContent: IonContent;
+  @ViewChild(IonList, { read: ElementRef }) commentList: ElementRef;
+  mutationObserver: MutationObserver
+  comments: any[]
   postId: string;
   comment = {
     isCoach: false,
@@ -22,21 +24,28 @@ export class TimelineCommentPage implements OnInit {
     private navParams: NavParams,
     private timelineService: TimelineService
   ) {
-    this.comments = []
     this.postId = '';
+  }
+  ionViewDidEnter() {
+    this.modalContent.scrollToBottom()//scroll to bottom after loading data for first time 
+    this.mutationObserver = new MutationObserver((mutations) => {
+      this.modalContent.scrollToBottom();
+    });
+    this.mutationObserver.observe(this.commentList.nativeElement, {
+      childList: true,
+      subtree: true
+    });
   }
 
   ngOnInit() {
-    this.content.scrollEvents=true
-    this.postId = this.navParams.get('postId')
     this.getComments()
-
+    this.modalContent.scrollEvents = true;
+    this.postId = this.navParams.get('postId')
   }
 
   getComments() {
     this.timelineService.getComments(this.postId).subscribe(res => {
       this.comments = res['comments']
-      this.content.scrollToBottom(100);
     })
   }
 
@@ -49,11 +58,9 @@ export class TimelineCommentPage implements OnInit {
   createComment() {
     if (this.comment.content) {
       this.timelineService.createComment(this.postId, this.comment).subscribe(res => {
-        this.comments = res['comments']
+        this.comments.push(res['comment'])
         this.comment.content = "";
-        this.content.scrollToBottom()
       })
-    
     }
 
   }

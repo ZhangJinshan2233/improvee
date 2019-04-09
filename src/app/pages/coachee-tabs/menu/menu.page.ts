@@ -15,7 +15,10 @@ export class MenuPage implements OnInit {
   }
 
   ngOnInit() {
-   
+    
   }
-
+  ionViewWillEnter(){
+    let tabBar=document.querySelector('ion-tab-bar');
+    tabBar.style.display='flex'
+  }
 }

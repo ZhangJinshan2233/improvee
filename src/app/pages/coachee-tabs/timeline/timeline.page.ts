@@ -6,8 +6,6 @@ import { TimelineCreatePage } from '../timeline-create/timeline-create.page'
 import { TimelineCommentPage } from "../timeline-comment/timeline-comment.page";
 import { format, isYesterday, isToday } from 'date-fns';
 import * as _ from 'lodash';
-import { temporaryAllocator } from '@angular/compiler/src/render3/view/util';
-
 @Component({
   selector: 'app-timeline',
   templateUrl: './timeline.page.html',
