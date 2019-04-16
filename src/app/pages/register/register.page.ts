@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import {
   FormGroup,
   FormBuilder,
-  FormControl,
   Validators
 } from "@angular/forms";
 

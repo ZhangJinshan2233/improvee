@@ -1,13 +1,86 @@
 <ion-header>
-    <ion-toolbar color='primary'>
-      <ion-buttons slot="start">
-        <ion-button>
-          <ion-back-button></ion-back-button>
+  <ion-toolbar class="ion-no-padding">
+    <ion-buttons slot="start">
+      <ion-button color="primary">
+        <ion-back-button></ion-back-button>
+      </ion-button>
+    </ion-buttons>
+    <div class="user-photo" [appScrollVanish]="scrollArea">
+      <ion-avatar>
+        <ion-img [src]="currentUser?.profileImage?.data || '/assets/img/noavatar.png'"></ion-img>
+      </ion-avatar>
+      <ion-button fill="outline" shape="round" size="small">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+<ion-content #scrollArea class="ion-padding-top" [scrollEvents]='true'>
+  <ion-list>
+    <ion-card class="text-primary">
+      <div *ngIf="!isNameFormShow">
+        <ion-item lines="full">
+          <ion-icon slot="start" name="person"></ion-icon>
+          <ion-label>Name</ion-label>
+          <ion-button slot="end" fill="clear" (click)="togglerNameForm()">
+            <ion-icon slot="icon-only" name="create"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-label>
+            {{currentUser?.firstName}} {{currentUser?.lastName}}
+          </ion-label>
+        </ion-item>
+      </div>
+
+      <form [formGroup]="nameForm" novalidate *ngIf="isNameFormShow" (ngSubmit)="submitNameForm()">
+        <ion-item lines="full">
+          <ion-icon slot="start" name="person"></ion-icon>
+          <ion-label>Name</ion-label>
+          <ion-button slot="end" fill="clear" type="submit">save</ion-button>
+          <ion-button slot="end" fill="clear" (click)="cancle()">cancle </ion-button>
+        </ion-item>
+        <ion-item>
+          <ion-input formControlName="firstName" type='text'
+            [class.invalid]="!nameForm.controls.firstName.valid &&  isNameFormSubmitted"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input formControlName='lastName' type='text'
+            [class.invalid]="!nameForm.controls.lastName.valid &&  isNameFormSubmitted"></ion-input>
+        </ion-item>
+      </form>
+    </ion-card>
+    <ion-card>
+      <ion-item lines="full">
+        <ion-icon slot="start" name="mail"></ion-icon>
+        <ion-label>Email</ion-label>
+        <ion-button slot="end" fill="clear" [disabled]=true>
+          <ion-icon slot="icon-only" name="create"></ion-icon>
         </ion-button>
-      </ion-buttons>
-      <ion-title color='light'>Profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
-<ion-content padding>
-  <h2>profile</h2>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label>
+          {{currentUser?.email}}
+        </ion-label>
+        <ion-icon slot="end" name="lock"></ion-icon>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-item lines="full">
+        <ion-icon slot="start" name="key"></ion-icon>
+        <ion-label>change password</ion-label>
+        <ion-button slot="end" fill="clear" [routerLink]="['/coachee/menu/profile/changePassword']">
+          <ion-icon slot="icon-only" name="create"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-item lines="full">
+        <ion-icon slot="start" name="log-out"></ion-icon>
+        <ion-button fill="clear" (click)="logout()">
+          Log out
+        </ion-button>
+      </ion-item>
+    </ion-card>
+  </ion-list>
 </ion-content>

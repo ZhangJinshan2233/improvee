@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { TimelineService } from "../../../services/timeline.service";
 import { IonContent } from '@ionic/angular';
-import { ModalController, LoadingController } from '@ionic/angular';
+import { ModalController, LoadingController, IonInfiniteScroll } from '@ionic/angular';
 import { TimelineCreatePage } from '../timeline-create/timeline-create.page'
 import { TimelineCommentPage } from "../timeline-comment/timeline-comment.page";
 import { format, isYesterday, isToday } from 'date-fns';
@@ -13,6 +13,7 @@ import * as _ from 'lodash';
 })
 export class TimelinePage implements OnInit {
   @ViewChild(IonContent) content: IonContent;
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll
   skipNum: number;
   timelinePosts: any;
   constructor(
@@ -100,6 +101,7 @@ export class TimelinePage implements OnInit {
         this.timelinePosts = _.concat(this.timelinePosts, convertedTimelinePosts);
       }
       refreshEvent.target.complete()
+      this.infiniteScroll.disabled = false;
     })
   }
   /**

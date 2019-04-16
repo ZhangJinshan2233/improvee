@@ -52,7 +52,7 @@ export class TimelineService {
    * @returns 
    */
   createComment(postId: string, comment?: { content?: string }) {
-    return this.http.post(`${this.timelineUrl}/${postId}`, comment).pipe(
+    return this.http.post(`${this.timelineUrl}/${postId}/comments`, comment).pipe(
       catchError(e => {
         let error = e.error['error']
         this.showAlert(error);
@@ -66,7 +66,7 @@ export class TimelineService {
    * @returns Obserable<timelinePost>
    */
   getComments(postId) {
-    return this.http.get(`${this.timelineUrl}/${postId}`).pipe(
+    return this.http.get(`${this.timelineUrl}/${postId}/comments`).pipe(
       catchError(e => {
         let error = e.error['error']
         this.showAlert(error);

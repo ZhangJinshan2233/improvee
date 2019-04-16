@@ -19,6 +19,7 @@ export class TimelineCommentPage implements OnInit {
     _coach: null,
     content: ''
   }
+  noavatar = '/assets/img/improvee.png'
   constructor(
     private modalCtrl: ModalController,
     private navParams: NavParams,
@@ -28,13 +29,17 @@ export class TimelineCommentPage implements OnInit {
   }
   ionViewDidEnter() {
     this.modalContent.scrollToBottom()//scroll to bottom after loading data for first time 
+
     this.mutationObserver = new MutationObserver((mutations) => {
       this.modalContent.scrollToBottom();
     });
-    this.mutationObserver.observe(this.commentList.nativeElement, {
-      childList: true,
-      subtree: true
-    });
+  
+    if (this.comments.length >= 1) {
+      this.mutationObserver.observe(this.commentList.nativeElement, {
+        childList: true,
+        subtree: true
+      });
+    }
   }
 
   ngOnInit() {
@@ -46,6 +51,7 @@ export class TimelineCommentPage implements OnInit {
   getComments() {
     this.timelineService.getComments(this.postId).subscribe(res => {
       this.comments = res['comments']
+      console.log(this.comments)
     })
   }
 
@@ -58,6 +64,7 @@ export class TimelineCommentPage implements OnInit {
   createComment() {
     if (this.comment.content) {
       this.timelineService.createComment(this.postId, this.comment).subscribe(res => {
+        console.log(res['comment'])
         this.comments.push(res['comment'])
         this.comment.content = "";
       })

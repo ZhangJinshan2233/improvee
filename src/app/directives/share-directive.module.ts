@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HasRoleDirective } from "./has-role.directive";
+import { ScrollVanishDirective } from './scroll-vanish.directive';
+
 @NgModule({
-  declarations: [HasRoleDirective],
+  declarations: [HasRoleDirective, ScrollVanishDirective],
   imports: [
     CommonModule
   ],
-  exports:[HasRoleDirective]
+  exports:[HasRoleDirective,ScrollVanishDirective]
 })
 export class ShareDirectiveModule { }

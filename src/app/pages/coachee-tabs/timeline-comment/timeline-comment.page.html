@@ -10,10 +10,13 @@
 </ion-header>
 <ion-content>
   <ion-list *ngIf="comments?.length">
-    <ion-item *ngFor="let comment of comments; index as i">
+    <ion-item *ngFor="let comment of comments; index as i" slot="start">
+      <ion-avatar>
+        <ion-img [src]="comment?.profileImage?.data|| noavatar"></ion-img>
+      </ion-avatar>
       <ion-label text-wrap>
         <h5>
-          {{comment.content}}
+      <b>{{comment.fullName}} </b> {{comment.content}}
         </h5>
         <ion-note style="font-size: 0.7em">
           {{comment.createdDate | timeAgo}}

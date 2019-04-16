@@ -86,22 +86,30 @@ export class LoginPage implements OnInit {
 
     } else {
 
+
       this.authService.login(this.loginForm.value).subscribe(res => {
 
         this.authService.currentUser.subscribe(user => {
 
-          if (user.userType === 'freeCoachee' || user.userType === 'premiumCoachee') {
+          this.loginForm.setValue({ 'email': '', 'password': '' })
+          this.isSubmitted = false
+          
+          if (user != null) {
 
-            this.router.navigateByUrl('/slides')
+            if (user.userType === 'freeCoachee' || user.userType === 'premiumCoachee') {
 
-          } else if (user.userType === 'coach') {
+              this.router.navigateByUrl('/slides')
 
-            this.router.navigateByUrl('/coach')
+            } else if (user.userType === 'coach') {
 
-          } else if (user.userType === 'adminCoach') {
+              this.router.navigateByUrl('/coach')
 
-            this.router.navigateByUrl('/adminCoach')
+            } else if (user.userType === 'adminCoach') {
+
+              this.router.navigateByUrl('/adminCoach')
+            }
           }
+
         })
       });
     }

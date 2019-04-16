@@ -46,6 +46,11 @@ export class AuthService {
     });
   }
 
+  logout() {
+    this.storage.remove(TOKEN_KEY).then(() => {
+      this.currentUserSubject.next(null);
+    });
+  }
   /**
    * @function register
    * @param credentialInfo 

@@ -29,11 +29,11 @@ const routes: Routes = [
       },
       {
         path: 'message',
-        data: { allowUserType: [UserType.free, UserType.premium] },
+        data: { allowUserType: [UserType.premium] },
         children: [
           {
             path: '',
-            loadChildren: '../coachee-tabs/profile/profile.module#ProfilePageModule',
+            loadChildren: '../coachee-tabs/message/message.module#MessagePageModule',
           }
         ]
       },
@@ -48,6 +48,10 @@ const routes: Routes = [
           {
             path: 'profile',
             loadChildren: '../coachee-tabs/profile/profile.module#ProfilePageModule',
+          },
+          {
+            path:'profile/changePassword',
+            loadChildren: '../coachee-tabs/change-password/change-password.module#ChangePasswordPageModule'
           }
         ]
       },

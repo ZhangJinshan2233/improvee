@@ -12,7 +12,6 @@ import { CoacheeTabsPageRoutingModule } from "./coachee-tabs.router.module";
     FormsModule,
     IonicModule,
     ShareDirectiveModule,
-   
     CoacheeTabsPageRoutingModule
   ],
   declarations: [CoacheeTabsPage]

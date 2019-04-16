@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { MenuPage } from './menu.page';
-
+import { ShareDirectiveModule } from "../../../directives/share-directive.module";
 const routes: Routes = [
   {
     path: '',
@@ -19,6 +19,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    ShareDirectiveModule,
     RouterModule.forChild(routes)
   ],
   declarations: [MenuPage]
