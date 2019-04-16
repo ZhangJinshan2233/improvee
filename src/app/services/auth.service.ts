@@ -93,7 +93,6 @@ export class AuthService {
           this.currentUserSubject.next(user)
         }),
         catchError(e => {
-          console.log(e.error)
           this.showAlert(e.error['error']);
           throw e.error;
         })
@@ -103,7 +102,7 @@ export class AuthService {
   public get currentUser() {
     return this.currentUserSubject.asObservable();
   }
-  
+
   hasRoles(roles: String[]) {
 
     if (!this.currentUserSubject.value || !roles.includes(this.currentUserSubject.value.userType)) {
@@ -115,6 +114,28 @@ export class AuthService {
 
   }
 
+  changePassword(passwordInfo?: {
+    currentPassword: string,
+    newPassword: string,
+  }) {
+
+    return this.http.post(`${this.url}/changepassword`, passwordInfo).pipe(
+      catchError(err => {
+        this.showAlert(err.error['error']);
+        throw err.error
+      })
+    )
+  }
+
+  updateProfile(profileInfo?){
+    console.log(profileInfo)
+    return this.http.post(`${this.url}/profile`,profileInfo).pipe(
+      catchError(err=>{
+        this.showAlert(err.error['error']);
+        throw err.error
+      })
+    )
+  }
   showAlert(msg) {
     let alert = this.alertController.create({
       message: msg,

@@ -24,7 +24,6 @@ export class ProfilePage implements OnInit {
   ngOnInit() {
     this.menuService.getUserInfo().subscribe(res => {
       this.currentUser = res['currentUser']
-      console.log(this.currentUser)
       this.createNameForm();
     })
     let tabBar = document.querySelector('ion-tab-bar');
@@ -47,6 +46,12 @@ export class ProfilePage implements OnInit {
   submitNameForm() {
     this.isNameFormSubmitted = true
     console.log(this.nameForm.value)
+    this.auth.updateProfile(this.nameForm.value).subscribe(res=>{
+      this.menuService.getUserInfo().subscribe(res=>{
+        this.currentUser=res['currentUser']
+      })
+      this.isNameFormShow = !this.isNameFormShow
+    })
   }
 
   cancle() {
