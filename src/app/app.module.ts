@@ -16,12 +16,12 @@ import { HttpClientModule } from "@angular/common/http";
 import { Storage, IonicStorageModule } from "@ionic/storage";
 import { ShareDirectiveModule } from "./directives/share-directive.module";
 import { Camera } from '@ionic-native/Camera/ngx';
-
+import { ActionSheet } from '@ionic-native/action-sheet/ngx'
 export function jwtOptionsFactory(storage) {
   return {
     tokenGetter: () => {
       return storage.get("access_token");
-      
+
     },
     whitelistedDomains: ["192.168.1.235:3000"]
     // whitelistedDomains: ["192.168.1.123:3000"]
@@ -49,6 +49,7 @@ export function jwtOptionsFactory(storage) {
     StatusBar,
     SplashScreen,
     Camera,
+    ActionSheet,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

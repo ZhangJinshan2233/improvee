@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
+import { Camera } from '@ionic-native/Camera/ngx';
 import { TimelineService } from "../../../services/timeline.service";
 import { AlertController, ModalController } from "@ionic/angular";
-
+import {CameraOptionsSetting} from '../../../_helper/cameraOptionsSetting';
 @Component({
   selector: 'app-timeline-create',
   templateUrl: './timeline-create.page.html',
@@ -44,25 +44,8 @@ export class TimelineCreatePage implements OnInit {
    */
   async getPicture(isCamera) {
 
-    let sourceType = this.camera.PictureSourceType.CAMERA;
-
-    if (!isCamera)
-
-      sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
-
-    //set options of camera
-    const caremaOptions: CameraOptions = {
-      quality: 50,
-      saveToPhotoAlbum: false,
-      correctOrientation: true,
-      targetHeight: 1000,
-      targetWidth: 1000,
-      destinationType: this.camera.DestinationType.DATA_URL,//
-      encodingType: this.camera.EncodingType.JPEG,
-      sourceType: sourceType,
-      mediaType: this.camera.MediaType.PICTURE
-    }
-
+    let caremaOptions=CameraOptionsSetting(isCamera,this.camera)
+   
     try {
 
       this.newPost.imgData = await this.camera.getPicture(caremaOptions);

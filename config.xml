@@ -91,5 +91,6 @@
         <string>Improvee App needs your permission to access your Camera to upload head portrait and post images.</string>
     </edit-config>
     <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
+    <plugin name="cordova-plugin-actionsheet" spec="^2.3.3" />
     <engine name="ios" spec="5.0.0" />
 </widget>

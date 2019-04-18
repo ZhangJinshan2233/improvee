@@ -9,9 +9,7 @@ export class MenuPage implements OnInit {
   currentUser={}
   noavatar='/assets/img/noavatar.png'
   constructor(private menuService: MenuService) { 
-    this.menuService.getUserInfo().subscribe(res => {
-      this.currentUser = res['currentUser']
-    })
+   
   }
 
   ngOnInit() {
@@ -19,6 +17,9 @@ export class MenuPage implements OnInit {
   }
   ionViewWillEnter(){
     let tabBar=document.querySelector('ion-tab-bar');
-    tabBar.style.display='flex'
+    tabBar.style.display='flex';
+    this.menuService.getUserInfo().subscribe(res => {
+      this.currentUser = res['currentUser']
+    })
   }
 }

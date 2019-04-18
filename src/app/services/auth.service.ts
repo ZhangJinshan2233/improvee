@@ -128,7 +128,6 @@ export class AuthService {
   }
 
   updateProfile(profileInfo?){
-    console.log(profileInfo)
     return this.http.post(`${this.url}/profile`,profileInfo).pipe(
       catchError(err=>{
         this.showAlert(err.error['error']);
