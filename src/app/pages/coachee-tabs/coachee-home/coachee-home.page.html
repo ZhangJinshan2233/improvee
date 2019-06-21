@@ -1,0 +1,173 @@
+<ion-content class="ion-no-padding">
+
+  <!-- challenges -->
+  <ion-card>
+    <ion-card-header class="ion-text-center ion-padding-bottom ion-padding-top">
+      <ion-card-title color="primary">Challenges</ion-card-title>
+    </ion-card-header>
+    <ion-list *ngFor="let challenge of activeChallenges">
+      <ion-item detail lines="none" (click)='gotoActiveChallenge(challenge.title)'>
+        <ion-avatar slot="start">
+          <ion-img [src]="challenge?.imgUrl"></ion-img>
+        </ion-avatar>
+        <ion-label class="ion-text-center ion-text-capitalize" color="primary">{{challenge.title}} </ion-label>
+      </ion-item>
+      <ion-card-content class="ion-no-padding">
+        <ion-grid>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="3" class="ion-text-center">
+              <div>
+                <ion-label color="primary" style="font-size:0.8em">Today</ion-label>
+                <br>
+                <ion-label color="primary" style="font-size:0.8em">Completed</ion-label>
+              </div>
+            </ion-col>
+            <ion-col>
+              <ion-row class="ion-justify-content-end">
+                <ion-col size="1" class="ion-text-center ion-no-padding">
+                  <div>
+                    <ion-label class='circle' [ngStyle]="{'background-color':breakfast?'#f4a933':'inherit'}">
+                    </ion-label>
+                  </div>
+                </ion-col>
+                <ion-col size="1" class="ion-text-center">
+                  <div>
+                    <ion-label class='circle' [ngStyle]="{'background-color':lunch?'#f4a933':'inherit'}">
+                    </ion-label>
+                  </div>
+                </ion-col>
+                <ion-col size="1" class="ion-text-center">
+                  <div>
+                    <ion-label class='circle' [ngStyle]="{'background-color':dinner?'#f4a933':'inherit'}">
+                    </ion-label>
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row class="ion-justify-content-end">
+                <ion-col size="1">
+                  <ion-label color="primary" style="font-size:0.8em">B</ion-label>
+                </ion-col>
+                <ion-col size="1">
+                  <ion-label color="primary" style="font-size:0.8em">L</ion-label>
+                </ion-col>
+                <ion-col size="1">
+                  <ion-label color="primary" style="font-size:0.8em">D</ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-list>
+    <ion-card-content class="ion-text-center" *ngIf="!activeChallenges.length">
+      <ion-button fill="clear" (click)="gotoChallenges()">
+        <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- habit list  -->
+  <ion-card class="ion-card-margin">
+    <ion-item detail lines="none" [routerLink]="['/coachee/coachee-home/habitlist']" routerDirection="forward">
+      <ion-avatar slot="start">
+        <img src="/assets/img/habit-list.png">
+      </ion-avatar>
+      <ion-label class="ion-text-center" color="primary">Habit List</ion-label>
+    </ion-item>
+    <ion-card-content class="ion-no-padding">
+      <ion-grid>
+        <ion-row class="ion-align-items-center ion-justify-content-between">
+          <ion-col size="3" class="ion-text-center">
+            <div>
+              <ion-label color="primary" style="font-size:0.8em">Today</ion-label>
+              <br>
+              <ion-label color="primary" style="font-size:0.8em">Completed</ion-label>
+            </div>
+          </ion-col>
+          <ion-col size="3">
+            <div>
+              <circle-progress [percent]=completedHabitPercent [showSubtitle]='false' [radius]='25'
+                [outerStrokeWidth]='2' [innerStrokeWidth]='2' [space]="-2"></circle-progress>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- indicators -->
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <div>
+          <ion-card class="ion-card-height">
+            <ion-grid>
+              <ion-row>
+                <ion-col class="ion-text-center ion-padding-top">
+                  <div>
+                    <ion-label color="primary">Weight</ion-label>
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="ion-text-center ion-padding-top">
+                  <div>
+                    <ion-label class="ion-label-font" color="primary">{{weight}}</ion-label>
+                    <ion-label color="primary">kg</ion-label>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          <ion-card class="ion-card-height">
+            <ion-grid>
+              <ion-row>
+                <ion-col class="ion-text-center ion-padding-top">
+                  <div>
+                    <ion-label color="primary">BMI</ion-label>
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="ion-text-center ion-padding-top">
+                  <div>
+                    <ion-label class="ion-label-font" color="primary">{{BMI}}</ion-label>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- healthy tips -->
+  <ion-list *ngIf="healthyTips.length">
+    <ion-card *ngFor="let tip of healthyTips">
+      <ion-img [src]="tip?.imgUrl"></ion-img>
+      <ion-card-header>
+        <ion-card-title class='ion-text-capitalize' color='primary'>
+          {{tip.title}}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="ion-text-wrap">
+        {{tip?.abstract}}
+      </ion-card-content>
+      <ion-button fill='clear' size='small' (click)="gotoHealthyTip(tip.url)" class="ion-text-uppercase">
+        Read more
+      </ion-button>
+    </ion-card>
+  </ion-list>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button translucent="true" size="small" (click)="gotoChatPage()">
+      <ion-icon name="chatboxes"></ion-icon>
+      <ion-badge *ngIf="noReadMessageNumber">{{noReadMessageNumber}}</ion-badge>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

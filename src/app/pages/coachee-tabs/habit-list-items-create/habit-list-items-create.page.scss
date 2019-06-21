@@ -1,0 +1,41 @@
+ion-checkbox {
+    position: absolute;
+    opacity: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100%;
+    width: 100%
+}
+.circle {
+    display: block;
+    border-radius: 50%;
+    background-color: #f1f7ef;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    padding-top: 5px;
+    position: relative;
+    border: 1px dot;
+
+}
+.modal-title-css {
+    font-size: 1.5em;
+    text-align: center;
+    margin: 10px
+}
+
+.modal-week-label {
+    font-size: 0.8em;
+    color: #baccb4;
+    margin: 30px 0px 30px 30px;
+
+}
+
+ion-grid:last-child {
+    margin-top: 30px
+}
+
+ion-footer ion-toolbar {
+    --background: var(--ion-color-light-shade)
+}

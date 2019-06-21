@@ -16,7 +16,10 @@ import { HttpClientModule } from "@angular/common/http";
 import { Storage, IonicStorageModule } from "@ionic/storage";
 import { ShareDirectiveModule } from "./directives/share-directive.module";
 import { Camera } from '@ionic-native/Camera/ngx';
-import { ActionSheet } from '@ionic-native/action-sheet/ngx'
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { ActionSheet } from '@ionic-native/action-sheet/ngx';
+import { WheelSelector } from '@ionic-native/wheel-selector/ngx';
+import {NgCalendarModule} from 'ionic2-calendar'
 export function jwtOptionsFactory(storage) {
   return {
     tokenGetter: () => {
@@ -42,14 +45,17 @@ export function jwtOptionsFactory(storage) {
         deps: [Storage]
       }
     }),
-    AppRoutingModule
+    AppRoutingModule,
+    NgCalendarModule
   ],
 
   providers: [
     StatusBar,
     SplashScreen,
     Camera,
+    InAppBrowser,
     ActionSheet,
+    WheelSelector,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

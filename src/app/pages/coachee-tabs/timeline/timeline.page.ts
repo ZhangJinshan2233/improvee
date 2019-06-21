@@ -27,14 +27,14 @@ export class TimelinePage implements OnInit {
   ngOnInit() {
     this.loadPosts();
     let tabBar = document.querySelector('ion-tab-bar');
+    tabBar.style.display = 'none';
     let fab = document.querySelector('ion-fab');
     this.content.ionScrollStart.subscribe(() => {
-      tabBar.style.display = 'none';
       fab.style.display = 'none'
     })
 
     this.content.ionScrollEnd.subscribe(() => {
-      tabBar.style.display = 'flex';
+      // tabBar.style.display = 'flex';
       fab.style.display = 'flex';
     })
 

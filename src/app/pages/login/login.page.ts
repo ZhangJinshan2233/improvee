@@ -97,8 +97,8 @@ export class LoginPage implements OnInit {
           if (user != null) {
 
             if (user.userType === 'freeCoachee' || user.userType === 'premiumCoachee') {
-
-              this.router.navigateByUrl('/slides')
+              
+              this.router.navigateByUrl('/coachee/info')
 
             } else if (user.userType === 'coach') {
 

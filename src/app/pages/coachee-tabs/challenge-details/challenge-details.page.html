@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-buttons slot='start'>
+      <ion-back-button defaultHref='coachee/challenges'></ion-back-button>
+    </ion-buttons>
+    <ion-title class='ion-text-capitalize'>{{challenge.title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-img [src]="challenge?.imgUrl"></ion-img>
+    <ion-card-header>
+      <ion-card-subtitle>
+        duration:{{challenge.duration}} days
+      </ion-card-subtitle>
+      <ion-card-title>
+        Abstract
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-text>
+        {{challenge?.abstract}}
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Features
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-text>
+        {{challenge?.features}}
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-footer>
+  <ion-toolbar color='secondary'>
+    <ion-row>
+      <ion-col size='12' class='ion-text-center ion-text-uppercase ion-no-padding'>
+        <ion-button fill='clear'>
+          get started
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuardService } from "./services/auth-guard.service";
-import {UserType} from './model/userType';
+import { UserType } from './model/userType';
 const routes: Routes = [
   {
     path: '',
@@ -19,32 +19,36 @@ const routes: Routes = [
   {
     path: 'slides',
     loadChildren: './pages/slides/slides.module#SlidesPageModule',
-    data:{allowUserType:[UserType.free,UserType.premium]},
-    canActivateChild:[AuthGuardService],
-    canLoad:[AuthGuardService],
+    data: { allowUserType: [UserType.free, UserType.premium] },
+    canActivateChild: [AuthGuardService],
+    canLoad: [AuthGuardService],
   },
   {
     path: 'coachee',
     loadChildren: './pages/coachee-tabs/coachee-tabs.module#CoacheeTabsPageModule',
-    data:{allowUserType:[UserType.free,UserType.premium]},
-    canActivateChild:[AuthGuardService],
-    canLoad:[AuthGuardService],
+    data: { allowUserType: [UserType.free, UserType.premium] },
+    canActivateChild: [AuthGuardService],
+    canLoad: [AuthGuardService],
   },
   {
     path: 'coach',
     loadChildren: './pages/coach-tabs/coach-tabs.module#CoachTabsPageModule',
-    data:{allowUserType:[UserType.coach]},
-    canActivateChild:[AuthGuardService],
-    canLoad:[AuthGuardService]
+    data: { allowUserType: [UserType.coach] },
+    canActivateChild: [AuthGuardService],
+    canLoad: [AuthGuardService]
   },
   {
     path: 'adminCoach',
     loadChildren: './pages/coach-admin-tabs/coach-admin-tabs.module#CoachAdminTabsPageModule',
-    data:{allowUserType:[UserType.admin]},
-    canActivateChild:[AuthGuardService],
-    canLoad:[AuthGuardService]
+    data: { allowUserType: [UserType.admin] },
+    canActivateChild: [AuthGuardService],
+    canLoad: [AuthGuardService]
   },
-  
+  {
+    path: 'chat',
+    loadChildren: './pages/coachee-tabs/chat/chat.module#ChatPageModule'
+  },
+
 ];
 
 @NgModule({

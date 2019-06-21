@@ -1,0 +1,14 @@
+ion-img{
+    position: absolute;
+    opacity: 0.4;
+    z-index: -1;
+}
+ion-item-group:last-of-type ion-card{
+    height:200px;
+}
+
+ion-range {
+    --knob-background: var(--ion-color-secondary);
+    --bar-height: 5px;
+    --bar-border-radius: 2.5px;
+}

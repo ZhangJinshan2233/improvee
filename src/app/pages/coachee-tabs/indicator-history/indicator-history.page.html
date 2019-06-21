@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>History-{{indicatorName}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-card *ngFor="let item of items">
+      <ion-item lines='none' detail (click)="showMOdal(item)">
+        <ion-label class="ion-text-capitalize">
+          {{item.createDate}}
+        </ion-label>
+      </ion-item>
+      <ion-card-content class="ion-padding-horizontal">
+        <ion-row>
+          <ion-col>
+            <div>
+              <ion-label class='indicator-value-font' color='primary'>
+                {{item.value}}
+              </ion-label>
+              <ion-label class='indicator-unit-font'>
+                <small>{{item.unit}}</small>
+              </ion-label>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>

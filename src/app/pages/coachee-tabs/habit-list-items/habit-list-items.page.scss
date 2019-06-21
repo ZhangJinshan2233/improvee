@@ -1,0 +1,35 @@
+
+.label-font {
+    font-size: 1.5em
+}
+
+ion-list ion-item-sliding ion-item ion-card {
+    width: 100% !important;
+}
+
+.habit-title {
+    margin: 0px 20px;
+    color: #10dc60;
+}
+
+.modal-week-label {
+    font-size: 0.8em;
+    color: #baccb4;
+    margin: 20px 0px 30px 20px;
+
+}
+.circle {
+    display: block;
+    border-radius: 50%;
+    background-color: #f1f7ef;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    padding-top: 2px;
+    position: relative;
+    border: 1px dot;
+
+}
+ion-label::first-letter {
+    text-transform: uppercase !important;
+}

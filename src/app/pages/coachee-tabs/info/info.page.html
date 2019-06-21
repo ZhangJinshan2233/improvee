@@ -1,0 +1,286 @@
+<ion-content>
+  <ion-slides [options]="slideOpts" pager='true' (ionSlideWillChange)="doCheck()">
+    <ion-slide>
+      <ion-grid>
+        <ion-row class='ion-margin-bottom ion-padding-bottom'>
+          <ion-col>
+            <div class="ion-text-center">
+              <ion-label color="primary" class='ion-label-font'>Welcome!</ion-label>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row class='ion-margin ion-padding'>
+          <ion-col class="ion-text-center">
+            <div>
+              <ion-label color="primary">let's start the basics</ion-label>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-radio-group [(ngModel)]="gender">
+          <ion-row class='ion-justify-content-between'>
+            <ion-col size='6' class='gender-div'>
+              <div>
+                <ion-radio value='male' (ionSelect)='getGender($event)'></ion-radio>
+                <ion-avatar [ngClass]="{'ion-avtar-active':gender=='male','ion-avatar-noactive':gender=='female'}">
+                  <img src="assets/img/male.jpeg" alt="">
+                </ion-avatar>
+              </div>
+            </ion-col>
+            <ion-col size="6" class='gender-div'>
+              <div>
+                <ion-radio value='female' (ionSelect)='getGender($event)'></ion-radio>
+                <ion-avatar [ngClass]="{'ion-avtar-active':gender=='female','ion-avatar-noactive':gender=='male'}">
+                  <img src="assets/img/female.png" alt="">
+                </ion-avatar>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide>
+      <ion-grid>
+        <ion-row class='ion-padding-bottom'>
+          <ion-col>
+            <div>
+              <ion-label color="primary">Date of birthday</ion-label>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row class='ion-margin-bottom ion-padding'>
+          <ion-col>
+            <ion-item class='ion-text-center' lines='inset'>
+              <ion-label color='primary' class='ion-label-font'>
+                <ion-datetime display-format="MMM DD, YYYY" [(ngModel)]="dateOfBirth" (ionChange)=getDOB($event)>
+                </ion-datetime>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row class='ion-margin ion-padding ion-row-margin'>
+          <ion-col>
+            <div class="ion-text-center">
+              <ion-label color="primary">Height:</ion-label>
+              <ion-label color="primary" class="ion-label-font"> {{hightValue}}</ion-label>
+              <ion-label color="primary"> cm</ion-label>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row class='ion-margin ion-padding'>
+          <ion-col>
+            <div class='ruler-container'>
+              <app-ruler [max]="200" [min]='80' [currentValue]='160' (onChange)="getHeightValue($event)"></app-ruler>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide>
+      <ion-grid>
+        <ion-row class="ion-margin ion-padding">
+          <ion-col>
+            <div class="ion-text-center">
+              <ion-label color="primary">Weight:</ion-label>
+              <ion-label color="primary" class='ion-label-font'> {{weightValue}}</ion-label>
+              <ion-label color="primary"> kg</ion-label>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row class='ion-margin ion-padding '>
+          <ion-col>
+            <div class='ruler-container'>
+              <app-ruler [max]="150" [min]='30' [currentValue]='60' (onChange)="getWeightValue($event)"></app-ruler>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin ion-padding ion-row-margin">
+          <ion-col>
+            <div class="ion-text-center">
+              <ion-label color="primary">Weight Goal:</ion-label>
+              <ion-label color="primary" class='ion-label-font'> {{weightGoalValue}}</ion-label>
+              <ion-label color="primary"> kg</ion-label>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row class='ion-margin ion-padding'>
+          <ion-col>
+            <div class='ruler-container'>
+              <app-ruler [max]="150" [min]='30' [currentValue]='60' (onChange)="getWeightGoalValue($event)"></app-ruler>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-slide>
+    <ion-slide>
+      <ion-list>
+        <ion-card>
+          <ion-card-content>
+            <ion-label class='ion-margin-bottom'><b>Do you participate in physical activity?</b></ion-label>
+            <ion-radio-group [(ngModel)]="physicalActivityState">
+              <ion-grid>
+                <ion-row class="ion-align-items-center ion-margin-vertical">
+                  <ion-col size='2'>
+                    <ion-radio mode="md" value="yes" (ionSelect)="getPhysicalActivityState($event)"></ion-radio>
+                  </ion-col>
+                  <ion-col>
+                    Yes
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-center ion-margin-vertical">
+                  <ion-col size='2'>
+                    <ion-radio mode="md" value="no" (ionSelect)="getPhysicalActivityState($event)"></ion-radio>
+                  </ion-col>
+                  <ion-col>
+                    No
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-radio-group>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-content>
+            <ion-label class='ion-margin-bottom'><b>How active are you in your daily life?</b></ion-label>
+            <ion-radio-group [(ngModel)]="walkActiveState">
+              <ion-grid>
+                <ion-row class="ion-align-items-center ion-margin-vertical">
+                  <ion-col size='2'>
+                    <ion-radio mode="md" value="walking around all day" (ionSelect)="getWalkActiveState($event)">
+                    </ion-radio>
+                  </ion-col>
+                  <ion-col>
+                    I am on my feet or walking around all day.
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-center ion-margin-vertical">
+                  <ion-col size='2'>
+                    <ion-radio mode="md" value="mix between sitting and walking"
+                      (ionSelect)="getWalkActiveState($event)">
+                    </ion-radio>
+                  </ion-col>
+                  <ion-col>
+                    It's a mix between sitting and walking or standing.
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-center ion-margin-vertical">
+                  <ion-col size='2'>
+                    <ion-radio mode="md" value="walking in the evening" (ionSelect)="getWalkActiveState($event)">
+                    </ion-radio>
+                  </ion-col>
+                  <ion-col>
+                    I am seated down for the majority of the day, but walk in the evening.
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-center ion-margin-vertical">
+                  <ion-col size='2'>
+                    <ion-radio mode="md" value="seated down all day and evening"
+                      (ionSelect)="getWalkActiveState($event)">
+                    </ion-radio>
+                  </ion-col>
+                  <ion-col>
+                    I am seated down all day and for the majorityof the evening.
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-radio-group>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+    </ion-slide>
+    <ion-slide>
+      <ion-list>
+        <ion-card>
+          <ion-card-content>
+            <ion-label class='ion-margin-bottom'><b>Are you eating nutritiously enough?</b></ion-label>
+            <ion-radio-group [(ngModel)]="nutriotionState">
+              <ion-grid>
+                <ion-row class="ion-align-items-center ion-margin-vertical">
+                  <ion-col size='2'>
+                    <ion-radio mode="md" value="yes" (ionSelect)="getNutritionState($event)"></ion-radio>
+                  </ion-col>
+                  <ion-col>
+                    Yes
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-center ion-margin-vertical">
+                  <ion-col size='2'>
+                    <ion-radio mode="md" value="no" (ionSelect)="getNutritionState($event)"></ion-radio>
+                  </ion-col>
+                  <ion-col>
+                    No
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-center ion-margin-vertical">
+                  <ion-col size='2'>
+                    <ion-radio mode="md" value="notSure" (ionSelect)="getNutritionState($event)"></ion-radio>
+                  </ion-col>
+                  <ion-col>
+                    Not sure
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-radio-group>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-content>
+            <ion-label class='ion-margin-bottom'><b>Which sentence best describes?</b></ion-label>
+            <ion-radio-group [(ngModel)]="sentenceDescribeState">
+              <ion-grid>
+                <ion-row class="ion-align-items-center ion-margin-vertical">
+                  <ion-col size='2'>
+                    <ion-radio mode="md" value="not need to lose weight" (ionSelect)="getSentenceDescribeState($event)">
+                    </ion-radio>
+                  </ion-col>
+                  <ion-col>
+                    I don't think I need to lose weight.
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-center ion-margin-vertical">
+                  <ion-col size='2'>
+                    <ion-radio mode="md" value="lose weight but have no idea"
+                      (ionSelect)="getSentenceDescribeState($event)">
+                    </ion-radio>
+                  </ion-col>
+                  <ion-col>
+                    I plan to lose weight but I haven't thought about what I would do.
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-center ion-margin-vertical">
+                  <ion-col size='2'>
+                    <ion-radio mode="md" value="start to lose weight " (ionSelect)="getSentenceDescribeState($event)">
+                    </ion-radio>
+                  </ion-col>
+                  <ion-col>
+                    I plan to start to my weight lost journey by next month.
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-center ion-margin-vertical">
+                  <ion-col size='2'>
+                    <ion-radio mode="md" value="making changes to my lifestyles"
+                      (ionSelect)="getSentenceDescribeState($event)">
+                    </ion-radio>
+                  </ion-col>
+                  <ion-col>
+                    I have started making changes to my lifestyle.
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-radio-group>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="!disablePrevBtn">
+      <ion-button expand="full" color="primary" shape="round" (click)="gotoPre()">Pre</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end" *ngIf="!disableNextBtn">
+      <ion-button expand="full" color="primary" shape="round" (click)="gotoNext()">Next</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

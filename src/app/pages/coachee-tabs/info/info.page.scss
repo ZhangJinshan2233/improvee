@@ -1,0 +1,52 @@
+.ion-label-font {
+    font-size: 1.5em
+}
+.ion-row-margin {
+    margin-top: 80px;
+}
+
+ion-avatar {
+    margin: auto;
+    height: 80px;
+    width: 80px;
+}
+
+.ion-avtar-active {
+    opacity: 1;
+    transform: scale(1.2, 1.2)
+}
+
+.ion-avatar-noactive {
+    opacity: 0.5;
+}
+
+on-slide {
+    width: 100vw !important;
+}
+
+ion-slides {
+    width: 100vw !important;
+    height:100%
+}
+
+.ruler-container {
+    width: 100vw;
+}
+
+ion-grid ion-radio-group ion-row ion-radio {
+    height: 60px;
+    width: 60px;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.gender-div {
+    position: relative;
+}
+
+ion-footer ion-toolbar {
+    --background: var(--ion-color-light-shade)
+}

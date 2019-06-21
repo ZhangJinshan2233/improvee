@@ -1,0 +1,29 @@
+ion-footer ion-toolbar{
+    --background:var(--ion-color-light-shade)
+}
+
+$border-style:1px dotted gray;
+
+ion-content ion-grid ion-row:nth-of-type(2){
+    border-bottom:$border-style;
+}
+
+ion-content ion-grid ion-row:last-of-type ion-col:first-of-type{
+    border-right: $border-style;
+   
+}
+ion-content ion-grid ion-row:nth-last-of-type(2) ion-col:first-of-type{
+    border-right: $border-style;
+   
+}
+
+ion-content ion-grid ion-row{
+    margin:16px !important;
+}
+ion-content ion-grid ion-grid{
+    padding:10px !important;
+}
+
+.invalid {
+    border: 1px solid #ea6153;
+}

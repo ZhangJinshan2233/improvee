@@ -1,0 +1,45 @@
+ion-thumbnail {
+    --border-radius: 50%;
+}
+
+.ion-card-height {
+    height: 100px
+}
+
+.ion-card-margin {
+    margin-bottom: 0 !important;
+}
+
+ion-card>ion-img:first-child {
+    height: 150px;
+    width:100%;
+}
+
+.ion-label-font {
+    font-size: 2em
+}
+
+ion-fab-button {
+    --background: var(--ion-color-primary)
+}
+
+.circle {
+
+    display: block;
+    border-radius: 50%;
+    background-color: #f1f7ef;
+    height: 10px;
+    width: 10px;
+    text-align: center;
+    position: relative;
+    border: 1px dotted;
+}
+ion-badge {
+    position: absolute;
+    color: rgb(61, 51, 122);
+    border-radius: 100%;
+    top:50%;
+    left:50%;
+    background-color: #fff;
+    transform:translate(-50%,-50%)
+}

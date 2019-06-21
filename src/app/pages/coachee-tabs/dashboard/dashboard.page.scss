@@ -1,0 +1,39 @@
+ion-content {
+    --background: var(--ion-color-light)
+}
+
+.accordion-list {
+    --ion-item-background: #fff;
+
+    .section-inactive,
+    .section-active {
+        --min-height: 58px
+    }
+}
+
+.accordion-list:last-of-type {
+    margin-bottom: 8px
+}
+
+.section-inactive {
+    --ion-item-background: #fff;
+    --ion-item-color: #000;
+}
+
+.section-active {
+    --ion-item-background: #ffc400;
+    --ion-item-color: #fff;
+    font-weight: 600;
+
+    ion-icon {
+        color: #fff
+    }
+}
+.indicator-value-font{
+    font-size:1.5em
+}
+
+ion-card-content{
+    padding-top:0px !important;
+    padding-bottom:0px !important;
+}

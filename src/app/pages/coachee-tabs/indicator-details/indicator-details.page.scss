@@ -1,0 +1,31 @@
+ion-segment-button{
+    --border-width:0px!important;
+}
+
+ion-segment-button ion-label{
+    font-size: 1.3em
+}
+
+ion-col div ion-label{
+    font-size: 80%
+}
+
+
+//control ion-slide
+
+ion-slide{
+    width:100vw !important;
+}
+
+// ion-slide >:first-child {
+//     width: 100%;
+// }
+
+ion-slides{
+    width:100vw !important;
+    // height: 50vh;
+}
+.chart-container{
+    width:100vw;
+    height: 40vh;
+}

@@ -42,4 +42,6 @@ export class SlidesPage implements OnInit {
   skip() {
     this.router.navigateByUrl('/coachee')
   }
+
+  
 }

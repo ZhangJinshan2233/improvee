@@ -13,7 +13,7 @@
 				<form novalidate [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
 					<ion-item>
-						<ion-label position="floating">Email</ion-label>
+						<ion-label position="floating" color="primary">Email</ion-label>
 						<ion-input type="email" formControlName="email" [ngClass]="{ 'is-invalid': isSubmitted && loginForm.controls['email'].errors }"></ion-input>
 					</ion-item>
 					<div *ngIf="isSubmitted && loginForm.controls['email'].errors" padding class="invalid-feedback">
@@ -21,7 +21,7 @@
 						<div *ngIf="loginForm.controls['email'].errors.email">Email must be a valid email address</div>
 					</div>
 					<ion-item>
-						<ion-label position="floating">Password</ion-label>
+						<ion-label position="floating" color="primary">Password</ion-label>
 						<ion-input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': isSubmitted && loginForm.controls['password'].errors }"></ion-input>
 					</ion-item>
 					<div *ngIf="isSubmitted && loginForm.controls['password'].errors" padding class="invalid-feedback">
@@ -32,7 +32,7 @@
 						<a>Forget password?</a>
 					</div>
 					<div padding>
-						<ion-button color='primary' size='large' expand="block" type="submit">login</ion-button>
+						<ion-button color='primary' size='large' expand="block" type="submit">LOGIN</ion-button>
 					</div>
 
 				</form>

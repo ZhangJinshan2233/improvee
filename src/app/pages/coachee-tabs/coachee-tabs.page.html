@@ -1,15 +1,15 @@
 <ion-tabs>
   <ion-tab-bar slot='bottom'>
-    <ion-tab-button tab="timeline" *appHasRole="['freeCoachee','premiumCoachee']">
-      <ion-label>Timeline</ion-label>
+    <ion-tab-button tab="coachee-home" *appHasRole="['freeCoachee','premiumCoachee']">
+      <ion-label>Home</ion-label>
       <ion-icon name="home"></ion-icon>
     </ion-tab-button>
     <ion-tab-button tab="dashboard" *appHasRole="['freeCoachee','premiumCoachee']">
-      <ion-label>Dashboard</ion-label>
+      <ion-label>Records</ion-label>
       <ion-icon name="stats"></ion-icon>
     </ion-tab-button>
-    <ion-tab-button tab="message" *appHasRole="['premiumCoachee']">
-      <ion-label>Chat</ion-label>
+    <ion-tab-button tab="challenges" *appHasRole="['freeCoachee','premiumCoachee']">
+      <ion-label>Challenge</ion-label>
       <ion-icon name="chatboxes"></ion-icon>
     </ion-tab-button>
     <ion-tab-button tab="menu" *appHasRole="['freeCoachee','premiumCoachee']">

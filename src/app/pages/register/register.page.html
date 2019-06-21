@@ -1,11 +1,10 @@
+
 <ion-header>
   <ion-toolbar color='primary'>
     <ion-buttons slot="start">
-      <ion-button>
-        <ion-back-button></ion-back-button>
-      </ion-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title color='light'>Sign up</ion-title>
+    <ion-title>Sign up</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -14,30 +13,34 @@
       <ion-col align-self-center>
         <form novalidate [formGroup]="registerForm" (ngSubmit)="onSubmit()" #registerFormCtrls class="animated">
           <ion-item>
-            <ion-label position="floating">First name</ion-label>
-            <ion-input type="text" formControlName="firstName" [ngClass]="{ 'is-invalid': isSubmitted&& registerForm.controls['firstName'].errors }"></ion-input>
+            <ion-label position="floating" color="primary">First name</ion-label>
+            <ion-input type="text" formControlName="firstName"
+              [ngClass]="{ 'is-invalid': isSubmitted&& registerForm.controls['firstName'].errors }"></ion-input>
           </ion-item>
           <div *ngIf="isSubmitted && registerForm.controls['firstName'].errors" padding class="invalid-feedback">
             <div *ngIf="registerForm.controls['firstName'].errors.required">First name is required</div>
           </div>
           <ion-item>
-            <ion-label position="floating">Last name</ion-label>
-            <ion-input type="text" formControlName="lastName" [ngClass]="{ 'is-invalid': isSubmitted&& registerForm.controls['lastName'].errors }"></ion-input>
+            <ion-label position="floating" color="primary">Last name</ion-label>
+            <ion-input type="text" formControlName="lastName"
+              [ngClass]="{ 'is-invalid': isSubmitted&& registerForm.controls['lastName'].errors }"></ion-input>
           </ion-item>
           <div *ngIf="isSubmitted&& registerForm.controls['lastName'].errors" padding class="invalid-feedback">
             <div *ngIf="registerForm.controls['lastName'].errors.required">Last name is required</div>
           </div>
           <ion-item>
-            <ion-label position="floating">Email</ion-label>
-            <ion-input type="email" formControlName="email" [ngClass]="{ 'is-invalid': isSubmitted&& registerForm.controls['email'].errors }"></ion-input>
+            <ion-label position="floating" color="primary">Email</ion-label>
+            <ion-input type="email" formControlName="email"
+              [ngClass]="{ 'is-invalid': isSubmitted&& registerForm.controls['email'].errors }"></ion-input>
           </ion-item>
           <div *ngIf="isSubmitted&& registerForm.controls['email'].errors" padding class="invalid-feedback">
             <div *ngIf="registerForm.controls['email'].errors.required">Email is required</div>
             <div *ngIf="registerForm.controls['email'].errors.email">Email must be a valid email address</div>
           </div>
           <ion-item>
-            <ion-label position="floating">Password</ion-label>
-            <ion-input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': isSubmitted&& registerForm.controls['password'].errors }"></ion-input>
+            <ion-label position="floating" color="primary">Password</ion-label>
+            <ion-input type="password" formControlName="password" class="form-control"
+              [ngClass]="{ 'is-invalid': isSubmitted&& registerForm.controls['password'].errors }"></ion-input>
           </ion-item>
           <div *ngIf="isSubmitted&& registerForm.controls['password'].errors" padding class="invalid-feedback">
             <div *ngIf="registerForm.controls['password'].errors.required">Password is required</div>
@@ -45,18 +48,17 @@
           </div>
 
           <ion-item>
-            <ion-label position="floating">Confirm password</ion-label>
-            <ion-input type="password" formControlName="confirmPassword" [ngClass]="{ 'is-invalid': isSubmitted&& registerForm.controls['confirmPassword'].errors }"></ion-input>
+            <ion-label position="floating" color="primary">Confirm password</ion-label>
+            <ion-input type="password" formControlName="confirmPassword"
+              [ngClass]="{ 'is-invalid': isSubmitted&& registerForm.controls['confirmPassword'].errors }"></ion-input>
           </ion-item>
           <div *ngIf="isSubmitted&& registerForm.controls['confirmPassword'].errors" padding class="invalid-feedback">
             <div *ngIf="registerForm.controls['confirmPassword'].errors.required">Confirm Password is required</div>
             <div *ngIf="registerForm.controls['confirmPassword'].errors.mustMatch">Passwords must match</div>
           </div>
-          <div padding class="process">
-            <ion-button color='primary' size='large' expand="block" type="submit" class="register-submit-button">SIGN
-              UP</ion-button>
-            <div class="progress-bar"></div>
-          </div>
+          <div class='ion-padding ion-margin'>
+						<ion-button color='primary' expand="block" type="submit">SIGN UP</ion-button>
+					</div>
         </form>
       </ion-col>
     </ion-row>
