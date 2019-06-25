@@ -1,51 +1,112 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-button>
-        <ion-back-button></ion-back-button>
-      </ion-button>
+  <ion-toolbar color='primary'>
+    <ion-buttons slot='start'>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
-
-    <ion-title>
-      {{viewTitle}}
-    </ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="today()">Today</ion-button>
+    <ion-title>Habit Lists</ion-title>
+    <ion-buttons slot='end'>
+      <ion-button (click)='getCurrentWeek()'>Today</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content>
-  <div class="habitlist-weekview-css">
-    <calendar [weekviewHeaderTemplate]="customDayHeaderTemplate" [eventSource]="eventSource"
-      [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
-      (onCurrentDateChanged)="onCurrentDateChanged($event)" (onRangeChanged)="reloadSource(startTime, endTime)"
-      (onEventSelected)="onEventSelected($event)" (onTitleChanged)="onViewTitleChanged($event)"
-      (onTimeSelected)="onTimeSelected($event)" step="10" [markDisabled]="markDisabled">
-    </calendar>
-  </div>
-
-  <ng-template #customDayHeaderTemplate let-viewDate="viewDate">
-    <div class="day-header-week">
-      <label> {{ viewDate.dayHeader.split(' ')[0]}} </label>
-    </div>
-
-    <div class="week-day-container">
-      <div class="day">
-        <div class="circle">
-          <label>{{ viewDate.dayHeader.split(' ')[1] }} </label>
+  <ion-grid>
+    <ion-row class='ion-justify-content-between'>
+      <ion-col size='2'>
+        <ion-button fill='clear' expend='block' (click)="getPreWeek()">
+          <ion-icon name="arrow-dropleft" mode='md' slot='icon-only'></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size='8' class='ion-text-center ion-align-self-center'>
+        <div>
+          <ion-label color='primary' style="font-size:1.2em">{{currentDate |date:'MMM/yyyy'}}</ion-label>
         </div>
-      </div>
-      <div class="event-marker"></div>
-    </div>
-  </ng-template>
-  <ion-list>
+      </ion-col>
+      <ion-col size='2' class='ion-text-right'>
+        <div>
+          <ion-button fill='clear' (click)="getNextWeek()" [disabled]="isLastWeek">
+            <ion-icon name="arrow-dropright" mode='md' slot='icon-only'></ion-icon>
+          </ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row class='ion-justify-content-between'>
+      <ion-col size='1.5' class='ion-text-center'>
+        <ion-label color='primary'>Sun</ion-label>
+      </ion-col>
+      <ion-col size='1.5' class='ion-text-center'>
+        <ion-label color='primary'>Mon</ion-label>
+      </ion-col>
+      <ion-col size='1.5' class='ion-text-center'>
+        <ion-label color='primary'>Tue</ion-label>
+      </ion-col>
+      <ion-col size='1.5' class='ion-text-center'>
+        <ion-label color='primary'>Wed</ion-label>
+      </ion-col>
+      <ion-col size='1.5' class='ion-text-center'>
+        <ion-label color='primary'>Thu</ion-label>
+      </ion-col>
+      <ion-col size='1.5' class='ion-text-center'>
+        <ion-label color='primary'>Fri</ion-label>
+      </ion-col>
+      <ion-col size='1.5' class='ion-text-center'>
+        <ion-label color='primary'>Sat</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-radio-group [(ngModel)]='currentDay'>
+      <ion-row class='ion-justify-content-between'>
+        <ion-col size='1.5' class='ion-text-center'>
+          <div class='day-position' >
+            <ion-radio mode="md" value='0' (ionSelect)='getCurrentDate(week.Sun)'></ion-radio>
+            <ion-label [ngClass]="{'circle':currentDay=='0'}" class='ion-label-css ion-padding-vertical'>{{week.Sun | date :'dd'}}</ion-label>
+          </div>
+        </ion-col>
+        <ion-col size='1.5' class='ion-text-center'>
+          <div class='day-position' >
+            <ion-radio mode="md" value='1' (ionSelect)='getCurrentDate(week.Mon)'></ion-radio>
+            <ion-label [ngClass]="{'circle':currentDay==1}" class='ion-label-css ion-padding-vertical'>{{week.Mon | date: 'dd'}}</ion-label>
+          </div>
+        </ion-col>
+        <ion-col size='1.5' class='ion-text-center'>
+          <div class='day-position' >
+            <ion-radio mode="md" value=2 (ionSelect)='getCurrentDate(week.Tue)'></ion-radio>
+            <ion-label [ngClass]="{'circle':currentDay=='2'}" class='ion-label-css ion-padding-vertical'>{{week.Tue | date :'dd'}}</ion-label>
+          </div>
+        </ion-col>
+        <ion-col size='1.5' class='ion-text-center'>
+          <div class='day-position'>
+            <ion-radio mode="md" value=3 (ionSelect)='getCurrentDate(week.Wed)'></ion-radio>
+            <ion-label [ngClass]="{'circle':currentDay=='3'}" class='ion-label-css ion-padding-vertical'>{{week.Wed | date: 'dd'}}</ion-label>
+          </div>
+        </ion-col>
+        <ion-col size='1.5' class='ion-text-center'>
+          <div class='day-position'>
+            <ion-radio mode="md" value=4 (ionSelect)='getCurrentDate(week.Thu)'></ion-radio>
+            <ion-label [ngClass]="{'circle':currentDay=='4'}" class='ion-label-css ion-padding-vertical'>{{week.Thu | date :'dd'}}</ion-label>
+          </div>
+        </ion-col>
+        <ion-col size='1.5' class='ion-text-center'>
+          <div class='day-position' >
+            <ion-radio mode="md" value=5 (ionSelect)='getCurrentDate(week.Fri)'></ion-radio>
+            <ion-label [ngClass]="{'circle':currentDay=='5'}" class='ion-label-css ion-padding-vertical'>{{week.Fri | date: 'dd'}}</ion-label>
+          </div>
+        </ion-col>
+        <ion-col size='1.5' class='ion-text-center'>
+          <div class='day-position'>
+            <ion-radio mode="md" value=6 (ionSelect)='getCurrentDate(week.Sat)'></ion-radio>
+            <ion-label [ngClass]="{'circle':currentDay=='6'}" class='ion-label-css ion-padding-vertical'>{{week.Sat | date :'dd'}}</ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-radio-group>
+  </ion-grid>
+  <ion-list class='ion-no-margin'>
     <ion-card *ngFor="let entry of form">
       <ion-card-content>
         <ion-item lines="none">
           <ion-checkbox slot="start" [(ngModel)]="entry.isChecked"></ion-checkbox>
-          <ion-label class="ion-text-center ion-text-wrap">{{entry.val}}</ion-label>
+          <ion-label class="ion-text-center ion-text-wrap" class='ion-label-css ion-padding-vertical'>{{entry.val}}</ion-label>
         </ion-item>
       </ion-card-content>
     </ion-card>

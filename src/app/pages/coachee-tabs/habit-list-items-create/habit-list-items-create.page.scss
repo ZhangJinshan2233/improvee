@@ -11,12 +11,12 @@ ion-checkbox {
     display: block;
     border-radius: 50%;
     background-color: #f1f7ef;
-    height: 30px;
-    width: 30px;
     text-align: center;
-    padding-top: 5px;
-    position: relative;
     border: 1px dot;
+    padding-top: 8px;
+    margin:auto;
+    height: 40px;
+    width: 40px;
 
 }
 .modal-title-css {
@@ -30,6 +30,10 @@ ion-checkbox {
     color: #baccb4;
     margin: 30px 0px 30px 30px;
 
+}
+
+.day-position {
+    position: relative;
 }
 
 ion-grid:last-child {

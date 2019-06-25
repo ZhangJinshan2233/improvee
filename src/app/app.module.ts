@@ -19,7 +19,6 @@ import { Camera } from '@ionic-native/Camera/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ActionSheet } from '@ionic-native/action-sheet/ngx';
 import { WheelSelector } from '@ionic-native/wheel-selector/ngx';
-import {NgCalendarModule} from 'ionic2-calendar'
 export function jwtOptionsFactory(storage) {
   return {
     tokenGetter: () => {
@@ -45,8 +44,7 @@ export function jwtOptionsFactory(storage) {
         deps: [Storage]
       }
     }),
-    AppRoutingModule,
-    NgCalendarModule
+    AppRoutingModule
   ],
 
   providers: [

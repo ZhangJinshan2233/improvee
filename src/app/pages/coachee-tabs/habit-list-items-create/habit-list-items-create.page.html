@@ -11,7 +11,7 @@
 <ion-content>
   <form [formGroup]='habitForm' novalidate>
     <ion-grid>
-      <ion-row>
+      <ion-row  class='ion-padding'>
         <ion-col>
           <div>
             <ion-item lines='inset'>
@@ -21,72 +21,67 @@
           </div>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row class='ion-padding'>
         <ion-col>
           <div class="modal-week-label">
             <ion-label>when in the week</ion-label>
           </div>
         </ion-col>
       </ion-row>
-      <ion-row class="ion-justify-content-center">
-        <ion-col size='1.5' class="ion-align-self-center">
-          <div>
+      <ion-row class="ion-justify-content-between ion-padding">
+        <ion-col size='1.5' class="ion-text-center">
+          <div class='day-position'>
+            <ion-checkbox formControlName="sunday" (ionChange)="selectDay($event)"></ion-checkbox>
             <ion-label class='circle' [ngStyle]="changeBackgroundColor(habitForm.controls.sunday.value)">
-              <ion-checkbox formControlName="sunday" (ionChange)="selectDay($event)"></ion-checkbox>
-              <small>Sun</small>
+             Sun
             </ion-label>
           </div>
         </ion-col>
-        <ion-col size='1.5' class="ion-align-self-center">
-          <div>
+        <ion-col size='1.5' class="ion-text-center">
+          <div class='day-position'>
+            <ion-checkbox formControlName="monday" (ionChange)="selectDay($event)"></ion-checkbox>
             <ion-label class='circle' [ngStyle]="changeBackgroundColor(habitForm.controls.monday.value)">
-              <ion-checkbox formControlName="monday"></ion-checkbox>
-              <small>
                 Mon
-              </small>
             </ion-label>
           </div>
         </ion-col>
-        <ion-col size='1.5' class="ion-align-self-center">
-          <div>
-
+        <ion-col size='1.5' class="ion-text-center">
+          <div class='day-position'>
+            <ion-checkbox formControlName="tuesday" (ionChange)="selectDay($event)"></ion-checkbox>
             <ion-label class='circle' [ngStyle]="changeBackgroundColor(habitForm.controls.tuesday.value)">
-              <ion-checkbox formControlName="tuesday"></ion-checkbox>
-              <small>Tue</small>
+             Tue
             </ion-label>
           </div>
         </ion-col>
-        <ion-col size='1.5' class="ion-align-self-center">
-          <div>
+        <ion-col size='1.5' class="ion-align-self-center ion-text-center">
+          <div class='day-position'>
             <ion-label class='circle' [ngStyle]="changeBackgroundColor(habitForm.controls.wednesday.value)">
               <ion-checkbox formControlName="wednesday"></ion-checkbox>
-              <small>Wen</small>
+              Wen
             </ion-label>
           </div>
         </ion-col>
-        <ion-col size='1.5' class="ion-align-self-center">
-          <div>
-
+        <ion-col size='1.5' class="ion-text-center">
+          <div class='day-position'>
+            <ion-checkbox formControlName="thursday"></ion-checkbox>
             <ion-label class='circle' [ngStyle]="changeBackgroundColor(habitForm.controls.thursday.value)">
-
-              <ion-checkbox formControlName="thursday"></ion-checkbox>
-              <small>Thu</small>
+              Thu
             </ion-label>
           </div>
         </ion-col>
-        <ion-col size='1.5' class="ion-align-self-center">
-          <div>
+        <ion-col size='1.5' class="ion-text-center">
+          <div class='day-position'>
+            <ion-checkbox formControlName="friday"></ion-checkbox>
             <ion-label class='circle' [ngStyle]="changeBackgroundColor(habitForm.controls.friday.value)">
-              <ion-checkbox formControlName="friday"></ion-checkbox>
-              <small>Fri</small>
+              Fri
             </ion-label>
           </div>
         </ion-col>
-        <ion-col size='1.5' class="ion-align-self-center">
-          <div>
+        <ion-col size='1.5' class="ion-text-center">
+          <div class='day-position'>
+            <ion-checkbox formControlName="saturday"></ion-checkbox>
             <ion-label class='circle' [ngStyle]="changeBackgroundColor(habitForm.controls.saturday.value)">
-              <ion-checkbox formControlName="saturday"></ion-checkbox>
-              <small>Sat</small>
+              Sat
             </ion-label>
           </div>
         </ion-col>

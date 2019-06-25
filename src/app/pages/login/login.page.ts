@@ -7,10 +7,10 @@ import {
 
 import anime from "animejs";
 import { Router } from "@angular/router";
-import {
-  NativePageTransitions,
-  NativeTransitionOptions
-} from '@ionic-native/native-page-transitions/ngx';
+// import {
+//   NativePageTransitions,
+//   NativeTransitionOptions
+// } from '@ionic-native/native-page-transitions/ngx';
 
 import { AuthService } from "../../services/auth.service";
 import { User } from 'src/app/model/user';
@@ -23,7 +23,6 @@ const SHAKE_DISTANCE = 16;
   styleUrls: ["./login.page.scss"]
 })
 export class LoginPage implements OnInit {
-  @ViewChild('logo') logo: ElementRef
   user: User
   loginForm: FormGroup;
 
@@ -31,7 +30,7 @@ export class LoginPage implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
-    private nativePageTransitions: NativePageTransitions,
+    // private nativePageTransitions: NativePageTransitions,
     private authService: AuthService) { }
 
   ngOnInit() {
@@ -39,30 +38,25 @@ export class LoginPage implements OnInit {
 
   }
 
-  ionViewDidEnter() {
-    this.logo.nativeElement.classList.add('lightSpeedIn')
-  }
-
-
   ionViewWillLeave() {
 
     /** set transtition when page leave */
 
-    let options: NativeTransitionOptions = {
-      direction: 'up',
-      duration: 500,
-      slowdownfactor: 3,
-      slidePixels: 20,
-      fixedPixelsBottom: 60
-    }
+    // let options: NativeTransitionOptions = {
+    //   direction: 'up',
+    //   duration: 500,
+    //   slowdownfactor: 3,
+    //   slidePixels: 20,
+    //   fixedPixelsBottom: 60
+    // }
 
-    this.nativePageTransitions.curl(options)
-      .then(() => {
-        console.log("successed")
-      })
-      .catch(() => {
-        console.log("error")
-      });
+    // this.nativePageTransitions.curl(options)
+    //   .then(() => {
+    //     console.log("successed")
+    //   })
+    //   .catch(() => {
+    //     console.log("error")
+    //   });
 
   }
 
@@ -117,22 +111,6 @@ export class LoginPage implements OnInit {
 
   register() {
     this.router.navigateByUrl('/register')
-  }
-  /*
-     * make logo rorate
-  */
-  roateLogo() {
-    anime({
-      targets: ['.logo'],
-      rotate: 180,
-      duration: 1500,
-      loop: true,
-      elasticity: 600,
-      easing: 'easeOutElastic',
-      delay: function (el, index) {
-        return index * 80;
-      },
-    });
   }
 
   /*

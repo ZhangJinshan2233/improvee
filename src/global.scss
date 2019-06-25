@@ -34,24 +34,9 @@
 
 }
 
-// .habit-add-modal-css .modal-wrapper {
-//     height: 50%;
-//     top: 20%;
-//     width: 90%;
-//     position: absolute;
-//     display: block
-// }
-
 .habitlist-weekview-css {
     width: 100%
 }
-
-// .habitlist-weekview-css {
-
-.calendar-hour-column {
-    display: none
-}
-
 .day-header-week {
     // background-color: lightcoral;
     text-transform: uppercase;
@@ -59,60 +44,7 @@
     padding-bottom: 10px
 }
 
-.table>thead>tr>th,
-.table>tbody>tr>th,
-.table>tfoot>tr>th,
-.table>thead>tr>td,
-.table>tbody>tr>td,
-.table>tfoot>tr>td {
-    padding: 0px !important;
-}
-
-.table-bordered {
-    border-top: 0px !important;
-    border-left: 0px !important;
-    border-right: 0px !important;
-}
-
-.table-bordered>thead>tr>th,
-.table-bordered>tbody>tr>th,
-.table-bordered>tfoot>tr>th,
-.table-bordered>thead>tr>td,
-.table-bordered>tbody>tr>td,
-.table-bordered>tfoot>tr>td {
-    border: none !important;
-}
-
-.weekview-selected .day-header-week {
-    color: #3880ff;
-}
-
 .day .circle label {
     color: #f4a933;
     padding: 10px;
-}
-
-.weekview-selected .day .circle label {
-
-    color: #3880ff
-}
-
-calendar {
-    .weekview-allday-table {
-        display: none;
-        height: 0px !important;
-    }
-
-    .weekview-normal-event-container {
-        display: none;
-
-    }
-
-    .weekview-container {
-        height: 59px !important;
-    }
-
-    .weekview-header {
-        height: 58px !important;
-    }
 }

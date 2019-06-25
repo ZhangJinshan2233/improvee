@@ -47,8 +47,7 @@ const routes: Routes = [
   {
     path: 'chat',
     loadChildren: './pages/coachee-tabs/chat/chat.module#ChatPageModule'
-  },
-
+  }
 ];
 
 @NgModule({

@@ -11,118 +11,60 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <ion-segment mode="ios" (ionChange)="segmentChanged($event)" class='ion-margin-vertical' [(ngModel)]="segmentValue">
-    
-    <ion-segment-button value=0>
-      <ion-label>Week</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value=1>
-      <ion-label>Month</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value=2>
-      <ion-label>Year</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-  <ion-slides #slides (ionSlideDidChange)="slideChanged()">
-    <ion-slide>
-      <ion-grid>
-        <ion-row class='ion-justify-content-between ion-align-items-center'>
-          <ion-col size='2'>
-            <ion-button fill="clear" (click)="getPreWeek()">
-              <ion-icon name="arrow-dropleft" slot="icon-only"></ion-icon>
-            </ion-button>
+    <ion-grid class="ion-margin">
+        <ion-row>
+          <ion-col size='4' class="ion-text-center">
+            <ion-label color='primary'>60 Kg</ion-label>
           </ion-col>
-          <ion-col class="ion-text-center" size='8'>
-            <div>
-              <ion-label>
-                {{startDayOfWeek}}
-              </ion-label>
-              <ion-label>
-                -
-              </ion-label>
-              <ion-label>
-                {{lastDayOfWeek}}
-              </ion-label>
-            </div>
+          <ion-col size='4' class="ion-text-center">
+            <ion-label color='primary'>54 Kg</ion-label>
           </ion-col>
-          <ion-col size='2'>
-            <ion-button fill="clear" (click)="getNextWeek()">
-              <ion-icon name="arrow-dropright" slot="icon-only"></ion-icon>
-            </ion-button>
+          <ion-col size='4' class="ion-text-center">
+            <ion-label color='primary'>6 Kg</ion-label>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col>
-            <div class='chart-container'>
-              <canvas #weekChartCanvas id="weekChartCanvas"></canvas>
-            </div>
+          <ion-col size='4' class="ion-text-center">
+            <ion-label color='primary'><small>Goal</small></ion-label>
+          </ion-col>
+          <ion-col size='4' class="ion-text-center">
+            <ion-label color='primary'><small>Latest</small></ion-label>
+          </ion-col>
+          <ion-col size='4' class="ion-text-center">
+            <ion-label color='primary'><small>Change</small></ion-label>
           </ion-col>
         </ion-row>
       </ion-grid>
-    </ion-slide>
-    <ion-slide>
       <ion-grid>
-        <ion-row class='ion-justify-content-between ion-align-items-center'>
-          <ion-col size='2'>
-            <ion-button fill="clear" (click)="getPreMonth()">
-              <ion-icon name="arrow-dropleft" slot="icon-only"></ion-icon>
-            </ion-button>
-          </ion-col>
-          <ion-col class="ion-text-center">
-            <div>
-              <ion-label>
-                {{currentMonth| date:'MMM/yyyy'}}
-              </ion-label>
-            </div>
-          </ion-col>
-          <ion-col size='2'>
-            <ion-button fill="clear" (click)="getNextMonth()">
-              <ion-icon name="arrow-dropright" slot="icon-only"></ion-icon>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <div class='chart-container'>
-              <canvas #monthChartCanvas id="monthChartCanvas"></canvas>
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-slide>
-    <ion-slide>
-      <ion-grid>
-        <ion-row class='ion-justify-content-between ion-align-items-center'>
-          <ion-col size='2'>
-            <ion-button fill="clear" (click)="getPreYear()">
-              <ion-icon name="arrow-dropleft" slot="icon-only"></ion-icon>
-            </ion-button>
-          </ion-col>
-          <ion-col class="ion-text-center">
-            <div>
-              <ion-label>
-                {{currentYear| date:'yyyy'}}
-              </ion-label>
-            </div>
-          </ion-col>
-          <ion-col size='2'>
-            <ion-button fill="clear" (click)="getNextYear()">
-              <ion-icon name="arrow-dropright" slot="icon-only"></ion-icon>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <div class='chart-container'>
-              <canvas #yearChartCanvas id="yearChartCanvas"></canvas>
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-slide>
-  </ion-slides>
+          <ion-row class='ion-justify-content-between ion-align-items-center'>
+            <ion-col size='2'>
+              <ion-button fill="clear" (click)="getPreMonth()">
+                <ion-icon mode='md' name="arrow-dropleft" slot="icon-only"></ion-icon>
+              </ion-button>
+            </ion-col>
+            <ion-col class="ion-text-center">
+              <div>
+                <ion-label color='primary'>
+                  {{currentMonth| date:'MMM/yyyy'}}
+                </ion-label>
+              </div>
+            </ion-col>
+            <ion-col size='2'>
+              <ion-button fill="clear" (click)="getNextMonth()" [disabled]="isLastMonth">
+                <ion-icon mode='md' name="arrow-dropright" slot="icon-only"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <div class='chart-container'>
+                <canvas #monthChartCanvas 
+                id="monthChartCanvas"></canvas>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="addRecord()"> 
       <ion-icon name="add"></ion-icon>
