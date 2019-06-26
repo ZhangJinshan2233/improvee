@@ -1,28 +1,17 @@
-<ion-content class="ion-no-padding">
+<ion-content>
   <!-- habit list  -->
   <ion-card>
-    <ion-card-content>
-       <ion-grid>
-          <ion-row class='ion-justify-content-center'>
-              <ion-col size='9' class='ion-text-center'>
-                <div>
-                  <circle-progress 
-                    [percent]=completedHabitPercent 
-                    [outerStrokeWidth]='10'
-                    [innerStrokeWidth]='2' 
-                    [showSubtitle]='false' 
-                    [radius]='50'
-                    [backgroundPadding]='-18'>
-                  </circle-progress>
-                </div>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col class='ion-text-center'>
-                <ion-label color='primary'><small>Today completed</small></ion-label>
-              </ion-col>
-            </ion-row>
-       </ion-grid>
+    <ion-card-content class="ion-no-padding">
+      <ion-grid>
+        <ion-row class='ion-justify-content-center'>
+          <ion-col size='9' class='ion-text-center'>
+            <div>
+              <circle-progress [percent]=completedHabitPercent>
+              </circle-progress>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card-content>
     <ion-item detail lines="none" [routerLink]="['/coachee/coachee-home/habitlist']" routerDirection="forward">
       <ion-avatar slot="start">
@@ -115,7 +104,7 @@
   </ion-list>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button translucent="true" size="small" (click)="gotoChatPage()">
-      <ion-icon name="chatboxes"></ion-icon>
+      <ion-icon name="custom-icon-message-outline"></ion-icon>
       <ion-badge *ngIf="noReadMessageNumber">{{noReadMessageNumber}}</ion-badge>
     </ion-fab-button>
   </ion-fab>

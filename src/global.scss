@@ -11,6 +11,13 @@
 @import '~@ionic/angular/css/flex-utils.css';
 @import '~animate.css/animate.min.css';
 
+ion-icon{
+    &[name*='custom-']{
+        height:1em;
+        width:1em;
+    }
+
+}
 .text-primary {
     color: var(--ion-color-primary);
 }

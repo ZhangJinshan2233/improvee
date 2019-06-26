@@ -64,7 +64,7 @@ export class HabitListItemsPage implements OnInit {
   changeBackgroundColor(isChecked) {
     if (isChecked) {
       return {
-        backgroundColor: '#9acc3e'
+        backgroundColor: '#f4a933'
       }
     }
   }

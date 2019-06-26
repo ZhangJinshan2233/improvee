@@ -96,42 +96,31 @@
         <div *ngIf="habitForm.invalid">
           <ion-button fill='clear'>
             <ion-icon name='add' slot='icon-only'></ion-icon>
-          </ion-button><br>
-          <ion-label><small>
-              Add
-            </small></ion-label>
+          </ion-button>
         </div>
         <div *ngIf="habitForm.valid">
           <ion-button fill='clear' (click)='addHabit(habitForm)'>
-            <ion-icon name="checkmark" slot='icon-only'></ion-icon>
-          </ion-button><br>
-          <ion-label><small>
-              Add
-            </small></ion-label>
+            <ion-icon name="done-all" slot='icon-only'></ion-icon>
+          </ion-button>
         </div>
       </ion-col>
       <ion-col class="ion-text-center" size='4' *ngIf='isUpdate'>
         <div *ngIf="habitForm.invalid">
           <ion-button fill='clear'>
             <ion-icon name="create" slot='icon-only'></ion-icon>
-          </ion-button><br>
-          <ion-label><small>Update</small> </ion-label>
+          </ion-button>
         </div>
         <div *ngIf="habitForm.valid">
           <ion-button fill='clear' (click)='updateHabit(habitForm)'>
-            <ion-icon name="checkmark" slot='icon-only'></ion-icon>
-          </ion-button><br>
-          <ion-label><small>
-              Update
-            </small></ion-label>
+            <ion-icon name="done-all" slot='icon-only'></ion-icon>
+          </ion-button>
         </div>
       </ion-col>
       <ion-col class="ion-text-center" size='4' *ngIf='isUpdate'>
         <div>
           <ion-button fill='clear' (click)='deleteHabit(habitForm)'>
             <ion-icon name="trash" slot='icon-only'></ion-icon>
-          </ion-button><br>
-          <ion-label><small>Dalete</small></ion-label>
+          </ion-button>
         </div>
       </ion-col>
     </ion-row>

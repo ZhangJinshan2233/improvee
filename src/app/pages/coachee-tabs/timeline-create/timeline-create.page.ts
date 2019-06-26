@@ -3,6 +3,7 @@ import { Camera } from '@ionic-native/Camera/ngx';
 import { TimelineService } from "../../../services/timeline.service";
 import { AlertController, ModalController } from "@ionic/angular";
 import {CameraOptionsSetting} from '../../../_helper/cameraOptionsSetting';
+import { customAlertEnter } from '../../../_helper/customAlertEnter';
 @Component({
   selector: 'app-timeline-create',
   templateUrl: './timeline-create.page.html',
@@ -91,12 +92,13 @@ export class TimelineCreatePage implements OnInit {
    * @param msg 
    * @returns void
    */
-  showAlert(msg) {
-    let alert = this.alertController.create({
+ async showAlert(msg) {
+    const alert = await this.alertController.create({
       message: msg,
-      buttons: ['OK']
+      buttons: ['OK'],
+      enterAnimation: customAlertEnter
     });
-    alert.then(alert => alert.present());
+     alert.present()
   }
 
 }

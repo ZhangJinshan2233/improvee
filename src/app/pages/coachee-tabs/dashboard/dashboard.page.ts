@@ -1,12 +1,26 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { trigger,state,transition,style,animate } from "@angular/animations";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
-
+  animations: [
+    trigger('fadein', [
+      state('void', style({ opacity: 0 })),
+      transition('void => *', [
+        style({ opacity: 0 }),
+        animate('300ms ease-out', style({ opacity: 1 }))
+      ])
+    ]),
+    trigger('slidelefttitle', [
+      transition('void => *', [
+        style({ opacity: 0, transform: 'translateX(150%)' }),
+        animate('300ms 100ms ease-out', style({ transform: 'translateX(0%)', opacity: 1 }, ))
+      ])
+    ])
+  ]
 })
 export class DashboardPage implements OnInit {
 

@@ -21,7 +21,7 @@ export class CoacheeHomePage implements OnInit {
   //get from habits collections-undefined or number
   todayCompoletedHabitList: number = 2;
   totalHabitList = 6
-  completedHabitPercent: string;
+  completedHabitPercent: any;
   //get from records collections
   weight = 60;
   BMI = 25
@@ -32,8 +32,7 @@ export class CoacheeHomePage implements OnInit {
      private challengeService: ChallengeService,
      private tipsService:HealthyTipsService,
      private iab:InAppBrowser) {
-    this.completedHabitPercent = (100 * this.todayCompoletedHabitList / this.totalHabitList).toString();
-   
+    this.completedHabitPercent = (100 * this.todayCompoletedHabitList / this.totalHabitList)
   }
 
   ngOnInit() {

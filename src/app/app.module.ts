@@ -10,7 +10,7 @@ import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 
 /* import new Module component ... */
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JWT_OPTIONS, JwtModule } from "@auth0/angular-jwt";
 import { HttpClientModule } from "@angular/common/http";
 import { Storage, IonicStorageModule } from "@ionic/storage";
@@ -19,11 +19,11 @@ import { Camera } from '@ionic-native/Camera/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ActionSheet } from '@ionic-native/action-sheet/ngx';
 import { WheelSelector } from '@ionic-native/wheel-selector/ngx';
+import { customAlertEnter } from "./_helper/customAlertEnter";
 export function jwtOptionsFactory(storage) {
   return {
     tokenGetter: () => {
       return storage.get("access_token");
-
     },
     whitelistedDomains: ["192.168.1.235:3000"]
     // whitelistedDomains: ["192.168.1.123:3000"]
@@ -34,8 +34,12 @@ export function jwtOptionsFactory(storage) {
   entryComponents: [],
   imports: [BrowserModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     ShareDirectiveModule,
-    IonicModule.forRoot({ swipeBackEnabled: false }),
+    IonicModule.forRoot({
+      swipeBackEnabled: false,
+      alertEnter: customAlertEnter
+    }),
     IonicStorageModule.forRoot(),
     JwtModule.forRoot({
       jwtOptionsProvider: {

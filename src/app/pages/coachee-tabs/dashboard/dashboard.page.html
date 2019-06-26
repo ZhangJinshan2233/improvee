@@ -8,7 +8,7 @@
     </ion-item>
     <div *ngIf="item.indicators&&item.open" >
       <ion-list class="ion-no-margin accordion-list" *ngFor="let indicator of item.indicators">
-        <ion-card (click)='gotoIndicatorDetails(indicator.indicatorName)' button='true'>
+        <ion-card (click)='gotoIndicatorDetails(indicator.indicatorName)' button='true'  @slidelefttitle>
           <ion-item lines='none' detail >
             <ion-label class="ion-text-capitalize">
               {{indicator.indicatorName}}

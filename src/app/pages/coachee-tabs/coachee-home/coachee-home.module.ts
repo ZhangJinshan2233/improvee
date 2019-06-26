@@ -20,9 +20,22 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     NgCircleProgressModule.forRoot({
+      "backgroundPadding": -18,
+      "radius": 50,
+      "outerStrokeWidth": 10,
+      "outerStrokeColor": "#FF6347",
+      "innerStrokeColor": "#32CD32",
+      "innerStrokeWidth": 2,
+      "backgroundColor": "#F1F1F1",
+      "maxPercent": 100,
+      "subtitleColor": "#61A9DC",
+      "showSubtitle": true,
+      "showInnerStroke": false,
+      "lazy": false,
+      'subtitle':'Today completed'
     }),
     RouterModule.forChild(routes)
   ],
   declarations: [CoacheeHomePage]
 })
-export class CoacheeHomePageModule {}
+export class CoacheeHomePageModule { }
