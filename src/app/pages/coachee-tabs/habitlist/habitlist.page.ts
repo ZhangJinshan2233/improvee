@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { trigger,state,style,animate,transition, query, stagger, animateChild } from "@angular/animations";
 import {
   format,
   lastDayOfWeek,
@@ -10,16 +11,25 @@ import {
   selector: 'app-habitlist',
   templateUrl: './habitlist.page.html',
   styleUrls: ['./habitlist.page.scss'],
+  animations:[
+    trigger('fadeInOut', [
+      state('void', style({
+        opacity: 0
+      })),
+      transition('void => *', animate(800)),
+      transition('* => void', animate(300)),
+    ])
+  ]
 })
 export class HabitlistPage implements OnInit {
 
+  lists=[]
   ngOnInit() {
+    this.lists=this.form1
     this.getCurrentWeek()
     let tabBar = document.querySelector('ion-tab-bar');
     tabBar.style.display = 'none';
   }
-
-
   constructor(private router: Router) { }
   currentDay: any;
   currentDate: any;
@@ -72,8 +82,14 @@ export class HabitlistPage implements OnInit {
   }
   getCurrentDate(date) {
     console.log(date)
+    this.lists==this.form1?this.lists=this.form2:this.lists=this.form1
   }
-  public form = [
+  public form1 = [
+    { val: 'drink 8 glasses water', isChecked: true },
+    { val: 'eat vegetables', isChecked: false },
+    { val: 'fast dinner', isChecked: false }
+  ];
+  public form2 = [
     { val: 'drink 8 glasses water', isChecked: true },
     { val: 'eat vegetables', isChecked: false },
     { val: 'fast dinner', isChecked: false }

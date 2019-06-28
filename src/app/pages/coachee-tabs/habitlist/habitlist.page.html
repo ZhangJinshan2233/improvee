@@ -102,7 +102,7 @@
     </ion-radio-group>
   </ion-grid>
   <ion-list class='ion-no-margin'>
-    <ion-card *ngFor="let entry of form">
+    <ion-card *ngFor="let entry of lists" [@fadeInOut]>
       <ion-card-content>
         <ion-item lines="none">
           <ion-checkbox slot="start" [(ngModel)]="entry.isChecked"></ion-checkbox>
