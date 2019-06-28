@@ -7,9 +7,9 @@
       <ion-icon name="remove" slot="end" *ngIf="item.open"></ion-icon>
     </ion-item>
     <div *ngIf="item.indicators&&item.open" >
-      <ion-list class="ion-no-margin accordion-list" *ngFor="let indicator of item.indicators">
-        <ion-card (click)='gotoIndicatorDetails(indicator.indicatorName)' button='true'  @slidelefttitle>
-          <ion-item lines='none' detail >
+      <ion-list class="ion-no-margin accordion-list" @list>
+        <ion-card *ngFor="let indicator of item.indicators" @items>
+          <ion-item lines='none' detail (click)='gotoIndicatorDetails(indicator.indicatorName)' >
             <ion-label class="ion-text-capitalize">
               {{indicator.indicatorName}}
             </ion-label>

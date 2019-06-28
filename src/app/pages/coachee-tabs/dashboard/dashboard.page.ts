@@ -1,23 +1,31 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { trigger,state,transition,style,animate } from "@angular/animations";
+import { trigger,
+  state,
+  transition,
+  style,
+  animate,
+  query,
+  stagger,
+  animateChild
+
+} from "@angular/animations";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
-  animations: [
-    trigger('fadein', [
-      state('void', style({ opacity: 0 })),
-      transition('void => *', [
-        style({ opacity: 0 }),
-        animate('300ms ease-out', style({ opacity: 1 }))
-      ])
+  animations:[
+    trigger('list', [
+      transition(':enter', [
+        query('@items', stagger(300, animateChild()))
+      ]),
     ]),
-    trigger('slidelefttitle', [
-      transition('void => *', [
-        style({ opacity: 0, transform: 'translateX(150%)' }),
-        animate('300ms 100ms ease-out', style({ transform: 'translateX(0%)', opacity: 1 }, ))
+    trigger('items', [
+      transition(':enter', [
+        style({ transform: 'scale(0.5)', opacity: 0 }),  // initial
+        animate('500ms cubic-bezier(.8, -0.6, 0.2, 1.5)', 
+          style({ transform: 'scale(1)', opacity: 1 }))  // final
       ])
     ])
   ]
