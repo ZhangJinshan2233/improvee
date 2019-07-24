@@ -1,8 +1,10 @@
 import { ModalController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Chart,ChartOptions } from 'chart.js';
+import { Chart, ChartOptions } from 'chart.js';
 import { IndicatorRecordPage } from "../indicator-record/indicator-record.page";
+import { customModalEnterAnimation } from "../../../_helper/customModalEnter";
+import { customModalLeaveAnimation } from "../../../_helper/customModalLeave";
 import {
   format,
   subMonths,
@@ -30,14 +32,16 @@ export class IndicatorDetailsPage implements OnInit {
   currentMonth: any;
   firstDayOfCurrentMonth: any;
   lastDayOfCurrentMonth: any;
-  constructor(private activateRouter: ActivatedRoute, private router: Router, private modalCtrl: ModalController) { 
-   
+  isCoachee = true
+  constructor(private activateRouter: ActivatedRoute, private router: Router, private modalCtrl: ModalController) {
+
   }
 
   ngOnInit() {
     let tabBar = document.querySelector('ion-tab-bar');
     tabBar.style.display = 'none';
     this.indicator.indicatorName = this.activateRouter.snapshot.params['indicatorName'];
+    this.isCoachee = this.router.url.split('/').includes('coachee')
     this.indicator.unit = 'kg'
     this.currentMonth = format(new Date(), 'MM/DD/YYYY');
   }
@@ -87,7 +91,7 @@ export class IndicatorDetailsPage implements OnInit {
     this.router.navigateByUrl(`/challenge-category-details/${_id}`)
   }
   createMonthChart(chartview, monthViewXaxis, dataset) {
-    
+
     this.monthLineChart = new Chart(chartview, {
       type: 'line',
       data: {
@@ -108,7 +112,7 @@ export class IndicatorDetailsPage implements OnInit {
         scales: {
           yAxes: [{
             ticks: {
-              stepSize:1
+              stepSize: 1
             }
           }]
         },
@@ -138,6 +142,8 @@ export class IndicatorDetailsPage implements OnInit {
 
     const indicatorModal = await this.modalCtrl.create({
       component: IndicatorRecordPage,
+      enterAnimation: customModalEnterAnimation,
+      leaveAnimation: customModalLeaveAnimation,
       componentProps: { indicator: this.indicator, mode: "Add record" }
     });
 

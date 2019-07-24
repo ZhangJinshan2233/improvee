@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-buttons slot='start'>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Notes</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-card *ngFor='let note of notes; let even=even'
+     [color]="even? 'success':'medium'"
+     (click)="updateNote(note)"
+     >
+      <ion-card-content>
+        <ion-label class='ion-text-uppercase'>
+          {{note.title}}
+          <br>
+          <small>{{note.date |date}}</small>
+        </ion-label>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+  <ion-fab vertical='bottom' horizontal='end' slot='fixed'>
+    <ion-fab-button (click)='createNewNote()'>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertController, ModalController} from '@ionic/angular';
 import { HabitListItemsCreatePage } from "../habit-list-items-create/habit-list-items-create.page";
-
+import {customModalEnterAnimation} from "../../../_helper/customModalEnter";
+import { customModalLeaveAnimation} from "../../../_helper/customModalLeave";
 
 @Component({
   selector: 'app-habit-list-items',
@@ -120,7 +121,8 @@ export class HabitListItemsPage implements OnInit {
   async addHabit() {
     const habitModal = await this.modalCtrl.create({
       component: HabitListItemsCreatePage,
-      // cssClass: 'habit-add-modal-css',
+      enterAnimation: customModalEnterAnimation,
+      leaveAnimation: customModalLeaveAnimation,
       componentProps: { newHabit: this.newHabit, mode: "Add habit" }
     });
 

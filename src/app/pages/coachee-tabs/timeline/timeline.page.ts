@@ -5,6 +5,8 @@ import { ModalController, LoadingController, IonInfiniteScroll } from '@ionic/an
 import { TimelineCreatePage } from '../timeline-create/timeline-create.page'
 import { TimelineCommentPage } from "../timeline-comment/timeline-comment.page";
 import { format, isYesterday, isToday } from 'date-fns';
+import {customModalEnterAnimation} from "../../../_helper/customModalEnter";
+import { customModalLeaveAnimation} from "../../../_helper/customModalLeave";
 import * as _ from 'lodash';
 @Component({
   selector: 'app-timeline',
@@ -112,7 +114,9 @@ export class TimelinePage implements OnInit {
   async gotoNewPostPage() {
 
     const postModal = await this.modalCtrl.create({
-      component: TimelineCreatePage
+      component: TimelineCreatePage,
+      enterAnimation:customModalEnterAnimation,
+      leaveAnimation:customModalLeaveAnimation
     });
 
     await postModal.present();

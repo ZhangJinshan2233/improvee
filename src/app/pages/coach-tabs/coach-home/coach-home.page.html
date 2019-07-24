@@ -1,9 +1,47 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>coachHome</ion-title>
+  <ion-toolbar color='primary'>
+    <ion-item lines='none' color='primary'>
+      <ion-avatar slot='start'>
+        <img src="/assets/img/coach-profile.jpeg" alt="">
+      </ion-avatar>
+      <ion-label>
+        Ruby Teo<br>
+        <small>Nutritionist</small>
+      </ion-label>
+      <ion-buttons slot="end" style="position: relative">
+        <ion-button>
+          <ion-icon slot='icon-only' name="volume-high"></ion-icon>
+        </ion-button>
+        <ion-badge>10</ion-badge>
+      </ion-buttons>
+    </ion-item>
   </ion-toolbar>
 </ion-header>
+<ion-content>
+    <ion-row class='ion-align-items-center'>
+      <ion-col class='ion-no-padding' size='10'>
+        <ion-searchbar mode='ios' debounce="500" [(ngModel)]='searchTerm' [animated]=true (ionChange)='filterItems()'
+          (ionInput)='onSearchInput()'></ion-searchbar>
+      </ion-col>
+      <ion-col class='ion-no-padding'>
+        <ion-item lines='none' style='position:relative'>
+          <ion-icon name='flask' color='primary'></ion-icon>
+          <ion-select placeholder="" style='opacity: 0; position:absolute' [interfaceOptions]='customAlertOptions'
+            (ionChange)="filterByOption($event)">
+            <ion-select-option value="changedWeight">changed weight</ion-select-option>
+            <ion-select-option value="completedHabits">habit rate</ion-select-option>
+            <ion-select-option value="remainMembershipDays">remaining days</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-<ion-content padding>
-
+  <div *ngIf="searching" class="spinner-container">
+    <ion-spinner></ion-spinner>
+  </div>
+  <ion-list>
+    <app-coachee-info *ngFor='let coachee of coachees; let even=even' [coachee]='coachee'
+      [bgColor]="even? 'success':'medium'">
+    </app-coachee-info>
+  </ion-list>
 </ion-content>

@@ -1,0 +1,140 @@
+<ion-header>
+  <ion-toolbar slot='start' color="primary">
+    <ion-buttons>
+      <ion-back-button mode='md'></ion-back-button>
+    </ion-buttons>
+    <ion-item lines='none'>
+      <ion-avatar slot='start'>
+        <img [src]='coachee?.profileImage' alt="">
+      </ion-avatar>
+      <ion-label>
+        {{coachee.name}}
+        <br>
+        <small>Start: {{coachee.startDate |date}}</small>
+        <br>
+        <small>End: {{coachee.endDate |date}}</small>
+      </ion-label>
+      <ion-button [routerLink]="['notes']">
+        <ion-icon name="document" slot='icon-only'></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment mode='md' (ionChange)='segmentChanged($event)' class='ion-padding-vertical' [(ngModel)]='segmentValue'>
+    <ion-segment-button value=0 [ngClass]="{'is-active':segmentValue==0 }">
+      <ion-label>Habit lists </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value=1 [ngClass]="{'is-active':segmentValue==1 }">
+      <ion-label>Challenges</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value=2 [ngClass]="{'is-active':segmentValue==2 }">
+      <ion-label>Records</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value=3 [ngClass]="{'is-active':segmentValue==3 }">
+      <ion-label>More</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <ion-slides (ionSlideDidChange)="slideChanged()">
+    <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div class='chart-container'>
+              <canvas #habistListCanvas></canvas>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-list>
+              <ion-item-group *ngFor='let dailyList of habitList'>
+                <ion-item-divider>
+                  <ion-label class='ion-text-capitalize'>{{dailyList.date}}</ion-label>
+                </ion-item-divider>
+                <ion-item *ngFor='let item of dailyList.habits' lines='none'>
+                  <ion-label *ngIf='!item.completed' class='ion-text-capitalize'>{{item.title}}</ion-label>
+                  <del *ngIf='item.completed' class='ion-text-capitalize'>{{item.title}}</del>
+                </ion-item>
+              </ion-item-group>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide>
+      <ion-list *ngIf='allChallenges.length'>
+        <ion-item-group *ngFor='let item of allChallenges '>
+          <ion-item-divider>
+            <ion-label>{{item.title}}</ion-label>
+          </ion-item-divider>
+          <ion-item *ngFor='let challenge of item.challenges' detail lines='none'>
+            <ion-label>
+              {{challenge.name}}
+            </ion-label>
+          </ion-item>
+        </ion-item-group>
+      </ion-list>
+    </ion-slide>
+    <ion-slide>
+      <ion-list *ngIf="items.length" class="ion-no-margin accordion-list ion-no-padding">
+        <ion-item-group *ngFor="let item of items let i=index">
+          <ion-item-divider (click)="toggleSection(i)"
+            [ngClass]="{'section-active': item.open,'section-inactive':!item.open}">
+            <ion-label>{{item.groupName}}</ion-label>
+            <ion-icon name="add" slot="end" *ngIf="!item.open"></ion-icon>
+            <ion-icon name="remove" slot="end" *ngIf="item.open"></ion-icon>
+          </ion-item-divider>
+          <div *ngIf="item.open">
+            <ion-card *ngFor="let indicator of item.indicators" (click)='gotoIndicatorDetails(indicator.indicatorName)'>
+              <ion-card-content>
+                <ion-grid>
+                  <ion-row class='ion-justify-content-between ion-align-items-center'>
+                    <ion-col>
+                      <ion-label class="ion-text-capitalize ion-text-start">
+                        {{indicator.indicatorName}}
+                      </ion-label>
+                    </ion-col>
+                    <ion-col class='ion-text-end'>
+                      <div>
+                        <ion-label class='indicator-value-font' [color]='getStateOfIndicator(indicator.state)'>
+                          {{indicator.value}}
+                        </ion-label>
+                        <ion-label class='indicator-unit-font' [color]='getStateOfIndicator(indicator.state)'>
+                          <small>{{indicator.unit}}</small>
+                        </ion-label>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row class='ion-justify-content-between ion-align-items-center'>
+                    <ion-col>
+                      <ion-label class="ion-text-start">
+                        <small>{{indicator.createDate | date}}</small>
+                      </ion-label>
+                    </ion-col>
+                    <ion-col>
+                      <div class='ion-text-end'>
+                        <ion-label>
+                          {{indicator.state}}
+                        </ion-label>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </ion-item-group>
+      </ion-list>
+    </ion-slide>
+    <ion-slide>
+      <ion-list>
+        <ion-item>
+          <ion-label>Last login</ion-label>
+          <ion-label>2019-9-10</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

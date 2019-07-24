@@ -4,7 +4,7 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>{{indicator.indicatorName}}</ion-title>
-    <ion-buttons slot='end'>
+    <ion-buttons slot='end' *ngIf='isCoachee'>
       <ion-button (click)="getHistory()">
         <ion-icon name="time" slot='icon-only'></ion-icon>
       </ion-button>
@@ -65,7 +65,7 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed"  *ngIf='isCoachee'>
     <ion-fab-button (click)="addRecord()"> 
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

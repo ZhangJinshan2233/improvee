@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-title>{{status}}</ion-title>
+    <ion-buttons slot='end'>
+      <ion-button (click)='closeNoteModal()'>
+        <ion-icon name="close" slot='icon-only'></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]='noteForm' novalidate (ngSubmit)='onSubmit()'>
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked" color='primary'>DATE</ion-label>
+        <ion-datetime display-format="MM/DD/YYYY" formControlName='date'
+          [ngClass]="{'is-valid':isSubmitted && noteForm.controls['date'].errors}"></ion-datetime>
+      </ion-item>
+      <div *ngIf="isSubmitted && noteForm.controls['date'].errors" padding class="invalid-feedback">
+        <div *ngIf=" noteForm.controls['date'].errors.required">date is required</div>
+      </div>
+      <ion-item>
+        <ion-label position="stacked" color='primary'>TIME</ion-label>
+        <ion-datetime display-format="h:mm a" formControlName="time"
+          [ngClass]="{'is-valid':isSubmitted && noteForm.controls['time'].errors}"></ion-datetime>
+      </ion-item>
+      <div *ngIf="isSubmitted && noteForm.controls['time'].errors" padding class="invalid-feedback">
+        <div *ngIf=" noteForm.controls['time'].errors.required">time is required</div>
+      </div>
+      <ion-item>
+        <ion-label position="stacked" color='primary'>DISCUSSED</ion-label>
+        <ion-textarea rows='3' spellCheck='true' formControlName="discussed"
+          [ngClass]="{'is-valid':isSubmitted && noteForm.controls['discussed'].errors}">
+        </ion-textarea>
+      </ion-item>
+      <div *ngIf="isSubmitted && noteForm.controls['discussed'].errors" padding class="invalid-feedback">
+        <div *ngIf=" noteForm.controls['discussed'].errors.required">discussed is required</div>
+      </div>
+      <ion-item>
+        <ion-label position="stacked" color='primary'>CONCLUDED</ion-label>
+        <ion-textarea rows='3' spellCheck='true' formControlName="concluded"
+          [ngClass]="{'is-valid':isSubmitted && noteForm.controls['concluded'].errors}">
+        </ion-textarea>
+      </ion-item>
+      <div *ngIf="isSubmitted && noteForm.controls['concluded'].errors" padding class="invalid-feedback">
+        <div *ngIf=" noteForm.controls['concluded'].errors.required">concluded is required</div>
+      </div>
+      <ion-item>
+        <ion-label position="stacked" color='primary'>NEXT</ion-label>
+        <ion-textarea rows='3' spellCheck='true' formControlName="next"
+          [ngClass]="{'is-valid':isSubmitted && noteForm.controls['next'].errors}">
+        </ion-textarea>
+      </ion-item>
+      <div *ngIf="isSubmitted && noteForm.controls['next'].errors" padding class="invalid-feedback">
+        <div *ngIf=" noteForm.controls['next'].errors.required">next step is required</div>
+      </div>
+    </ion-list>
+    <div class='ion-padding ion-margin'>
+      <ion-button color='primary' size='large' expand="block" type="submit">Add</ion-button>
+    </div>
+  </form>
+</ion-content>

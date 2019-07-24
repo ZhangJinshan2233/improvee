@@ -1,0 +1,22 @@
+ion-avatar{
+    width:80px;
+    height:80px
+}
+
+ion-item{
+    --background:transparent;
+}
+
+ion-item ion-label{
+    padding: 10px;
+    --color:var(--ion-color-primary) !important
+}
+ion-button{
+    --color:var(--ion-color-dark)
+}
+
+.is-valid{
+    border:1px solid red
+}
+
+

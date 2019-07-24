@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from "../../../services/menu.service";
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from "../../../services/auth.service";
 import { Router } from '@angular/router';
 import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet/ngx';

@@ -12,7 +12,7 @@
 
 <ion-content>
   <ion-grid>
-    <ion-row class='ion-justify-content-between'>
+    <ion-row class='ion-justify-content-between ion-margin-bottom'>
       <ion-col size='2'>
         <ion-button fill='clear' expend='block' (click)="getPreWeek()">
           <ion-icon name="arrow-dropleft" mode='md' slot='icon-only'></ion-icon>
@@ -32,32 +32,32 @@
       </ion-col>
     </ion-row>
     <ion-row class='ion-justify-content-between'>
-      <ion-col size='1.5' class='ion-text-center'>
+      <ion-col size='1.5' class='ion-text-center ion-label-css'>
         <ion-label color='primary'>Sun</ion-label>
       </ion-col>
-      <ion-col size='1.5' class='ion-text-center'>
+      <ion-col size='1.5' class='ion-text-center ion-label-css'>
         <ion-label color='primary'>Mon</ion-label>
       </ion-col>
-      <ion-col size='1.5' class='ion-text-center'>
+      <ion-col size='1.5' class='ion-text-center ion-label-css'>
         <ion-label color='primary'>Tue</ion-label>
       </ion-col>
-      <ion-col size='1.5' class='ion-text-center'>
+      <ion-col size='1.5' class='ion-text-center ion-label-css'>
         <ion-label color='primary'>Wed</ion-label>
       </ion-col>
-      <ion-col size='1.5' class='ion-text-center'>
+      <ion-col size='1.5' class='ion-text-center ion-label-css'>
         <ion-label color='primary'>Thu</ion-label>
       </ion-col>
-      <ion-col size='1.5' class='ion-text-center'>
+      <ion-col size='1.5' class='ion-text-center ion-label-css'>
         <ion-label color='primary'>Fri</ion-label>
       </ion-col>
-      <ion-col size='1.5' class='ion-text-center'>
+      <ion-col size='1.5' class='ion-text-center ion-label-css'>
         <ion-label color='primary'>Sat</ion-label>
       </ion-col>
     </ion-row>
     <ion-radio-group [(ngModel)]='currentDay'>
       <ion-row class='ion-justify-content-between'>
         <ion-col size='1.5' class='ion-text-center'>
-          <div class='day-position' >
+          <div class='day-position'>
             <ion-radio mode="md" value='0' (ionSelect)='getCurrentDate(week.Sun)'></ion-radio>
             <ion-label [ngClass]="{'circle':currentDay=='0'}" class='ion-label-css ion-padding-vertical'>{{week.Sun | date :'dd'}}</ion-label>
           </div>
@@ -106,7 +106,8 @@
       <ion-card-content>
         <ion-item lines="none">
           <ion-checkbox slot="start" [(ngModel)]="entry.isChecked"></ion-checkbox>
-          <ion-label class="ion-text-center ion-text-wrap" class='ion-label-css ion-padding-vertical'>{{entry.val}}</ion-label>
+          <ion-label class="ion-text-center ion-text-wrap" class='ion-label-css ion-padding-vertical' *ngIf='!entry.isChecked'>{{entry.val}}</ion-label>
+          <ion-label class="ion-text-center ion-text-wrap" class='ion-label-css ion-padding-vertical' *ngIf='entry.isChecked' ><del>{{entry.val}}</del></ion-label>
         </ion-item>
       </ion-card-content>
     </ion-card>

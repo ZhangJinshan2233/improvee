@@ -1,0 +1,17 @@
+// ion-content {
+//     --background: url('/assets/img/coach-home-background.jpeg') no-repeat center/cover  fixed;
+// }
+ 
+
+ion-item ion-badge:first-of-type {
+    position: absolute;
+    --background: var(--ion-color-secondary);
+    left: 70%;
+    top:20%
+}
+
+.spinner-container {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }

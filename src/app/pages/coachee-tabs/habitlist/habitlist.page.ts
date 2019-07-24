@@ -12,12 +12,15 @@ import {
   templateUrl: './habitlist.page.html',
   styleUrls: ['./habitlist.page.scss'],
   animations:[
-    trigger('fadeInOut', [
+    trigger('fadeInOut',[
       state('void', style({
         opacity: 0
       })),
-      transition('void => *', animate(800)),
-      transition('* => void', animate(300)),
+      state('*', style({
+        opacity: 1
+      })),
+      transition('void => *', animate(600)),
+      transition('*=>void',animate(300))
     ])
   ]
 })
@@ -81,8 +84,10 @@ export class HabitlistPage implements OnInit {
 
   }
   getCurrentDate(date) {
-    console.log(date)
-    this.lists==this.form1?this.lists=this.form2:this.lists=this.form1
+    setTimeout(()=>{
+      this.lists==this.form1?this.lists=this.form2:this.lists=this.form1
+    },300)
+   
   }
   public form1 = [
     { val: 'drink 8 glasses water', isChecked: true },
@@ -90,9 +95,9 @@ export class HabitlistPage implements OnInit {
     { val: 'fast dinner', isChecked: false }
   ];
   public form2 = [
-    { val: 'drink 8 glasses water', isChecked: true },
-    { val: 'eat vegetables', isChecked: false },
-    { val: 'fast dinner', isChecked: false }
+    { val: 'water', isChecked: true },
+    { val: 'vegetables', isChecked: false },
+    { val: 'dinner', isChecked: false }
   ];
 
   gotoHabitListItemsPage() {

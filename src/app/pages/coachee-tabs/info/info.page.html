@@ -123,16 +123,20 @@
                   <ion-col size='2'>
                     <ion-radio mode="md" value="yes" (ionSelect)="getPhysicalActivityState($event)"></ion-radio>
                   </ion-col>
-                  <ion-col>
-                    Yes
-                  </ion-col>
+                  <ion-col >
+                    <div [ngStyle]="{'color':physicalActivityState=='yes'?'#f4a933':'black'}" >
+                      Yes
+                    </div>
+                  </ion-col>  
                 </ion-row>
                 <ion-row class="ion-align-items-center ion-margin-vertical">
                   <ion-col size='2'>
                     <ion-radio mode="md" value="no" (ionSelect)="getPhysicalActivityState($event)"></ion-radio>
                   </ion-col>
                   <ion-col>
-                    No
+                    <div [ngStyle]="{'color':physicalActivityState=='no'?'#f4a933':'black'}">
+                      No
+                    </div>
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -150,7 +154,9 @@
                     </ion-radio>
                   </ion-col>
                   <ion-col>
-                    I am on my feet or walking around all day.
+                    <div [ngStyle]="{'color':walkActiveState=='walking around all day'?'#f4a933':'black'}">
+                        I am on my feet or walking around all day.
+                    </div>
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-align-items-center ion-margin-vertical">
@@ -160,7 +166,9 @@
                     </ion-radio>
                   </ion-col>
                   <ion-col>
-                    It's a mix between sitting and walking or standing.
+                   <div [ngStyle]="{'color':walkActiveState=='mix between sitting and walking'?'#f4a933':'black'}">
+                      It's a mix between sitting and walking or standing.
+                   </div>
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-align-items-center ion-margin-vertical">
@@ -169,7 +177,9 @@
                     </ion-radio>
                   </ion-col>
                   <ion-col>
-                    I am seated down for the majority of the day, but walk in the evening.
+                   <div [ngStyle]="{'color':walkActiveState=='walking in the evening'?'#f4a933':'black'}">
+                      I am seated down for the majority of the day, but walk in the evening.
+                   </div>
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-align-items-center ion-margin-vertical">
@@ -179,7 +189,9 @@
                     </ion-radio>
                   </ion-col>
                   <ion-col>
-                    I am seated down all day and for the majorityof the evening.
+                  <div [ngStyle]="{'color':walkActiveState=='seated down all day and evening'?'#f4a933':'black'}">
+                      I am seated down all day and for the majorityof the evening.
+                  </div>
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -200,7 +212,9 @@
                     <ion-radio mode="md" value="yes" (ionSelect)="getNutritionState($event)"></ion-radio>
                   </ion-col>
                   <ion-col>
-                    Yes
+                    <div [ngStyle]="{'color':nutriotionState=='yes'?'#f4a933':'black'}">
+                        Yes
+                    </div>
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-align-items-center ion-margin-vertical">
@@ -208,7 +222,9 @@
                     <ion-radio mode="md" value="no" (ionSelect)="getNutritionState($event)"></ion-radio>
                   </ion-col>
                   <ion-col>
-                    No
+                   <div [ngStyle]="{'color':nutriotionState=='no'?'#f4a933':'black'}">
+                      No
+                   </div>
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-align-items-center ion-margin-vertical">
@@ -216,7 +232,9 @@
                     <ion-radio mode="md" value="notSure" (ionSelect)="getNutritionState($event)"></ion-radio>
                   </ion-col>
                   <ion-col>
-                    Not sure
+                   <div [ngStyle]="{'color':nutriotionState=='notSure'?'#f4a933':'black'}">
+                      Not sure
+                   </div>
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -234,7 +252,9 @@
                     </ion-radio>
                   </ion-col>
                   <ion-col>
-                    I don't think I need to lose weight.
+                   <div [ngStyle]="{'color':sentenceDescribeState=='not need to lose weight'?'#f4a933':'black'}">
+                      I don't think I need to lose weight.
+                   </div>
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-align-items-center ion-margin-vertical">
@@ -244,16 +264,20 @@
                     </ion-radio>
                   </ion-col>
                   <ion-col>
-                    I plan to lose weight but I haven't thought about what I would do.
+                   <div [ngStyle]="{'color':sentenceDescribeState=='lose weight but have no idea'?'#f4a933':'black'}">
+                      I plan to lose weight but I haven't thought about what I would do.
+                   </div>
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-align-items-center ion-margin-vertical">
                   <ion-col size='2'>
-                    <ion-radio mode="md" value="start to lose weight " (ionSelect)="getSentenceDescribeState($event)">
+                    <ion-radio mode="md" value="start to lose weight" (ionSelect)="getSentenceDescribeState($event)">
                     </ion-radio>
                   </ion-col>
                   <ion-col>
-                    I plan to start to my weight lost journey by next month.
+                    <div [ngStyle]="{'color':sentenceDescribeState=='start to lose weight'?'#f4a933':'black'}">
+                        I plan to start to my weight lost journey by next month.
+                    </div>
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-align-items-center ion-margin-vertical">
@@ -263,7 +287,9 @@
                     </ion-radio>
                   </ion-col>
                   <ion-col>
-                    I have started making changes to my lifestyle.
+                   <div [ngStyle]="{'color':sentenceDescribeState=='making changes to my lifestyles'?'#f4a933':'black'}">
+                      I have started making changes to my lifestyle.
+                   </div>
                   </ion-col>
                 </ion-row>
               </ion-grid>
