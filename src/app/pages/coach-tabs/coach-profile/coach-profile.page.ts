@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from '@angular/router';
-import { ActionSheet, ActionSheetOptions} from '@ionic-native/action-sheet/ngx';
+import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet/ngx';
 import { CameraOptionsSetting } from "../../../_helper/cameraOptionsSetting";
 import { Camera } from "@ionic-native/Camera/ngx"
 import { AlertController } from '@ionic/angular';
+import { ActivatedRoute } from "@angular/router";
 @Component({
   selector: 'app-coach-profile',
   templateUrl: './coach-profile.page.html',
@@ -19,14 +20,18 @@ export class CoachProfilePage implements OnInit {
     imgType: 'image/jpeg',
     data: ''
   }
+  isAdmin = false
   constructor(private formBuilder: FormBuilder,
-    private router:Router,
+    private router: Router,
     private actionSheet: ActionSheet,
     private camera: Camera,
-    private alertCtrl: AlertController
-    ) { }
+    private alertCtrl: AlertController,
+    private activateRoute: ActivatedRoute
+  ) { }
   ngOnInit() {
-    this.createFormGroup()
+    this.createFormGroup();
+
+    this.isAdmin = this.router.url.split('/').includes('adminCoach');
   }
   cancle() {
     this.isNameFormShow = !this.isNameFormShow
@@ -50,7 +55,7 @@ export class CoachProfilePage implements OnInit {
     this.isNameFormShow = !this.isNameFormShow
   }
 
-  logout(){
+  logout() {
     this.router.navigateByUrl('/')
   }
 
@@ -67,10 +72,10 @@ export class CoachProfilePage implements OnInit {
       if (buttonIndex === 1) {
         isCamera = true;
         this.getPicture(isCamera)
-      } else if(buttonIndex===2){
+      } else if (buttonIndex === 2) {
         isCamera = false;
         this.getPicture(isCamera)
-      }else{
+      } else {
         return
       }
     });
@@ -83,12 +88,12 @@ export class CoachProfilePage implements OnInit {
     try {
       this.profileImage.data = await this.camera.getPicture(caremaOptions);
       let imageSizeInByte = 4 * Math.ceil((this.profileImage.data.length) / 3) * 0.5624896334383812;
-      if (imageSizeInByte / (1024 * 1024) >= 8){
+      if (imageSizeInByte / (1024 * 1024) >= 8) {
         this.showAlert("the size of image is too big")
-      }else{
-        
+      } else {
+
       }
-      
+
 
     } catch (err) {
       return
@@ -108,4 +113,6 @@ export class CoachProfilePage implements OnInit {
     });
     alert.then(alert => alert.present());
   }
+
+  
 }

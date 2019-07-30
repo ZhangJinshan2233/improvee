@@ -20,8 +20,10 @@
 <ion-content>
     <ion-row class='ion-align-items-center'>
       <ion-col class='ion-no-padding' size='10'>
-        <ion-searchbar mode='ios' debounce="500" [(ngModel)]='searchTerm' [animated]=true (ionChange)='filterItems()'
-          (ionInput)='onSearchInput()'></ion-searchbar>
+        <ion-searchbar mode='ios' debounce="500" 
+        [(ngModel)]='searchTerm' [animated]=true 
+        (ionChange)='filterItems()'
+        (ionInput)='onSearchInput()'></ion-searchbar>
       </ion-col>
       <ion-col class='ion-no-padding'>
         <ion-item lines='none' style='position:relative'>

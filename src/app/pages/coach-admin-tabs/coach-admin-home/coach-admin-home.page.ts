@@ -13,4 +13,10 @@ export class CoachAdminHomePage implements OnInit {
   // console.log(this.activatedRouter.snapshot.paramMap.get('id'))
   }
 
+  ionViewWillEnter(){
+
+    let tabBar=document.querySelector('ion-tab-bar')
+    tabBar.style.display='flex'
+  }
+
 }

@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-buttons slot='start'>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class='ion-text-center'>
+      Habit-items
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar debounce='500' 
+  mode='ios'
+  (ionChange)='filterItems($event)'
+  (ionInput)='onSearchInput()'></ion-searchbar>
+  <div *ngIf='isSearching' class='ion-text-center'>
+    <ion-spinner></ion-spinner>
+  </div>
+  <ion-list>
+    <ion-item *ngFor='let item of habitItems' (click)='gotoDetails(item)'>
+      {{item.title}}
+    </ion-item>
+  </ion-list>
+  <ion-fab vertical='bottom' horizontal='end'>
+    <ion-fab-button (click)="addNewHabitItem()">
+      <ion-icon name='add'></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -12,7 +12,7 @@
         EDIT
       </ion-button>
     </ion-item>
-    <ion-grid class='ion-margin'>
+    <ion-grid class='ion-margin' *ngIf='!isAdmin'>
       <ion-row>
         <ion-col>
           <ion-label color='primary'>
@@ -105,7 +105,7 @@
         <ion-item lines="full">
           <ion-icon slot="start" name="key" color='primary'></ion-icon>
           <ion-label>change password</ion-label>
-          <ion-button slot="end" fill="clear" [routerLink]="['/coach/profile/changePassword']">
+          <ion-button slot="end" fill="clear" [routerLink]="['./changePassword']">
             <ion-icon slot="icon-only" name="create" color='primary'></ion-icon>
           </ion-button>
         </ion-item>

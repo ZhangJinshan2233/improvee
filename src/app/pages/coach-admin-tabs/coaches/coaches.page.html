@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-searchbar></ion-searchbar>
+    <ion-buttons slot='end'>
+      <ion-button (click)='closeModal()'>
+        <ion-icon name='close' slot='icon-only'></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-radio-group [(ngModel)]='selectedCoach'>
+      <ion-item *ngFor='let coach of items' lines='inset'>
+        <ion-avatar class='ion-margin'>
+          <img [src]='coach.profileImage' alt="">
+        </ion-avatar>
+        <ion-label>
+          {{coach.firstName}}{{coach.lastName}}
+          <br>
+          <small>{{coach.email}}</small>
+        </ion-label>
+        <ion-radio mode='md' value='{{coach.id}}' (ionSelect)='getSelectedCoach($event)'></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+</ion-content>

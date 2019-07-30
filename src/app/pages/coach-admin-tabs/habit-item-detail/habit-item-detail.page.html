@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-title class='ion-text-center'>{{state}}</ion-title>
+    <ion-buttons slot='end'>
+      <ion-button (click)="closeModal()">
+        <ion-icon name='close' slot='icon-only'></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]='habitItemForm' novalidate (ngSubmit)='submitHabitItemForm()' class='ion-margin'>
+    <ion-list>
+      <ion-item>
+        <ion-label position='stacked'>Title</ion-label>
+        <ion-input formControlName='title'></ion-input>
+      </ion-item>
+      <div *ngIf="isSubmitted && habitItemForm.controls.title.errors?.required" class='ion-margin invalid'>title is required</div>
+      <ion-item>
+        <ion-label position='stacked'>Description</ion-label>
+        <ion-textarea rows='3' formControlName='desc'></ion-textarea>
+      </ion-item>
+      <div *ngIf="isSubmitted && habitItemForm.controls.desc.errors?.required" class='ion-margin invalid'>description is required</div>
+    </ion-list>
+    <div class='ion-padding ion-margin'>
+      <ion-button color='primary' expand="block" type="submit">Submit</ion-button>
+    </div>
+  </form>
+</ion-content>

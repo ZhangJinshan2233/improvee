@@ -26,11 +26,11 @@ export class CoacheeDetailPage implements OnInit {
   habitList = [];
   allChallenges = [];
   constructor(private coachService: CoachService, 
-    private activatedRouter: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private router:Router) { }
 
   ngOnInit() {
-    let id = this.activatedRouter.snapshot.params.coacheeId
+    let id = this.activatedRoute.snapshot.params.coacheeId
     this.coachee = this.coachService.findOne(id)
     let tabBar = document.querySelector('ion-tab-bar');
     tabBar.style.display = 'none'

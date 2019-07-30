@@ -35,7 +35,7 @@
         </ion-textarea>
       </ion-item>
       <div *ngIf="isSubmitted && noteForm.controls['discussed'].errors" padding class="invalid-feedback">
-        <div *ngIf=" noteForm.controls['discussed'].errors.required">discussed is required</div>
+        <div *ngIf="noteForm.controls['discussed'].errors.required">discussed is required</div>
       </div>
       <ion-item>
         <ion-label position="stacked" color='primary'>CONCLUDED</ion-label>

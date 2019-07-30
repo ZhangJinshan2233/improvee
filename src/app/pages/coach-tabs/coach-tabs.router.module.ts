@@ -50,7 +50,6 @@ const routes: Routes = [
         redirectTo: '/coach/coach-home',
         pathMatch: 'full'
       }
-
     ]
   },
   {

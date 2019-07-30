@@ -1,9 +1,31 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>coachAdminHome</ion-title>
+  <ion-toolbar color='primary'>
+    <ion-item lines='none' color='primary'>
+      <ion-avatar slot='start'>
+        <img src="/assets/img/coach-profile.jpeg" alt="">
+      </ion-avatar>
+      <ion-label>
+        Ruby Teo<br>
+        <small>Nutritionist</small>
+      </ion-label>
+    </ion-item>
   </ion-toolbar>
 </ion-header>
-
-<ion-content padding>
-
+<ion-content>
+  <ion-list>
+    <ion-item detail [routerLink]="['./habit-items']" lines='inset'>
+      <ion-icon name="list-box" slot='start'></ion-icon>
+      <ion-label>
+        manage habit items
+      </ion-label>
+    </ion-item>
+    <ion-item detail [routerLink]="['./manage-coachee']" lines='inset'>
+      <ion-icon name="contacts" slot='start'></ion-icon>
+      <ion-label>manage coachees</ion-label>
+    </ion-item>
+    <ion-item detail [routerLink]="['./coach-list']" lines='inset'>
+      <ion-icon name="person-add" slot='start'></ion-icon>
+      <ion-label>manage coach</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
