@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuService } from "../../../services/menu.service";
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatchValidator } from "../../../_helper/match-validator";
 import { Router } from '@angular/router';
@@ -12,10 +11,14 @@ import { AuthService } from "../../../services/auth.service";
 export class ChangePasswordPage implements OnInit {
 
   passwordForm: FormGroup;
-  isSubmitted = false
-  constructor(private formBuilder: FormBuilder, private router: Router, private auth: AuthService) { }
+  isSubmitted = false;
+  isCoachee=true
+  constructor(private formBuilder: FormBuilder,
+    private router: Router,
+    private auth: AuthService) { }
 
   ngOnInit() {
+    this.isCoachee= this.router.url.split('/').includes('coachee')
     this.createPasswordForm()
   }
 
@@ -34,7 +37,11 @@ export class ChangePasswordPage implements OnInit {
     this.isSubmitted = true;
     if (this.passwordForm.invalid) return
     this.auth.changePassword(this.passwordForm.value).subscribe(res => {
-      this.router.navigateByUrl('coachee/menu/profile')
+      if(this.isCoachee){
+        this.router.navigateByUrl('coachee/menu/profile')
+      }else{
+        this.router.navigateByUrl('coach/profile')
+      }
     })
   }
 }

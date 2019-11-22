@@ -1,23 +1,9 @@
 .ion-label-font {
     font-size: 1.5em
 }
+
 .ion-row-margin {
     margin-top: 80px;
-}
-
-ion-avatar {
-    margin: auto;
-    height: 80px;
-    width: 80px;
-}
-
-.ion-avtar-active {
-    opacity: 1;
-    transform: scale(1.2, 1.2)
-}
-
-.ion-avatar-noactive {
-    opacity: 0.5;
 }
 
 ion-slide {
@@ -26,27 +12,43 @@ ion-slide {
 
 ion-slides {
     width: 100vw !important;
-    height:100%
+    height: 100%
 }
 
-.ruler-container {
-    width: 100vw;
+ion-item {
+    --background: transparent
 }
 
-ion-grid ion-radio-group ion-row ion-radio {
-    height: 60px;
-    width: 60px;
-    opacity: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+ion-slides {
+    ion-slide:first-child {
+
+        background: linear-gradient(-60deg, #fdf1df 45%, rgb(253, 246, 246) 45%) !important;
+    }
+
+    ion-slide:nth-child(2) {
+
+        background: linear-gradient(135deg,#e8eaf3 50%, rgb(253, 246, 246) 50%) !important;
+    }
+
+    ion-slide:nth-child(3) {
+
+        background: linear-gradient(-60deg,#fdf1df 45%, rgb(253, 246, 246) 45%) !important;
+    }
+
+    ion-slide:last-child {
+        background: linear-gradient(30deg, rgb(253, 246, 246) 40%, #e8eaf3 40%, #e8eaf3 100%) !important;
+    }
 }
 
-.gender-div {
-    position: relative;
+ion-button {
+    width: 100% !important;
 }
 
-ion-footer ion-toolbar {
-    --background: var(--ion-color-light-shade)
+ion-card {
+    --color: black
+}
+
+ion-list {
+    width: 100%;
+    background-color: transparent
 }

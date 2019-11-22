@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-import { ShareDirectiveModule } from "../../../directives/share-directive.module";
 import { IonicModule } from '@ionic/angular';
-
 import { InfoPage } from './info.page';
 
 const routes: Routes = [
@@ -19,7 +17,6 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    ShareDirectiveModule,
     RouterModule.forChild(routes)
   ],
   declarations: [InfoPage]

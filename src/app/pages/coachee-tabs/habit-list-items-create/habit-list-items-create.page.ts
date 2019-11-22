@@ -1,53 +1,58 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { NavParams } from '@ionic/angular';
-import { FormBuilder,FormGroup ,Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HabitService } from 'src/app/services/habit.service';
 @Component({
   selector: 'app-habit-list-items-create',
   templateUrl: './habit-list-items-create.page.html',
   styleUrls: ['./habit-list-items-create.page.scss'],
 })
 export class HabitListItemsCreatePage implements OnInit {
-  mode = "Add Habit";
-  habitForm:FormGroup;
-  isUpdate=false;
-  habit:any;
-  constructor(private modalCtrl: ModalController, private navParams: NavParams,private formBuilder:FormBuilder) {
+  mode = "Add habit";
+  habitForm: FormGroup;
+  isUpdate = false;
+  habit: any;
+  week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  constructor(private modalCtrl: ModalController,
+    private navParams: NavParams,
+    private formBuilder: FormBuilder
+  ) {
   }
-createHabitForm(){
-  this.habitForm=this.formBuilder.group({
-    title:['',Validators.required],
-    des:[''],
-    sunday:[],
-    monday:[],
-    tuesday:[],
-    wednesday: [],
-    thursday: [],
-    friday: [],
-    saturday: [],
-  })
-}
+  create_habitForm() {
+    this.habitForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      description: [''],
+      Sunday: [false, []],
+      Monday: [false, []],
+      Tuesday: [false, []],
+      Wednesday: [false, []],
+      Thursday: [false, []],
+      Friday: [false, []],
+      Saturday: [false, []],
+    })
+  }
   ngOnInit() {
-    this.createHabitForm()
-    let habit=this.navParams.data['newHabit']
-    this.habitForm.setValue({
-      title:habit.title,
-      des:habit.des,
-      sunday:habit.sunday,
-      monday:habit.monday,
-      tuesday:habit.tuesday,
-      wednesday: habit.wednesday,
-      thursday: habit.thursday,
-      friday: habit.friday,
-      saturday: habit.saturday
-    }) 
+    this.create_habitForm()
+    this.habit = this.navParams.data['newHabit']
     this.mode = this.navParams.data['mode']
-    if(this.mode=="Update habit"){
-      this.isUpdate=true
+    if (this.mode == "Edit habit") {
+      this.isUpdate = true
+      this.habitForm.setValue({
+        name: this.habit.name,
+        description: this.habit.description,
+        Sunday: this.habit.daysOfWeek.includes('Sunday'),
+        Monday: this.habit.daysOfWeek.includes('Monday'),
+        Tuesday: this.habit.daysOfWeek.includes('Tuesday'),
+        Wednesday: this.habit.daysOfWeek.includes('Wednesday'),
+        Thursday: this.habit.daysOfWeek.includes('Thursday'),
+        Friday: this.habit.daysOfWeek.includes('Friday'),
+        Saturday: this.habit.daysOfWeek.includes('Saturday'),
+      })
     }
   }
 
-  changeBackgroundColor(isChecked) {
+  change_background_color(isChecked) {
     if (isChecked) {
       return {
         backgroundColor: '#f4a933'
@@ -55,29 +60,41 @@ createHabitForm(){
     }
   }
 
-  addHabit(habit) {
-    console.log(habit.value)
+  submit_habit_form() {
+    if (this.habitForm.invalid) return
+    let daysOfWeek = this.week.filter((item) => {
+      return this.habitForm.value[item]
+    })
+    let { name, description } = this.habitForm.value
+    if (this.mode =="Add habit") {
+      this.modalCtrl.dismiss({
+        newHabit: {
+          name,
+          description,
+          daysOfWeek
+        }
+      })
+    } else {
+      this.modalCtrl.dismiss({
+        habit: {
+          _id: this.habit._id,
+          isObsolete: this.habit.isObsolete,
+          name,
+          description,
+          daysOfWeek
+        },
+        editMode: 'edit'
+      })
+    }
+  }
+  
+  deleteHabit() {
     this.modalCtrl.dismiss({
-      newHabit:habit.value
+      editMode: 'delete'
     })
   }
-  updateHabit(habit) {
-    console.log(habit.value)
-    this.modalCtrl.dismiss({
-      habit:habit.value
-    })
-  }
-  deleteHabit(habit) {
-    console.log(habit.value)
-    this.modalCtrl.dismiss({
-      habit: habit.value
-    })
-  }
+
   closeModal() {
     this.modalCtrl.dismiss(null);
-  }
-  selectDay($event){
-    console.log(this.habitForm.controls.sunday)
-    
   }
 }

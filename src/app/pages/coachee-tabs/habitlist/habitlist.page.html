@@ -1,11 +1,11 @@
 <ion-header>
-  <ion-toolbar color='primary'>
+  <ion-toolbar color='secondary'>
     <ion-buttons slot='start'>
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Habit Lists</ion-title>
+    <ion-title>Daily habits</ion-title>
     <ion-buttons slot='end'>
-      <ion-button (click)='getCurrentWeek()'>Today</ion-button>
+      <ion-button (click)='get_current_week()'>Today</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -14,18 +14,18 @@
   <ion-grid>
     <ion-row class='ion-justify-content-between ion-margin-bottom'>
       <ion-col size='2'>
-        <ion-button fill='clear' expend='block' (click)="getPreWeek()">
+        <ion-button fill='outline' expend='block' [disabled]="isSubmitted" (click)="get_pre_week()" size='small'>
           <ion-icon name="arrow-dropleft" mode='md' slot='icon-only'></ion-icon>
         </ion-button>
       </ion-col>
       <ion-col size='8' class='ion-text-center ion-align-self-center'>
         <div>
-          <ion-label color='primary' style="font-size:1.2em">{{currentDate |date:'MMM/yyyy'}}</ion-label>
+          <ion-label color='dark' style="font-size:1.2em">{{currentDate |date:'MMM/yyyy'}}</ion-label>
         </div>
       </ion-col>
       <ion-col size='2' class='ion-text-right'>
         <div>
-          <ion-button fill='clear' (click)="getNextWeek()" [disabled]="isLastWeek">
+          <ion-button fill='outline' (click)="get_next_week()" size='small' [disabled]="isLastWeek || isSubmitted" >
             <ion-icon name="arrow-dropright" mode='md' slot='icon-only'></ion-icon>
           </ion-button>
         </div>
@@ -33,87 +33,102 @@
     </ion-row>
     <ion-row class='ion-justify-content-between'>
       <ion-col size='1.5' class='ion-text-center ion-label-css'>
-        <ion-label color='primary'>Sun</ion-label>
+        <ion-label color='dark'>Sun</ion-label>
       </ion-col>
       <ion-col size='1.5' class='ion-text-center ion-label-css'>
-        <ion-label color='primary'>Mon</ion-label>
+        <ion-label color='dark'>Mon</ion-label>
       </ion-col>
       <ion-col size='1.5' class='ion-text-center ion-label-css'>
-        <ion-label color='primary'>Tue</ion-label>
+        <ion-label color='dark'>Tue</ion-label>
       </ion-col>
       <ion-col size='1.5' class='ion-text-center ion-label-css'>
-        <ion-label color='primary'>Wed</ion-label>
+        <ion-label color='dark'>Wed</ion-label>
       </ion-col>
       <ion-col size='1.5' class='ion-text-center ion-label-css'>
-        <ion-label color='primary'>Thu</ion-label>
+        <ion-label color='dark'>Thu</ion-label>
       </ion-col>
       <ion-col size='1.5' class='ion-text-center ion-label-css'>
-        <ion-label color='primary'>Fri</ion-label>
+        <ion-label color='dark'>Fri</ion-label>
       </ion-col>
       <ion-col size='1.5' class='ion-text-center ion-label-css'>
-        <ion-label color='primary'>Sat</ion-label>
+        <ion-label color='dark'>Sat</ion-label>
       </ion-col>
     </ion-row>
-    <ion-radio-group [(ngModel)]='currentDay'>
+    <ion-radio-group [(ngModel)]="currentDay">
       <ion-row class='ion-justify-content-between'>
         <ion-col size='1.5' class='ion-text-center'>
           <div class='day-position'>
-            <ion-radio mode="md" value='0' (ionSelect)='getCurrentDate(week.Sun)'></ion-radio>
-            <ion-label [ngClass]="{'circle':currentDay=='0'}" class='ion-label-css ion-padding-vertical'>{{week.Sun | date :'dd'}}</ion-label>
-          </div>
-        </ion-col>
-        <ion-col size='1.5' class='ion-text-center'>
-          <div class='day-position' >
-            <ion-radio mode="md" value='1' (ionSelect)='getCurrentDate(week.Mon)'></ion-radio>
-            <ion-label [ngClass]="{'circle':currentDay==1}" class='ion-label-css ion-padding-vertical'>{{week.Mon | date: 'dd'}}</ion-label>
-          </div>
-        </ion-col>
-        <ion-col size='1.5' class='ion-text-center'>
-          <div class='day-position' >
-            <ion-radio mode="md" value=2 (ionSelect)='getCurrentDate(week.Tue)'></ion-radio>
-            <ion-label [ngClass]="{'circle':currentDay=='2'}" class='ion-label-css ion-padding-vertical'>{{week.Tue | date :'dd'}}</ion-label>
+            <ion-radio mode="md" value=0 [disabled]=weekdayStatus?.Sun (ionSelect)='get_current_date_habits(week.Sun)'></ion-radio>
+            <ion-label [ngClass]="{'circle':currentDay==0}" class='ion-label-css ion-padding-vertical'>
+              {{week.Sun | date :'dd'}}</ion-label>
           </div>
         </ion-col>
         <ion-col size='1.5' class='ion-text-center'>
           <div class='day-position'>
-            <ion-radio mode="md" value=3 (ionSelect)='getCurrentDate(week.Wed)'></ion-radio>
-            <ion-label [ngClass]="{'circle':currentDay=='3'}" class='ion-label-css ion-padding-vertical'>{{week.Wed | date: 'dd'}}</ion-label>
+            <ion-radio mode="md" value=1 [disabled]=weekdayStatus?.Mon (ionSelect)='get_current_date_habits(week.Mon)'></ion-radio>
+            <ion-label [ngClass]="{'circle':currentDay==1}" class='ion-label-css ion-padding-vertical'>
+              {{week.Mon | date: 'dd'}}</ion-label>
           </div>
         </ion-col>
         <ion-col size='1.5' class='ion-text-center'>
           <div class='day-position'>
-            <ion-radio mode="md" value=4 (ionSelect)='getCurrentDate(week.Thu)'></ion-radio>
-            <ion-label [ngClass]="{'circle':currentDay=='4'}" class='ion-label-css ion-padding-vertical'>{{week.Thu | date :'dd'}}</ion-label>
-          </div>
-        </ion-col>
-        <ion-col size='1.5' class='ion-text-center'>
-          <div class='day-position' >
-            <ion-radio mode="md" value=5 (ionSelect)='getCurrentDate(week.Fri)'></ion-radio>
-            <ion-label [ngClass]="{'circle':currentDay=='5'}" class='ion-label-css ion-padding-vertical'>{{week.Fri | date: 'dd'}}</ion-label>
+            <ion-radio mode="md" value=2 [disabled]=weekdayStatus?.Tue (ionSelect)='get_current_date_habits(week.Tue)'></ion-radio>
+            <ion-label [ngClass]="{'circle':currentDay=='2'}" class='ion-label-css ion-padding-vertical'>
+              {{week.Tue | date :'dd'}}</ion-label>
           </div>
         </ion-col>
         <ion-col size='1.5' class='ion-text-center'>
           <div class='day-position'>
-            <ion-radio mode="md" value=6 (ionSelect)='getCurrentDate(week.Sat)'></ion-radio>
-            <ion-label [ngClass]="{'circle':currentDay=='6'}" class='ion-label-css ion-padding-vertical'>{{week.Sat | date :'dd'}}</ion-label>
+            <ion-radio mode="md" value=3 [disabled]=weekdayStatus?.Wed (ionSelect)='get_current_date_habits(week.Wed)'></ion-radio>
+            <ion-label [ngClass]="{'circle':currentDay=='3'}" class='ion-label-css ion-padding-vertical'>
+              {{week.Wed | date: 'dd'}}</ion-label>
+          </div>
+        </ion-col>
+        <ion-col size='1.5' class='ion-text-center'>
+          <div class='day-position'>
+            <ion-radio mode="md" value="4" [disabled]=weekdayStatus?.Thu (ionSelect)='get_current_date_habits(week.Thu)'></ion-radio>
+            <ion-label [ngClass]="{'circle':currentDay=='4'}" class='ion-label-css ion-padding-vertical'>
+              {{week.Thu | date :'dd'}}</ion-label>
+          </div>
+        </ion-col>
+        <ion-col size='1.5' class='ion-text-center'>
+          <div class='day-position'>
+            <ion-radio mode="md" value=5 [disabled]=weekdayStatus?.Fri (ionSelect)='get_current_date_habits(week.Fri)'></ion-radio>
+            <ion-label [ngClass]="{'circle':currentDay=='5'}" class='ion-label-css ion-padding-vertical'>
+              {{week.Fri | date: 'dd'}}</ion-label>
+          </div>
+        </ion-col>
+        <ion-col size='1.5' class='ion-text-center'>
+          <div class='day-position'>
+            <ion-radio mode="md" value=6 [disabled]=weekdayStatus?.Sat (ionSelect)='get_current_date_habits(week.Sat)'></ion-radio>
+            <ion-label [ngClass]="{'circle':currentDay=='6'}" class='ion-label-css ion-padding-vertical'>
+              {{week.Sat | date :'dd'}}</ion-label>
           </div>
         </ion-col>
       </ion-row>
     </ion-radio-group>
   </ion-grid>
   <ion-list class='ion-no-margin'>
-    <ion-card *ngFor="let entry of lists" [@fadeInOut]>
+    <ion-card *ngFor="let habit of habitlistRecord?.habits" [@fadeInOut]>
       <ion-card-content>
-        <ion-item lines="none">
-          <ion-checkbox slot="start" [(ngModel)]="entry.isChecked"></ion-checkbox>
-          <ion-label class="ion-text-center ion-text-wrap" class='ion-label-css ion-padding-vertical' *ngIf='!entry.isChecked'>{{entry.val}}</ion-label>
-          <ion-label class="ion-text-center ion-text-wrap" class='ion-label-css ion-padding-vertical' *ngIf='entry.isChecked' ><del>{{entry.val}}</del></ion-label>
-        </ion-item>
+        <ion-row class="ion-align-items-center ">
+          <ion-col size='2'>
+            <ion-checkbox [(ngModel)]="habit.status" (ionChange)="update_habit_item(habit)"></ion-checkbox>
+          </ion-col>
+          <ion-col>
+            <div>
+              <ion-label class="ion-text-center ion-text-wrap" class='ion-padding-vertical' *ngIf='!habit.status'>
+                {{habit?.name}}</ion-label>
+              <ion-label class="ion-text-center ion-text-wrap" class='ion-padding-vertical' *ngIf='habit.status'>
+                <del>{{habit?.name}}</del></ion-label>
+            </div>
+          </ion-col>
+        </ion-row>
       </ion-card-content>
     </ion-card>
   </ion-list>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button [routerLink]="['/coachee/coachee-home/habitlist/habit-list-items']">
+    <ion-fab-button [routerLink]="['./habit-list-items']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

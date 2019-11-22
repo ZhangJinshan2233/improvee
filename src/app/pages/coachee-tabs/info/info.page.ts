@@ -1,30 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-
+import { CoacheeService } from "../../../services/coachee.service";
 @Component({
   selector: 'app-info',
   templateUrl: './info.page.html',
   styleUrls: ['./info.page.scss'],
 })
 export class InfoPage implements OnInit {
-  @ViewChild(IonSlides) slides: IonSlides
-  dateOfBirth: any;
-  disablePrevBtn: boolean;
-  disableNextBtn: boolean;
-  gender: string;
-  hightValue: any;
-  weightValue: any;
-  weightGoalValue: any;
-  isSubmit = false
   //assessment
-
-  nutriotionState = "yes";
-  walkActiveState = "walking around all day";
+  public amount: number | string = ''
+  nutriotionHabitsState = "yes";
+  dailyActivityLevel = "walking around all day";
   physicalActivityState = "yes";
-  sentenceDescribeState = "not need to lose weight";
-
+  motivationStage = "not need to lose weight";
 
   slideOpts = {
     initialSlide: 0,
@@ -39,87 +27,51 @@ export class InfoPage implements OnInit {
       }
     }
   }
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+     private coacheeService:CoacheeService
+     ) { }
   ngOnInit() {
     let tabBar = document.querySelector('ion-tab-bar')
     tabBar.style.display = 'none'
-    this.dateOfBirth = new Date().toISOString()
-    this.gender = 'male'
-    this.disablePrevBtn = true;
-    this.disableNextBtn = false;
-    this.slides.lockSwipes(true)
-  }
-  doCheck() {
-    let peomiseBegining = this.slides.isBeginning()
-    let promiseEnd = this.slides.isEnd()
-
-    Promise.all([peomiseBegining]).then(data => {
-      data[0] ? this.disablePrevBtn = true : this.disablePrevBtn = false;
-      console.log(data)
-    })
-
-    Promise.all([promiseEnd]).then(data => {
-      if (data[0]) {
-        this.isSubmit = true
-
-      } else {
-        this.isSubmit = false
-      }
-    })
-  }
-  gotoNext() {
-    this.slides.lockSwipes(false);
-    this.slides.slideNext();
-    this.slides.lockSwipes(true);
-    if (this.isSubmit) {
-      this.submitInfo()
-      this.router.navigateByUrl('/coachee')
-    }
-  }
-  gotoPre() {
-
-    this.slides.lockSwipes(false);
-    this.slides.slidePrev();
-    this.slides.lockSwipes(true);
   }
 
-  getHeightValue(value) {
-    this.hightValue = value
-  }
-  getWeightValue(value) {
-    this.weightValue = value
-  }
+  //life cycle assessment
 
-  getWeightGoalValue(value) {
-    this.weightGoalValue = value
+  getNutriotionHabitsState(event) {
+    this.nutriotionHabitsState = event.target.value
   }
 
-  getGender($event) {
-    console.log($event.target.value)
-  }
-
-  getDOB(event) {
-    this.dateOfBirth = event.target.value
-    console.log(this.dateOfBirth)
-  }
-
-  //assessment
-
-  getNutritionState(event) {
-    console.log(event.target.value)
-  }
-
-  getWalkActiveState(event) {
-    console.log(event.target.value)
+  getDailyActivityLevel(event) {
+    this.dailyActivityLevel = event.target.value
   }
   getPhysicalActivityState(event) {
-    console.log(event.target.value)
+    this.physicalActivityState = event.target.value
   }
 
-  getSentenceDescribeState(event) {
-    console.log(event.target.value)
+  getMotivationStage(event) {
+    this.motivationStage = event.target.value
   }
   submitInfo() {
-    console.log('sumitinfo')
+    let lifeStyleAssessments = [{
+      question: "Do you participate in physical activity?",
+      result: this.physicalActivityState
+    },
+    {
+      question: "How active are you in your daily life?",
+      result: this.dailyActivityLevel
+    }, {
+      question: "Are you eating nutritiously enough?",
+      result: this.nutriotionHabitsState
+    }, {
+      question: "Which sentence best describes?",
+      result: this.motivationStage
+    }
+    ]
+    this.coacheeService.update_assessments_and_recommended_habit({lifeStyleAssessments:lifeStyleAssessments,firstTimeLogin:false}).subscribe(success => {
+      if (success) {
+        this.router.navigateByUrl('/coachee')
+      }
+    })
+
   }
 }

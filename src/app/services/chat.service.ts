@@ -1,34 +1,88 @@
 import { Injectable } from '@angular/core';
-
+import { mapTo, catchError, tap, merge, map, } from 'rxjs/operators';
+import { Socket } from 'ngx-socket-io';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { AlertController, LoadingController } from '@ionic/angular';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ChatService {
-private  messages = [
-    {
-      user: 'simon',
-      createdAt: 1554090856000,
-      isImage:false,
-      msg: 'Hey whats up mate?',
-      imgData:""
-    },
-    {
-      user: 'max',
-      createdAt: 1554090956000,
-      isImage:false,
-      msg: 'Working on the Ionic mission, you?',
-      imgData:""
-    },
-    {
-      user: 'simon',
-      createdAt: 1554091056000,
-      isImage:false,
-      msg: 'Doing some new tutorial stuff',
-      imgData:""
-    }
-  ];
-  constructor() { }
-  getAllMessages(){
-    return this.messages
+  loading: any
+  userId:any
+  url = `${environment.url}/api/chat`;
+  constructor(private socket: Socket,
+    private http: HttpClient,
+    private alertCtrl:AlertController,
+    private loadingCtrl:LoadingController,
+  ) {
+    this.socket.connect()
+  }
+
+  goto_chat_room(roomName) {
+    return this.http.get(`${this.url}/rooms/${roomName}`).pipe(
+      catchError(e => {
+        let error = e.error.message;
+        throw error;
+      })
+    )
+  }
+
+  close() {
+    this.socket.disconnect()
+  }
+
+  join_chat_room(chatRoom) {
+    this.socket.emit('enter chatRoom', chatRoom)
+  };
+
+  leave_chat_room(chatRoom) {
+    this.socket.emit('leave chatRoom', chatRoom)
+  }
+
+  send_message(messageInfo) {
+    this.socket.emit('new message',messageInfo)
+  }
+
+  refresh_message() {
+    return this.socket.fromEvent('refresh message')
+  }
+
+  create_new_message(message){
+    return this.http.post(`${this.url}/messages`,message).pipe(
+      mapTo(true),
+      catchError(e => {
+        let error = e.error.message;
+        this.show_alert(error);
+        throw error;
+      })
+    )
+  }
+  get_messages_pagination(chatRoomId,skipNum){
+    return this.http.get(`${this.url}/messages/${chatRoomId}/?skipNum=${skipNum}`).pipe(
+      catchError(e => {
+        let error = e.error.message;
+        this.show_alert(error);
+        throw error;
+      })
+    )
+   } 
+  async show_alert(msg) {
+    let alert = await this.alertCtrl.create({
+      message: msg,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  show_loading() {
+    this.loading = this.loadingCtrl.create({
+      message: 'Please wait...',
+      spinner: 'crescent',
+    })
+    this.loading.then(loading => {
+      loading.present()
+    })
   }
 }

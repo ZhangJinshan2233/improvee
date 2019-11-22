@@ -8,7 +8,7 @@ const routes: Routes = [
     component: CoachTabsPage,
     children: [
       {
-        path: 'coach-home',
+        path: 'home',
         data: { allowUserType: [UserType.coach] },
         children: [
           {
@@ -17,44 +17,64 @@ const routes: Routes = [
           },
           {
             path: ':coacheeId',
-            loadChildren: '../coach-tabs/coachee-detail/coachee-detail.module#CoacheeDetailPageModule'
+            children: [
+              {
+                path: '',
+                loadChildren: '../coach-tabs/coachee-detail/coachee-detail.module#CoacheeDetailPageModule'
+              },
+              {
+                path: 'notes',
+                loadChildren: '../coach-tabs/note/note.module#NotePageModule'
+              },
+              {
+                path: 'indicators/:name',
+                loadChildren: '../coachee-tabs/indicator-records/indicator-records.module#IndicatorRecordsPageModule'
+              },
+              {
+                path: 'indicators/history/:name',
+                loadChildren: '../coachee-tabs/indicator-record-history/indicator-record-history.module#IndicatorRecordHistoryPageModule'
+              },
+              {
+                path: 'challenges/foodJournal/:challengeId',
+                loadChildren: '../coachee-tabs/foodjournal-post/foodjournal-post.module#FoodjournalPostPageModule'
+              },
+              
+            ]
           },
+
+
           {
-            path: ':coacheeId/notes',
-            loadChildren: '../coach-tabs/note/note.module#NotePageModule'
-          },
-          {
-            path: ':coacheeId/indicators/:indicatorName',
-            loadChildren: '../coachee-tabs/indicator-details/indicator-details.module#IndicatorDetailsPageModule'
-          },
+            path: 'chat/:coacheeId',
+            loadChildren: '../coach-tabs/chat/chat.module#ChatPageModule'
+          }
         ]
       },
       {
         path: 'profile',
         data: { allowUserType: [UserType.coach] },
-        children:[
+        children: [
           {
-            path:'',
+            path: '',
             loadChildren: '../coach-tabs/coach-profile/coach-profile.module#CoachProfilePageModule',
           },
           {
-            path:'changePassword',
+            path: 'changePassword',
             loadChildren: '../coachee-tabs/change-password/change-password.module#ChangePasswordPageModule'
           },
-          
+
         ]
-       
+
       },
       {
         path: '',
-        redirectTo: '/coach/coach-home',
+        redirectTo: '/coach/home',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/coach/coach-home',
+    redirectTo: '/coach/home',
     pathMatch: 'full'
   }
 ]

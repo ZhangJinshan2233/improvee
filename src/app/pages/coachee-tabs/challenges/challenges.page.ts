@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ChallengeService } from 'src/app/services/challenge.service';
+import { ChallengeCategoryService } from 'src/app/services/challenge-category.service';
 import { Router } from '@angular/router';
-
+import{ChallengeService}from '../../../services/challenge.service'
 @Component({
   selector: 'app-challenges',
   templateUrl: './challenges.page.html',
@@ -10,21 +10,33 @@ import { Router } from '@angular/router';
 export class ChallengesPage implements OnInit {
 
   allChallenges = [];
-  activeChallenges = []
-  constructor(private challengeService: ChallengeService,private router:Router) { }
+  activeChallenges = [];
+  constructor(private categoryService: ChallengeCategoryService,
+    private challengeService:ChallengeService,
+     private router: Router) { }
 
   ngOnInit() {
-    this.allChallenges = this.challengeService.getAllChallenges();
-    this.activeChallenges = this.challengeService.getActiveChallenges()
+    this.challengeService.get_categories_and_active_categories().subscribe(res=>{
+     console.log(res)
+      this.allChallenges = res[1]['challengeCategories'];
+      this.activeChallenges=res[0]['activeChallenges']
+    })
+    this.challengeService.newChallengeSubject.subscribe(res=>{
+      if(res){
+       this.activeChallenges.push(res)
+      }
+    })
   }
   ionViewWillEnter() {
-    let tabBar=document.querySelector('ion-tab-bar');
-    tabBar.style.display='flex'
+    let tabBar = document.querySelector('ion-tab-bar');
+    tabBar.style.display = 'flex';
+   
   }
-async gotoActiveChallenge(title:string){
- let activeChallenge=await this.challengeService.findActiveChallenge(title)
- if(activeChallenge.title=='food journal'){
-   this.router.navigateByUrl(`coachee/challenges/activeChallenges/${activeChallenge.title}`)
- }
-}
+
+  goto_challenge_detail(activeChallengeId){
+    this.router.navigateByUrl(`coachee/challenges/activeChallenges/${activeChallengeId}`)
+  }
+  logRatingChange($event) {
+
+  }
 }

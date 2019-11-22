@@ -39,7 +39,10 @@ ion-checkbox {
 ion-grid:last-child {
     margin-top: 30px
 }
+ion-content{
+    --background: linear-gradient(30deg, #e8eaf3 40%, rgb(253, 246, 246) 40%, rgb(253, 246, 246) 70%, #fdf1df 70%, #fdf1df 100%) !important;
+}
 
-ion-footer ion-toolbar {
-    --background: var(--ion-color-light-shade)
+ion-item{
+    --background:transparent !important;
 }

@@ -12,7 +12,7 @@ export class MenuService {
   getUserInfo(){
     return this.http.get(this.url).pipe(
       catchError(e => {
-        let error = e.error['error'] ? e.error['error'] : "fail to sign up"
+        let error = e.error.message ? e.error.message  : "fail to sign in"
         this.showAlert(error);
         throw error;
       })

@@ -3,61 +3,98 @@ import { CoachService } from "../../../services/coach.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
 import { Chart, ChartOptions } from 'chart.js';
+import * as _ from 'lodash'
 import {
   format,
   subDays
 } from "date-fns";
+import { get_record_status } from 'src/app/_helper/indicatorRecordStatus';
 @Component({
   selector: 'app-coachee-detail',
   templateUrl: './coachee-detail.page.html',
   styleUrls: ['./coachee-detail.page.scss'],
 })
 export class CoacheeDetailPage implements OnInit {
-  @ViewChild(IonSlides) slides: IonSlides
-  @ViewChild('habistListCanvas') habistListCanvas: ElementRef;
+  @ViewChild(IonSlides, { static: false }) slides: IonSlides
+  @ViewChild('habistListCanvas', { static: true }) habistListCanvas: ElementRef;
   habitListChart: Chart
   coachee: any;
   segmentValue = 0;
-  habitListAxisData: any;
+  habitListAxisData = ['Sun', 'Mon', 'Thu', 'Wed', 'Tue', 'Fri', 'Sat']
   items = [];
-  
-  habitListDataset = [50, 60, 90, 100, 20, 50, 60];
-
+  isHabitsSegmentLoaded = false;
+  isChallengeSegmentLoaded = false;
+  isIndicatorSegmentLoaded = false;
+  isMoreLoaded = false;
+  habitListDataset = [0, 0, 0, 0, 0, 0, 0];
   habitList = [];
-  allChallenges = [];
-  constructor(private coachService: CoachService, 
+  activeChallenges = [];
+  nonactiveChallenges = [];
+  indicatorRecords = [];
+  constructor(private coachService: CoachService,
     private activatedRoute: ActivatedRoute,
-    private router:Router) { }
+    private router: Router) { }
 
   ngOnInit() {
-    let id = this.activatedRoute.snapshot.params.coacheeId
-    this.coachee = this.coachService.findOne(id)
     let tabBar = document.querySelector('ion-tab-bar');
     tabBar.style.display = 'none'
-    this.habitList = this.coachService.getAllHabits();
-   
+    let coacheeId = this.activatedRoute.snapshot.params.coacheeId
+    this.coachService.coachee_details_get_coachee_and__week_habitlist(coacheeId).subscribe(res => {
+      this.coachee = res[0]['coachee'];
+      this.habitList = res[1]['weekHabitlist'];
+      this.isHabitsSegmentLoaded = true
+      for (let i = 0; i < this.habitList.length; i++) {
+        let completedHabitPercent = 0
+        if (this.habitList[i].habits.length > 0) {
+          let todayCompoletedHabitList = _.filter(this.habitList[i].habits, (item) => {
+            return item.status
+          })
+          completedHabitPercent = (100 * todayCompoletedHabitList.length) / this.habitList[i].habits.length
+        } else {
+          completedHabitPercent = 0
+        }
+        this.habitListDataset[i] = completedHabitPercent
+      }
+      this.create_habitList_chart(this.habistListCanvas.nativeElement, this.habitListAxisData, this.habitListDataset)
+    })
   }
-  async segmentChanged($event) {
+
+  async segment_change($event) {
     switch ($event.target.value) {
       case '0':
-        if (!this.habitList.length) {
-          console.log(0)
-          this.habitList = this.coachService.getAllHabits()
-        }
         break;
       case '1':
-        if (!this.allChallenges.length) {
-          console.log(1)
-          this.allChallenges = this.coachService.getChallenges();
+        this.segmentValue = 1
+        if (!this.isChallengeSegmentLoaded) {
+          this.coachService.coachee_details_get_activechallenges_and__nonactivechallenges(this.coachee._id).subscribe(res => {
+            this.isChallengeSegmentLoaded = true;
+            this.activeChallenges = res[0]['activeChallenges'];
+            this.nonactiveChallenges = res[1]['nonactiveChallenges']
+          })
         }
         break;
-      case '2': 
-        if (!this.items.length) {
-          this.items = this.items1;
-          this.items[0].open = true;
+      case '2':
+        this.segmentValue = 2
+        if (!this.isIndicatorSegmentLoaded) {
+          this.coachService.coachee_details_get_indicators_record(this.coachee._id).subscribe(res => {
+            this.isIndicatorSegmentLoaded = true
+            let changedStatusRecord = res['indicatorRecordByName'].map(item => {
+              return get_record_status(item, this.coachee)
+            })
+            this.indicatorRecords =
+              _.chain(changedStatusRecord)
+                .groupBy('group')
+                .toPairs()
+                .map(item => _.zipObject(['group', 'indicators'], item))
+                .orderBy('group', 'desc')
+                .value();
+            this.indicatorRecords[0].open = true;
+          })
         }
         break;
       case '3':
+        this.segmentValue = 3
+        console.log(3)
         break;
     }
     await this.slides.slideTo(this.segmentValue)
@@ -67,18 +104,7 @@ export class CoacheeDetailPage implements OnInit {
     this.segmentValue = await this.slides.getActiveIndex();
   }
 
-  ionViewDidEnter() {
-
-    this.habitListAxisData = new Array(7).fill('').reduce((pre, cur, index) => {
-      cur = format(subDays(new Date(), index), 'ddd')
-      return [...pre, cur]
-    }, [])
-
-    this.createHabitListChart(this.habistListCanvas.nativeElement, this.habitListAxisData, this.habitListDataset)
-
-  }
-  createHabitListChart(chartview, axisData, dataset) {
-
+  create_habitList_chart(chartview, axisData, dataset) {
     this.habitListChart = new Chart(chartview, {
       type: 'bar',
       data: {
@@ -106,88 +132,42 @@ export class CoacheeDetailPage implements OnInit {
       }
     });
   }
-
-  updateMonthChart(monthViewXaxis, monthData) {
-    this.habitListChart.data.labels = monthViewXaxis
-    this.habitListChart.data.datasets.forEach((dataset) => {
-      dataset.data = monthData
-    });
-    this.habitListChart.update();
+  /**
+    * toggle section
+    * @param index 
+    */
+  toggle_section(index) {
+    this.indicatorRecords[index].open = !this.indicatorRecords[index].open
+    if (this.indicatorRecords[index].open) {
+      for (let i = 0; i < this.indicatorRecords.length; i++) {
+        if (i != index) {
+          this.indicatorRecords[i].open = false;
+        }
+      }
+    }
   }
 
+  /**
+  * go to indicator record page
+  * @param indicator 
+  * @param i =>which group
+  * @param j =>which indicator
+  */
+  goto_indicator_details(indicator, i, j) {
+
+    this.router.navigateByUrl(`/coach/home/${this.coachee._id}/indicators/history/${indicator.name}`)
+
+  }
+  goto_challenge_detail(challenge) {
+    let challengeCategoryName = challenge.categoryName
+    if (challengeCategoryName === "Food Journal") {
+      this.router.navigateByUrl(`coach/home/${this.coachee._id}/challenges/foodJournal/${challenge._id}`)
+    }
+    console.log(challenge)
+  }
   gotoIndicatorPage(indicator) {
 
   }
-  items1: any[] = [
-    {
-      groupName: 'Wellness',
-      indicators: [
-        {
-          indicatorName: 'weight',
-          value: '68',
-          unit: 'kg',
-          createDate: '7/12/2019',
-          state: 'normal'
-
-        },
-        {
-          indicatorName: 'height',
-          value: '171',
-          unit: 'cm',
-          createDate: '7/12/2019',
-          state: 'normal'
-        },
-        {
-          indicatorName: 'BMI',
-          value: '25',
-          unit: '',
-          createDate: '7/12/2019',
-          state: 'over'
-        },
-        {
-          indicatorName: 'waist',
-          value: '89',
-          unit: 'cm',
-          createDate: '7/12/2019',
-          state: 'server'
-        }
-      ]
-    },
-    {
-      groupName: 'Medical',
-      indicators: [
-        {
-          indicatorName: 'HDL',
-          value: '4.5',
-          unit: 'mm/mmol',
-          createDate: '7/12/2019',
-          state: 'normal'
-        },
-        {
-          indicatorName: 'BP-sys',
-          value: '110',
-          unit: 'mm/mmol',
-          createDate: '7/12/2019',
-          state: 'normal'
-        },
-        {
-          indicatorName: 'BP-dys',
-          value: '89',
-          unit: 'mm/mmol',
-          createDate: '7/12/2019',
-          state: 'normal'
-        },
-        {
-          indicatorName: 'LDL',
-          value: '4.5',
-          unit: 'mm/mmol',
-          createDate: '7/12/2019',
-          state: 'server'
-        }
-      ]
-    }
-  ]
-
   toggleSection(index) {
     this.items[index].open = !this.items[index].open
     if (this.items[index].open) {
@@ -200,7 +180,7 @@ export class CoacheeDetailPage implements OnInit {
   }
 
   gotoIndicatorDetails(indicatorName) {
-  this.router.navigateByUrl(`coach/coach-home/${this.coachee.id}/indicators/${indicatorName}`)
+    this.router.navigateByUrl(`coach/home/${this.coachee.id}/indicators/${indicatorName}`)
   }
 
   getStateOfIndicator(state) {

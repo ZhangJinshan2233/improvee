@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-
+import { ShareModule } from "../../share/share.module";
 import { ChatPage } from './chat.page';
 
 const routes: Routes = [
@@ -19,6 +19,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    ShareModule,
     RouterModule.forChild(routes)
   ],
   declarations: [ChatPage]

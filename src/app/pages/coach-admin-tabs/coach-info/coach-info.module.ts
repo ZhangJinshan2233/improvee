@@ -15,6 +15,7 @@ import { CoachInfoPage } from './coach-info.page';
     ReactiveFormsModule
   ],
   declarations: [CoachInfoPage],
-  entryComponents:[CoachInfoPage]
+  entryComponents:[CoachInfoPage],
+  
 })
 export class CoachInfoPageModule {}

@@ -4,18 +4,14 @@ import {
   FormBuilder,
   Validators
 } from "@angular/forms";
-
-import anime from "animejs";
 import { Router } from "@angular/router";
-// import {
-//   NativePageTransitions,
-//   NativeTransitionOptions
-// } from '@ionic-native/native-page-transitions/ngx';
 
 import { AuthService } from "../../services/auth.service";
 import { User } from 'src/app/model/user';
-
-const SHAKE_DISTANCE = 16;
+import { ModalController } from '@ionic/angular';
+import { customModalEnterAnimation } from 'src/app/_helper/customModalEnter';
+import { customModalLeaveAnimation } from 'src/app/_helper/customModalLeave';
+import { ForgetPasswordPage } from "../forget-password/forget-password.page";
 
 @Component({
   selector: "app-login",
@@ -25,121 +21,79 @@ const SHAKE_DISTANCE = 16;
 export class LoginPage implements OnInit {
   user: User
   loginForm: FormGroup;
-
   isSubmitted = false;
 
   constructor(private formBuilder: FormBuilder,
+    private modalCtrl: ModalController,
     private router: Router,
-    // private nativePageTransitions: NativePageTransitions,
     private authService: AuthService) { }
 
   ngOnInit() {
-    this.createLoginForm();
-
+    this.create_login_form();
   }
 
-  ionViewWillLeave() {
-
-    /** set transtition when page leave */
-
-    // let options: NativeTransitionOptions = {
-    //   direction: 'up',
-    //   duration: 500,
-    //   slowdownfactor: 3,
-    //   slidePixels: 20,
-    //   fixedPixelsBottom: 60
-    // }
-
-    // this.nativePageTransitions.curl(options)
-    //   .then(() => {
-    //     console.log("successed")
-    //   })
-    //   .catch(() => {
-    //     console.log("error")
-    //   });
-
+  get f() {
+    return this.loginForm.controls
   }
 
-  createLoginForm() {
+  create_login_form() {
     this.loginForm = this.formBuilder.group({
-      email: ["", [Validators.required, Validators.email]],
-      password: ["", Validators.required]
+      email: ["890@8907", [Validators.required, Validators.email]],
+      password: ["123456", [Validators.required, Validators.minLength(6)]]
     });
   }
   /**
    * login
    * @function onSubmit
+   * @param email password
    */
   onSubmit() {
-
     this.isSubmitted = true;
-
-    if (!this.loginForm.valid) {
-
-      this.shakeForm(); return
-
-    } else {
-
-
-      this.authService.login(this.loginForm.value).subscribe(res => {
-
-        this.authService.currentUser.subscribe(user => {
-
-          this.loginForm.setValue({ 'email': '', 'password': '' })
+    if (this.loginForm.invalid) return
+    this.authService.login(this.loginForm.value).subscribe(user => {
+      if (user) {
+        if (user.firstTimeLogin) {
+          this.router.navigateByUrl('/coachee/info')
           this.isSubmitted = false
-          
-          if (user != null) {
+          this.loginForm.setValue({ 'email': '', 'password': '' })
+          return;
+        }
+        switch (user.userType) {
+         
+          case 'Coachee':
+            this.router.navigateByUrl('/coachee');
+            break;
+          case 'CommonCoach':
+            this.router.navigateByUrl('/coach')
+            break;
 
-            if (user.userType === 'freeCoachee' || user.userType === 'premiumCoachee') {
-              
-              this.router.navigateByUrl('/coachee/info')
+          case 'AdminCoach':
+            this.router.navigateByUrl('/adminCoach')
+            break;
 
-            } else if (user.userType === 'coach') {
+          default:
+            console.log("No  exists!");
+            break;
+        }
+      }
 
-              this.router.navigateByUrl('/coach')
+    });
 
-            } else if (user.userType === 'adminCoach') {
-
-              this.router.navigateByUrl('/adminCoach')
-            }
-          }
-
-        })
-      });
-    }
   }
 
-  register() {
+  goto_register_page() {
+
     this.router.navigateByUrl('/register')
   }
 
-  /*
-   * shake form when form has error
-  */
+  async create_forget_password_modal() {
 
-  shakeForm() {
-    let shake = anime({
-      targets: "form",
-      easing: "easeInOutSine",
-      duration: 550,
-      translateX: [
-        {
-          value: SHAKE_DISTANCE * -1
-        },
-        {
-          value: SHAKE_DISTANCE
-        },
-        {
-          value: SHAKE_DISTANCE / -2
-        },
-        {
-          value: SHAKE_DISTANCE / 2
-        },
-        {
-          value: 0
-        }
-      ]
-    });
+    let forgetPasswordModal = await this.modalCtrl.create({
+      component: ForgetPasswordPage,
+      enterAnimation: customModalEnterAnimation,
+      leaveAnimation: customModalLeaveAnimation,
+    })
+
+    await forgetPasswordModal.present()
   }
-
 }

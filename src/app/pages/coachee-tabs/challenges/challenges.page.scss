@@ -1,14 +1,45 @@
-ion-img{
-    position: absolute;
-    opacity: 0.4;
-    z-index: -1;
-}
-ion-item-group:last-of-type ion-card{
-    height:200px;
-}
+// ion-img{
+//     position: absolute;
+//     opacity: 0.4;
+//     z-index: -1;
+// }
+// ion-item-group:last-of-type ion-card{
+//     height:200px;
+// }
 
 ion-range {
     --knob-background: var(--ion-color-secondary);
     --bar-height: 5px;
     --bar-border-radius: 2.5px;
+}
+
+ion-content {
+    --background: linear-gradient(60deg, #e8eaf3 45%, rgb(253, 246, 246) 45%) fixed !important;
+}
+
+ion-item-divider {
+    --background: var(--ion-color-secondary);
+    --inner-padding-start: 10px;
+    --color: rgb(253, 246, 246);
+    border-radius: 8px;
+}
+
+ion-item-group {
+    background-color: transparent !important;
+
+    ion-item {
+        --background: transparent !important;
+    }
+
+    ion-card {
+        --background: transparent !important;
+    }
+}
+
+ion-card-header {
+    padding-bottom: 0px 
+}
+
+.ion-label-font-size{
+    font-size: 1.5em
 }

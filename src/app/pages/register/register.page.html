@@ -1,66 +1,114 @@
-
 <ion-header>
-  <ion-toolbar color='primary'>
+  <ion-toolbar color='secondary'>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Sign up</ion-title>
+    <ion-title class='ion-text-center'>Sign up</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col align-self-center>
-        <form novalidate [formGroup]="registerForm" (ngSubmit)="onSubmit()" #registerFormCtrls class="animated">
-          <ion-item>
-            <ion-label position="floating" color="primary">First name</ion-label>
-            <ion-input type="text" formControlName="firstName"
-              [ngClass]="{ 'is-invalid': isSubmitted&& registerForm.controls['firstName'].errors }"></ion-input>
-          </ion-item>
-          <div *ngIf="isSubmitted && registerForm.controls['firstName'].errors" padding class="invalid-feedback">
-            <div *ngIf="registerForm.controls['firstName'].errors.required">First name is required</div>
-          </div>
-          <ion-item>
-            <ion-label position="floating" color="primary">Last name</ion-label>
-            <ion-input type="text" formControlName="lastName"
-              [ngClass]="{ 'is-invalid': isSubmitted&& registerForm.controls['lastName'].errors }"></ion-input>
-          </ion-item>
-          <div *ngIf="isSubmitted&& registerForm.controls['lastName'].errors" padding class="invalid-feedback">
-            <div *ngIf="registerForm.controls['lastName'].errors.required">Last name is required</div>
-          </div>
-          <ion-item>
-            <ion-label position="floating" color="primary">Email</ion-label>
-            <ion-input type="email" formControlName="email"
-              [ngClass]="{ 'is-invalid': isSubmitted&& registerForm.controls['email'].errors }"></ion-input>
-          </ion-item>
-          <div *ngIf="isSubmitted&& registerForm.controls['email'].errors" padding class="invalid-feedback">
-            <div *ngIf="registerForm.controls['email'].errors.required">Email is required</div>
-            <div *ngIf="registerForm.controls['email'].errors.email">Email must be a valid email address</div>
-          </div>
-          <ion-item>
-            <ion-label position="floating" color="primary">Password</ion-label>
-            <ion-input type="password" formControlName="password" class="form-control"
-              [ngClass]="{ 'is-invalid': isSubmitted&& registerForm.controls['password'].errors }"></ion-input>
-          </ion-item>
-          <div *ngIf="isSubmitted&& registerForm.controls['password'].errors" padding class="invalid-feedback">
-            <div *ngIf="registerForm.controls['password'].errors.required">Password is required</div>
-            <div *ngIf="registerForm.controls['password'].errors.minlength">Password must be at least 6 characters</div>
-          </div>
-
-          <ion-item>
-            <ion-label position="floating" color="primary">Confirm password</ion-label>
-            <ion-input type="password" formControlName="confirmPassword"
-              [ngClass]="{ 'is-invalid': isSubmitted&& registerForm.controls['confirmPassword'].errors }"></ion-input>
-          </ion-item>
-          <div *ngIf="isSubmitted&& registerForm.controls['confirmPassword'].errors" padding class="invalid-feedback">
-            <div *ngIf="registerForm.controls['confirmPassword'].errors.required">Confirm Password is required</div>
-            <div *ngIf="registerForm.controls['confirmPassword'].errors.mustMatch">Passwords must match</div>
-          </div>
-          <div class='ion-padding ion-margin'>
-						<ion-button color='primary' size='large' expand="block" type="submit">SIGN UP</ion-button>
-					</div>
-        </form>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-list class='ion-no-margin'>
+    <form novalidate [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <ion-item>
+        <ion-input type="text" formControlName="firstName" placeholder="First name"
+          [ngClass]="{ 'is-invalid': isSubmitted&& f.firstName.errors }"></ion-input>
+      </ion-item>
+      <div *ngIf="isSubmitted && f.firstName.errors" class="invalid-feedback ion-padding">
+        <div *ngIf="f.firstName.errors.required">First name is required</div>
+      </div>
+      <ion-item>
+        <ion-input type="text" formControlName="lastName" placeholder="Last name"
+          [ngClass]="{ 'is-invalid': isSubmitted&& f.lastName.errors }">
+        </ion-input>
+      </ion-item>
+      <div *ngIf="isSubmitted&& f.lastName.errors" class="invalid-feedback ion-padding">
+        <div *ngIf="f.lastName.errors.required">Last name is required</div>
+      </div>
+      <ion-item>
+        <ion-input type="email" formControlName="email" placeholder="Email"
+          [ngClass]="{ 'is-invalid': isSubmitted&& f.email.errors }">
+        </ion-input>
+      </ion-item>
+      <div *ngIf="isSubmitted && f.email.errors" class="invalid-feedback ion-padding">
+        <div *ngIf="f.email.errors.required">Email is required</div>
+        <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+      </div>
+      <ion-item>
+        <ion-input type='text' formControlName='phoneNumber' placeholder='Phone number'></ion-input>
+      </ion-item>
+      <div *ngIf="isSubmitted && f.phoneNumber.errors" class='invalid-feedback ion-padding'>
+        <div *ngIf="f.phoneNumber.errors.required">phone number is required</div>
+        <div *ngIf="f.phoneNumber.errors.pattern">phone number is 8 numbers</div>
+      </div>
+      <ion-item>
+        <ion-input type='text' formControlName='height' placeholder='Height (cm)'></ion-input>
+      </ion-item>
+      <div *ngIf="isSubmitted && f.height.errors" class='invalid-feedback ion-padding'>
+        <div *ngIf="f.height.errors.required">height is required</div>
+        <div *ngIf="f.height.errors.min">height is invalid</div>
+        <div *ngIf="f.height.errors.max">height is invalid</div>
+        <div *ngIf="f.height.errors.pattern">height is invalid</div>
+      </div>
+      <ion-item>
+        <ion-input type='text' formControlName='weight' placeholder='Weight (Kg)'></ion-input>
+      </ion-item>
+      <div *ngIf="isSubmitted && f.weight.errors" class='invalid-feedback ion-padding'>
+        <div *ngIf="f.weight.errors.required">Weight is required</div>
+        <div *ngIf="f.weight.errors.min">Weight is invalid</div>
+        <div *ngIf="f.weight.errors.max">Weight is invalid</div>
+        <div *ngIf="f.weight.errors.pattern">Weight is invalid</div>
+      </div>
+      <ion-item>
+        <ion-label>Gender</ion-label>
+        <ion-select placeholder="Select One" formControlName="gender">
+          <ion-select-option value="female">Female</ion-select-option>
+          <ion-select-option value="male">Male</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="isSubmitted&& f.gender.errors" class="invalid-feedback ion-padding">
+        <div *ngIf="f.gender.errors.required">gender is required</div>
+      </div>
+      <ion-item>
+        <ion-label>DOB</ion-label>
+        <ion-datetime display-format="MMM DD, YYYY" formControlName="dateOfBirth">
+        </ion-datetime>
+      </ion-item>
+      <div *ngIf="isSubmitted&& f.dateOfBirth.errors" class="invalid-feedback ion-padding">
+        <div *ngIf="f.dateOfBirth.errors.required">date of birth is required</div>
+      </div>
+      <ion-item *ngIf="!isIndividual">
+        <ion-input  type="text" formControlName="companyCode" placeholder="company code"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="password" formControlName="password" placeholder='Password'
+          [ngClass]="{ 'is-invalid': isSubmitted&& f.password.errors }"></ion-input>
+      </ion-item>
+      <div *ngIf="isSubmitted&& f.password.errors" class="invalid-feedback ion-padding">
+        <div *ngIf="f.password.errors.required">Password is required</div>
+        <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+      </div>
+      <ion-item>
+        <ion-input type="password" formControlName="confirmPassword" placeholder='Confirm password'
+          [ngClass]="{ 'is-invalid': isSubmitted&& f.confirmPassword.errors }"></ion-input>
+      </ion-item>
+      <div *ngIf="isSubmitted&& f.confirmPassword.errors" class="invalid-feedback ion-padding">
+        <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+        <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+      </div>
+      <div class='ion-padding'>
+        <ion-button color='secondary' shape='round' size='default' expand="block" type="submit">SIGN UP</ion-button>
+      </div>
+    </form>
+  </ion-list>
+  <ion-item lines="none">
+    <ion-checkbox slot="start" size="small" (ionChange)="choose_group()"></ion-checkbox>
+    <small>
+      Company user
+    </small>
+  </ion-item>
+  <ion-item lines='none'>
+    <ion-label>
+      <small>By signing up, I accept the <a (click)="goto_terms_and_conditions()">Terms and Conditions</a></small>
+    </ion-label>
+  </ion-item>
 </ion-content>

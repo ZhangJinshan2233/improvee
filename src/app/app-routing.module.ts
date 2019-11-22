@@ -17,16 +17,9 @@ const routes: Routes = [
     loadChildren: './pages/register/register.module#RegisterPageModule',
   },
   {
-    path: 'slides',
-    loadChildren: './pages/slides/slides.module#SlidesPageModule',
-    data: { allowUserType: [UserType.free, UserType.premium] },
-    canActivateChild: [AuthGuardService],
-    canLoad: [AuthGuardService],
-  },
-  {
     path: 'coachee',
     loadChildren: './pages/coachee-tabs/coachee-tabs.module#CoacheeTabsPageModule',
-    data: { allowUserType: [UserType.free, UserType.premium] },
+    data: { allowUserType: [UserType.coachee] },
     canActivateChild: [AuthGuardService],
     canLoad: [AuthGuardService],
   },
@@ -44,11 +37,7 @@ const routes: Routes = [
     canActivateChild: [AuthGuardService],
     canLoad: [AuthGuardService]
   },
-  {
-    path: 'chat',
-    loadChildren: './pages/coachee-tabs/chat/chat.module#ChatPageModule'
-  },
-
+ 
 ]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

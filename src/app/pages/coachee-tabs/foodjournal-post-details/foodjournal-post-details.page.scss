@@ -1,0 +1,39 @@
+ion-icon{
+    font-size: 1.5em
+}
+.food-css {
+    position: relative;
+}
+ion-radio {
+    position: absolute;
+    opacity: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100%;
+    width: 100%
+}
+
+$border-style:1px dotted gray;
+
+.ion-row-border {
+    border-bottom: $border-style;
+}
+
+.ion-col-border {
+    border-right: $border-style;
+}
+
+.message-input {
+    width: 100%;
+    border: 1px solid var(--ion-color-medium);
+    border-radius: 10px;
+    background: #fff;
+    resize: none;
+    min-height: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  ion-thumbnail{
+      --size:180px
+  }

@@ -1,42 +1,39 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { trigger,state,style,animate,transition, query, stagger, animateChild } from "@angular/animations";
+import { trigger, state, style, animate, transition, query, stagger, animateChild } from "@angular/animations";
 import {
   format,
   lastDayOfWeek,
   getDay,
-  subDays
+  subDays,
+  addDays,
+  compareAsc,
 } from 'date-fns';
+import { HabitlistRecordService } from "../../../services/habitlist-record.service";
 @Component({
   selector: 'app-habitlist',
   templateUrl: './habitlist.page.html',
   styleUrls: ['./habitlist.page.scss'],
-  animations:[
-    trigger('fadeInOut',[
+  animations: [
+    trigger('fadeInOut', [
       state('void', style({
         opacity: 0
       })),
       state('*', style({
         opacity: 1
       })),
-      transition('void => *', animate(600)),
-      transition('*=>void',animate(300))
+      transition('void => *', animate(1000)),
+
     ])
   ]
 })
 export class HabitlistPage implements OnInit {
-
-  lists=[]
-  ngOnInit() {
-    this.lists=this.form1
-    this.getCurrentWeek()
-    let tabBar = document.querySelector('ion-tab-bar');
-    tabBar.style.display = 'none';
-  }
-  constructor(private router: Router) { }
-  currentDay: any;
+  isSubmitted=false //prevent user double clicking 
+  habitlistRecord: any;
+  currentDay: any
   currentDate: any;
-  isLastWeek = true
+  isLastWeek = true;
+  lastTimeDay: any
   week = {
     Sun: '',
     Mon: '',
@@ -46,60 +43,112 @@ export class HabitlistPage implements OnInit {
     Fri: '',
     Sat: ''
   }
-  currentWeek: any;
-  lastDayOfWeek: any;
+  //judge date is bigger than today 
+  weekdayStatus = {
+    Sun: true,
+    Mon: true,
+    Tue: true,
+    Wed: true,
+    Thu: true,
+    Fri: true,
+    Sat: true
+  }
+  //deal with ionSelect method execute two times in the first loading
+  isInitialized = true
 
-  getPreWeek() {
-    this.isLastWeek = false;
-    this.currentDate = format(new Date(subDays(new Date(this.currentDate), 7)), 'MM/DD/YYYY');
-    this.getWeek(this.currentDate)
-    console.log(this.currentDate)
+  ngOnInit() {
+
+    this.get_current_week()
+
+    let tabBar = document.querySelector('ion-tab-bar');
+
+    tabBar.style.display = 'none';
   }
 
-  getNextWeek() {
+  constructor(private router: Router,
+    private habitRecordService: HabitlistRecordService
+  ) {
+  }
 
-    this.currentDate = format(new Date(subDays(new Date(this.currentDate), -7)), 'MM/DD/YYYY');
-    if (this.currentDate == format(new Date(), 'MM/DD/YYYY')) {
+
+  get_pre_week() {
+    this.isSubmitted=true
+    this.isLastWeek = false;
+    //judge current day is eaqule to today and prevent exectue two time in the fist loading
+    let preWeekDay = format(new Date(subDays(new Date(this.currentDate), 7)), 'MM/DD/YYYY');
+    this.get_week(preWeekDay)
+    if (this.currentDay === getDay(new Date()).toString() && this.lastTimeDay === getDay(new Date()).toString()) {
+      this.get_current_date_habits(format(this.currentDate, 'MM/DD/YYYY'))
+    }
+  }
+
+  get_next_week() {
+    this.isSubmitted=true
+    let nextWeekDay = format(new Date(addDays(new Date(this.currentDate), 7)), 'MM/DD/YYYY');
+    if (nextWeekDay == format(new Date(), 'MM/DD/YYYY')) {
       this.isLastWeek = true
     }
-    this.getWeek(this.currentDate)
-    console.log(this.currentDate)
+    this.get_week(nextWeekDay)
+    if (this.currentDay === getDay(new Date()).toString() && this.lastTimeDay === getDay(new Date()).toString()) {
+      this.get_current_date_habits(format(this.currentDate, 'MM/DD/YYYY'))
+    }
   }
 
-  getCurrentWeek() {
-    this.getWeek(new Date());
+  get_current_week() {
+    this.isLastWeek = true
+    this.get_week(new Date());
+    // if (!this.isInitialized) {
+    //   this.get_current_date_habits(format(this.currentDate, 'MM/DD/YYYY'))
+    //   this.isInitialized = true
+    // }
+    // this.isInitialized = false
   }
-
-  getWeek(currentDate) {
+  /**
+   * set date of week
+   * @param currentDate 
+   */
+  get_week(currentDate) {
     this.currentDate = new Date(currentDate);
     this.currentDay = getDay(this.currentDate).toString()
-    this.lastDayOfWeek = format(lastDayOfWeek(currentDate), 'MM/DD/YYYY');
-    this.week.Sat = this.lastDayOfWeek
-    this.week.Sun = format(subDays(new Date(this.lastDayOfWeek), 6), 'MM/DD/YYYY');
-    this.week.Mon = format(subDays(new Date(this.lastDayOfWeek), 5), 'MM/DD/YYYY');
-    this.week.Tue = format(subDays(new Date(this.lastDayOfWeek), 4), 'MM/DD/YYYY');
-    this.week.Wed = format(subDays(new Date(this.lastDayOfWeek), 3), 'MM/DD/YYYY');
-    this.week.Thu = format(subDays(new Date(this.lastDayOfWeek), 2), 'MM/DD/YYYY');
-    this.week.Fri = format(subDays(new Date(this.lastDayOfWeek), 1), 'MM/DD/YYYY');
+    let lastDayWeek = format(lastDayOfWeek(this.currentDate), 'MM/DD/YYYY');
+    this.week.Sat = lastDayWeek
+    this.week.Sun = format(subDays(new Date(lastDayWeek), 6), 'MM/DD/YYYY');
+    this.week.Mon = format(subDays(new Date(lastDayWeek), 5), 'MM/DD/YYYY');
+    this.week.Tue = format(subDays(new Date(lastDayWeek), 4), 'MM/DD/YYYY');
+    this.week.Wed = format(subDays(new Date(lastDayWeek), 3), 'MM/DD/YYYY');
+    this.week.Thu = format(subDays(new Date(lastDayWeek), 2), 'MM/DD/YYYY');
+    this.week.Fri = format(subDays(new Date(lastDayWeek), 1), 'MM/DD/YYYY');
 
+    //prevent click the day which bigger than today and diasbled ion select
+    for (let day in this.week) {
+      if (compareAsc(this.week[day], new Date()) >= 0) {
+        this.weekdayStatus[day] = true
+      } else {
+        this.weekdayStatus[day] = false
+      }
+    }
   }
-  getCurrentDate(date) {
-    setTimeout(()=>{
-      this.lists==this.form1?this.lists=this.form2:this.lists=this.form1
-    },300)
-   
-  }
-  public form1 = [
-    { val: 'drink 8 glasses water', isChecked: true },
-    { val: 'eat vegetables', isChecked: false },
-    { val: 'fast dinner', isChecked: false }
-  ];
-  public form2 = [
-    { val: 'water', isChecked: true },
-    { val: 'vegetables', isChecked: false },
-    { val: 'dinner', isChecked: false }
-  ];
 
+  get_current_date_habits(date) {
+    this.lastTimeDay = getDay(date).toString()
+    this.habitRecordService.get_habitlist_record_by_date(date).subscribe(res => {
+      if (res['habitsOfScheduleDay']) {
+        this.habitlistRecord = res['habitsOfScheduleDay']
+        this.isSubmitted=false
+      } else {
+        this.habitRecordService.create_habitlist_record({ createDate: date }).subscribe(res => {
+          this.habitlistRecord = res['habitsOfScheduleDay']
+          this.isSubmitted=false
+        })
+      }
+    })
+  }
+  update_habit_item(habit) {
+    console.log(this.isInitialized)
+    this.habitRecordService.update_habitlist_item_status(this.habitlistRecord._id, habit).subscribe(res => {
+      console.log(res)
+    })
+  }
   gotoHabitListItemsPage() {
     this.router.navigateByUrl('')
   }

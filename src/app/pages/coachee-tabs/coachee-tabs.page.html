@@ -1,20 +1,20 @@
-<ion-tabs>
+<ion-tabs  (ionTabsDidChange)="getSelectedTab()">
   <ion-tab-bar slot='bottom'>
-    <ion-tab-button tab="coachee-home" *appHasRole="['freeCoachee','premiumCoachee']">
+    <ion-tab-button tab="coachee-home" *appHasRole="['Coachee']">
       <ion-label>Home</ion-label>
-      <ion-icon name="custom-icon-home-outline"></ion-icon>
+      <ion-icon name="custom-icon-home-outline" [ngClass]="{'is-active-tab':activeTab==='coachee-home'}"></ion-icon>
     </ion-tab-button>
-    <ion-tab-button tab="dashboard" *appHasRole="['freeCoachee','premiumCoachee']">
+    <ion-tab-button tab="dashboard" *appHasRole="['Coachee']">
       <ion-label>Record</ion-label>
-      <ion-icon name="custom-icon-record-outline"></ion-icon>
+      <ion-icon name="custom-icon-record-outline" [ngClass]="{'is-active-tab':activeTab==='dashboard'}"></ion-icon>
     </ion-tab-button>
-    <ion-tab-button tab="challenges" *appHasRole="['freeCoachee','premiumCoachee']">
+    <ion-tab-button tab="challenges" *appHasRole="['Coachee']">
       <ion-label>Challenge</ion-label>
-      <ion-icon name='custom-icon-challenge-outline'></ion-icon>
+      <ion-icon name='custom-icon-challenge-outline' [ngClass]="{'is-active-tab':activeTab==='challenges'}"></ion-icon>
     </ion-tab-button>
-    <ion-tab-button tab="menu" *appHasRole="['freeCoachee','premiumCoachee']">
+    <ion-tab-button tab="menu" *appHasRole="['Coachee']">
       <ion-label>Menu</ion-label>
-      <ion-icon name='custom-icon-menu-outline'></ion-icon>
+      <ion-icon name='custom-icon-menu-outline' [ngClass]="{'is-active-tab':activeTab==='menu'}"></ion-icon>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>

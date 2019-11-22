@@ -1,36 +1,37 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
-    <ion-grid>
-      <ion-row align-items-center>
-        <ion-col>
-          <ion-avatar>
-            <ion-img [src]="currentUser?.profileImage?.data || noavatar "></ion-img>
-          </ion-avatar>
-        </ion-col>
-        <ion-col>
-          <h3 class="text-primary">{{currentUser.firstName}}{{currentUser.lastName}}</h3>
-          <ion-note class="text-primary">{{currentUser.email}}</ion-note>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+   
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content #scrollArea [fullscreen]="true" [scrollEvents]='true' class="ion-padding-top">
+  <ion-grid>
+    <ion-row align-items-center>
+      <ion-col>
+        <ion-avatar>
+          <ion-img [src]="currentUser?.profileImage?.data || noavatar "></ion-img>
+        </ion-avatar>
+      </ion-col>
+      <ion-col>
+        <h3 class="text-primary">{{currentUser.firstName}}{{currentUser.lastName}}</h3>
+        <ion-note class="text-primary">{{currentUser.email}}</ion-note>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <ion-list>
-    <ion-item lines="none" [routerLink]="['/coachee/menu/profile']" routerDirection="forward">
+    <ion-item  [routerLink]="['/coachee/menu/profile']" routerDirection="forward">
       <ion-icon slot="start" name="person"></ion-icon>
       <ion-label>my profile</ion-label>
     </ion-item>
-    <ion-item lines="none" routerDirection="forward">
+    <ion-item  routerDirection="forward">
       <ion-icon slot="start" name="mail"></ion-icon>
       <ion-label>contact us</ion-label>
     </ion-item>
-    <ion-item lines="none" routerDirection="forward">
+    <ion-item  routerDirection="forward">
       <ion-icon slot="start" name="lock"></ion-icon>
       <ion-label>privacy policy</ion-label>
     </ion-item>
-    <ion-item lines="none" routerDirection="forward">
+    <ion-item  routerDirection="forward">
       <ion-icon slot="start" name="star"></ion-icon>
       <ion-label>rating us</ion-label>
     </ion-item>

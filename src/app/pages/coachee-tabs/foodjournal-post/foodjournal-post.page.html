@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Food Journal</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-card *ngFor='let post of foodJournalPosts; index as i'>
+      <ion-row class='ion-align-items-center'>
+        <ion-col size='7'>
+          <div>
+            <ion-card-header>
+              <ion-card-title class='ion-text-capitalize'>{{post.mealCategory}}</ion-card-title>
+            </ion-card-header>
+          </div>
+        </ion-col>
+        <ion-col class=ion-text-end>
+          <div>
+            {{post.createDate| timeAgo}}
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-card-content class="ion-no-padding">
+        <ion-text class="ion-padding">
+          {{post.description}}
+        </ion-text>
+        <ion-img src="data:image/jpeg;base64,{{post?.imgData}}"></ion-img>
+        <ion-grid>
+          <ion-row>
+            <ion-col class="ion-text-center">
+              <div>
+                <ionic4-star-rating activeIcon="heart" defaultIcon="heart-empty" activeColor="#ffb647"
+                  defaultColor="#989aa2" readonly={{isReadonly}} fontSize="20px"
+                  rating = {{post.rating}}
+                  (ratingChanged)="logRatingChange(post._id,$event)">
+                </ionic4-star-rating>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="ion-align-self-center">
+              <ion-button fill="clear" (click)="add_comment(post._id,i)">
+                <ion-icon slot='start' name="text"></ion-icon>
+                {{post.comments.length}} comments
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="load_more_posts($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <div *ngIf="isCoachee">
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf='!nonActive'>
+      <ion-fab-button (click)="add_post()">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+ 
+</ion-content>

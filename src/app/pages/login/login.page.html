@@ -1,50 +1,41 @@
 <ion-content>
-	<div padding-horizontal text-center>
-		<div class="logo" #logo></div>
-		<h3 no-margin>
-			<ion-text class="fw700 text-primary">
-				Improvee
-			</ion-text>
-		</h3>
-	</div>
 	<ion-grid>
-		<ion-row justify-content-center>
-			<ion-col align-self-center>
+		<ion-row class="justify-content-center">
+			<ion-col class="ion-align-self-center">
 				<form novalidate [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-
 					<ion-item>
-						<ion-label position="floating" color="primary">Email</ion-label>
-						<ion-input type="email" formControlName="email" [ngClass]="{ 'is-invalid': isSubmitted && loginForm.controls['email'].errors }"></ion-input>
+						<ion-label position="floating">Email</ion-label>
+						<ion-input type="email" formControlName="email" clear-input=true
+							[ngClass]="{ 'is-invalid': isSubmitted && f.email.errors }"></ion-input>
 					</ion-item>
-					<div *ngIf="isSubmitted && loginForm.controls['email'].errors" padding class="invalid-feedback">
-						<div *ngIf="loginForm.controls['email'].errors.required">Email is required</div>
-						<div *ngIf="loginForm.controls['email'].errors.email">Email must be a valid email address</div>
+					<div *ngIf="isSubmitted && f.email.errors" class="ion-padding invalid-feedback">
+						<div *ngIf="f.email.errors.required">Email is required</div>
+						<div *ngIf="f.email.errors.email">Email must be a valid email address</div>
 					</div>
 					<ion-item>
-						<ion-label position="floating" color="primary">Password</ion-label>
-						<ion-input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': isSubmitted && loginForm.controls['password'].errors }"></ion-input>
+						<ion-label position="floating">Password</ion-label>
+						<ion-input type="password" formControlName="password" class="form-control" clear-input=true
+							[ngClass]="{ 'is-invalid': isSubmitted && f.password.errors }">
+						</ion-input>
 					</ion-item>
-					<div *ngIf="isSubmitted && loginForm.controls['password'].errors" padding class="invalid-feedback">
-						<div *ngIf="loginForm.controls['password'].errors.required">Password is required</div>
-						<div *ngIf="loginForm.controls['password'].errors.minlength">Password must be at least 6 characters</div>
+					<div *ngIf="isSubmitted && f.password.errors" class="ion-padding invalid-feedback">
+						<div *ngIf="f.password.errors.required">Password is required</div>
+						<div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
 					</div>
-					<div padding text-right>
-						<a>Forget password?</a>
+					<div class="ion-text-right ion-margin forgetpassword_btn">
+						<ion-button fill='clear' (click)="create_forget_password_modal()">
+							Forget password?
+						</ion-button>
 					</div>
-					<div padding>
-						<ion-button color='primary' size='large' expand="block" type="submit">LOGIN</ion-button>
+					<div class='ion-padding'>
+						<ion-button color='light' shape='round' expand="block" type="submit">LOGIN</ion-button>
 					</div>
-
 				</form>
 			</ion-col>
 		</ion-row>
+		<div class='ion-padding'>
+			<ion-button shape='round' expand="block" (click)="goto_register_page()">SIGN UP
+			</ion-button>
+		</div>
 	</ion-grid>
-
 </ion-content>
-<ion-footer>
-	<ion-toolbar>
-		<ion-buttons slot="end">
-			<ion-button color='primary' size='large' expand="full" (click)="register()">SIGN UP</ion-button>
-		</ion-buttons>
-	</ion-toolbar>
-</ion-footer>

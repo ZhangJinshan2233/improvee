@@ -1,49 +1,63 @@
-ion-avatar{
-    height:80px;
-    width:80px;
-    margin-left:40px
-   
+ion-avatar {
+    height: 80px;
+    width: 80px;
+    margin-left: 40px
 }
 
-ion-toolbar ion-item{
+ion-toolbar ion-item {
     --background: transparent;
 }
 ion-toolbar ion-item ion-label{
     --color:var(--ion-color-light)!important;
 }
 
+
 ion-segment ion-segment-button{
     --border-width:0px 0px 1px 0px !important;
     --border-color:var(--ion-color-medium)
 }
 
-ion-slides{
-    width:100vw;
-}
-.is-active{
-    border-color: #f4a933;
-    font-size:1.1em;
-}
-ion-slide{
-    width:100vw
+ion-slides {
+    width: 100vw;
 }
 
- ion-slide ion-list{
-    width:100vw
+ion-slide {
+    width: 100vw
 }
 
-.chart-container{
-    width:100vw;
+ion-list {
+    width: 100vw
+}
+
+.chart-container {
+    width: 100vw;
     height: 40vh;
 }
+.indicator-value-font {
+    font-size: 1.5em;
+    display: inline-block;
+}
 
+.indicator-unit-font {
+    display: inline-block;
+}
 
-accordion-list {
-    --ion-item-background: #fff;
+ion-card-content {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+ion-item-divider {
+    margin-bottom: 5px;
+    --background: var(--ion-color-secondary)
+
+}
+.accordion-list {
+    --ion-item-background:transparent;
 
     .section-inactive,
     .section-active {
-        --min-height: 58px
+        --min-height: 50px
     }
 }
 
@@ -52,12 +66,12 @@ accordion-list {
 }
 
 .section-inactive {
-    --ion-item-background: #fff;
+    --ion-item-background:var(--ion-color-secondary);
     --ion-item-color: #000;
 }
 
 .section-active {
-    --ion-item-background: #ffc400;
+    --ion-item-background:var(--ion-color-primary);
     --ion-item-color: #fff;
     font-weight: 600;
 
@@ -66,23 +80,10 @@ accordion-list {
     }
 }
 .indicator-value-font{
-    font-size:1.5em;
-    display: inline-block;
+    font-size:1.5em
 }
 
-.indicator-unit-font{
-    display: inline-block;
-}
 ion-card-content{
     padding-top:0px !important;
     padding-bottom:0px !important;
-}
-
-ion-item-divider{
-    margin-bottom:5px;
-    --background:var(--ion-color-light-shade);
-    ion-label:first-child{
-        padding-left:20px
-    }
-    
 }

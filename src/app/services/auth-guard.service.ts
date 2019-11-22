@@ -5,7 +5,8 @@ import {
   RouterStateSnapshot,
   CanActivateChild,
   CanLoad,
-  Route
+  Route,
+  Router
 } from '@angular/router';
 
 import { AuthService } from './auth.service';
@@ -19,20 +20,22 @@ export class AuthGuardService implements CanActivate, CanActivateChild, CanLoad 
 
   currentUser: User;
 
-  constructor(private authService: AuthService) {
-    this.authService.currentUser.subscribe(user=>{
-    this.currentUser=user
+  constructor(private authService: AuthService,private router:Router) {
+    this.authService.currentUser.subscribe(user => {
+      this.currentUser = user
     })
   }
 
   check(route, _state?: RouterStateSnapshot) {
-
-    if (this.currentUser) {
-
-      if (route.data.allowUserType.includes(this.currentUser['userType']))
-
-        return true;
+    if (!this.currentUser){
+      this.router.navigateByUrl('login')
     }
+      if (this.currentUser) {
+
+        if (route.data.allowUserType.includes(this.currentUser['userType']))
+
+          return true;
+      }
     return false;
   }
 

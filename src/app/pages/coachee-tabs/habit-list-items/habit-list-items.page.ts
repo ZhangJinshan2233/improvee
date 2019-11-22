@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AlertController, ModalController} from '@ionic/angular';
+import { Component, OnInit} from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { HabitListItemsCreatePage } from "../habit-list-items-create/habit-list-items-create.page";
-import {customModalEnterAnimation} from "../../../_helper/customModalEnter";
-import { customModalLeaveAnimation} from "../../../_helper/customModalLeave";
-
+import { customModalEnterAnimation } from "../../../_helper/customModalEnter";
+import { customModalLeaveAnimation } from "../../../_helper/customModalLeave";
+import { HabitService } from "../../../services/habit.service";
 @Component({
   selector: 'app-habit-list-items',
   templateUrl: './habit-list-items.page.html',
@@ -11,114 +11,63 @@ import { customModalLeaveAnimation} from "../../../_helper/customModalLeave";
 })
 export class HabitListItemsPage implements OnInit {
   newHabit = {
-    id: null,
-    title: "",
+    _id: "",
+    name: "",
     des: "",
-    sunday: false,
-    monday: false,
-    tuesday: false,
-    wednesday: false,
-    thursday: false,
-    friday: false,
-    saturday: false,
+    daysOfWeek: []
   }
   habitId: any
-  constructor(public alertCtrl: AlertController, private modalCtrl: ModalController) { }
+  habits: any
+  constructor(private modalCtrl: ModalController,
+    private habitService: HabitService
+  ) { }
+
   ngOnInit() {
-   
-  }
- 
-  deleteHabit(habitId) {
-    let index = this.habitlist.findIndex((element) => {
-      return element.id = habitId
+    this.habitService.get_habits().subscribe(res => {
+      this.habits = res['habits']
     })
-    this.habitlist.splice(index, 1)
   }
 
-  async presentAlert() {
-    const alert = await this.alertCtrl.create({
-      header: 'Delete?',
-      mode: 'ios',
-      buttons: [
-        {
-          text: 'Cancel',
-          cssClass: 'secondary',
-
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Delete',
-
-          handler: () => {
-
-            this.deleteHabit(this.habitId)
-          }
-        }
-      ]
-
-    });
-
-    await alert.present();
-  }
-
-  changeBackgroundColor(isChecked) {
-    if (isChecked) {
+  change_backgroundcolor(habit, day) {
+    let dayStatus = habit.daysOfWeek.includes(day)
+    if (dayStatus) {
       return {
         backgroundColor: '#f4a933'
       }
     }
   }
-
-  showAlert(habitId) {
-    this.habitId = habitId;
-    this.presentAlert()
-
-  }
-
-  habitlist = [
-    {
-      id: 1,
-      title: "drink water",
-      des: "",
-      sunday: false,
-      monday: true,
-      tuesday: true,
-      wednesday: true,
-      thursday: true,
-      friday: true,
-      saturday: true,
-    },
-    {
-      id: 2,
-      title: "eat healthy food",
-      des: "",
-      sunday: true,
-      monday: true,
-      tuesday: true,
-      wednesday: true,
-      thursday: true,
-      friday: true,
-      saturday: true,
-    }
-
-  ]
-
-  async editHabit(habit) {
+  /**
+   * edit habit
+   * @param habit 
+   * @param i 
+   */
+  async edit_habit(habit, i) {
     const habitModal = await this.modalCtrl.create({
       component: HabitListItemsCreatePage,
-      // cssClass: 'habit-add-modal-css',
-      componentProps: { newHabit: habit, mode: "Update habit" }
+      componentProps: { newHabit: habit, mode: "Edit habit" }
     });
 
     await habitModal.present();
     let { data } = await habitModal.onDidDismiss();
     if (data) {
-      console.log(data.habit)
+      if (data.editMode === 'edit') {
+        if (data.habit) {
+          this.habitService.update_habit(habit._id, data.habit).subscribe(res => {
+            this.habits[i] = data.habit
+          })
+        }
+      } else if (data.editMode === 'delete') {
+        this.habitService.update_habit(habit._id, { isObsolete: true }).subscribe(res => {
+          this.habits.splice(i, 1)
+        })
+      }
     }
   }
-  
-  async addHabit() {
+
+/**
+ * add new habit
+ */
+  async add_habit() {
     const habitModal = await this.modalCtrl.create({
       component: HabitListItemsCreatePage,
       enterAnimation: customModalEnterAnimation,
@@ -129,9 +78,14 @@ export class HabitListItemsPage implements OnInit {
     await habitModal.present();
     let { data } = await habitModal.onDidDismiss();
     if (data) {
-      this.newHabit = data.newHabit;
-      this.habitlist.push(this.newHabit)
+      console.log(data.newHabit)
+      if (data.newHabit) {
+        this.habitService.create_habit(data.newHabit).subscribe(res => {
+         console.log(res['newHabit'])
+          this.habits.push(res['newHabit'])
+        })
+      }
     }
-  }
 
+  }
 }

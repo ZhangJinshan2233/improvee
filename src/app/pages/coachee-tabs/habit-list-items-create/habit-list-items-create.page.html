@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar class='ion-text-center' color='primary'>
+  <ion-toolbar class='ion-text-center' color='secondary'>
     <ion-title>{{mode}}</ion-title>
     <ion-buttons slot='end'>
       <ion-button (click)='closeModal()'>
@@ -9,121 +9,93 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <form [formGroup]='habitForm' novalidate>
+  <form [formGroup]='habitForm' novalidate (ngSubmit)="submit_habit_form()">
     <ion-grid>
-      <ion-row  class='ion-padding'>
+      <ion-row class='ion-padding'>
         <ion-col>
           <div>
             <ion-item lines='inset'>
-              <ion-label position="floating" color="primary">HABIT NAME</ion-label>
-              <ion-input formControlName='title'></ion-input>
+              <ion-label position="floating">Habit name</ion-label>
+              <ion-input formControlName='name'></ion-input>
             </ion-item>
-          </div>
-        </ion-col>
-      </ion-row>
-      <ion-row class='ion-padding'>
-        <ion-col>
-          <div class="modal-week-label">
-            <ion-label>when in the week</ion-label>
           </div>
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-between ion-padding">
         <ion-col size='1.5' class="ion-text-center">
           <div class='day-position'>
-            <ion-checkbox formControlName="sunday" (ionChange)="selectDay($event)"></ion-checkbox>
-            <ion-label class='circle' [ngStyle]="changeBackgroundColor(habitForm.controls.sunday.value)">
-             Sun
+            <ion-checkbox formControlName="Sunday"></ion-checkbox>
+            <ion-label class='circle' [ngStyle]="change_background_color(habitForm.controls.Sunday.value)">
+              Sun
             </ion-label>
           </div>
         </ion-col>
         <ion-col size='1.5' class="ion-text-center">
           <div class='day-position'>
-            <ion-checkbox formControlName="monday" (ionChange)="selectDay($event)"></ion-checkbox>
-            <ion-label class='circle' [ngStyle]="changeBackgroundColor(habitForm.controls.monday.value)">
-                Mon
+            <ion-checkbox formControlName="Monday"></ion-checkbox>
+            <ion-label class='circle' [ngStyle]="change_background_color(habitForm.controls.Monday.value)">
+              Mon
             </ion-label>
           </div>
         </ion-col>
         <ion-col size='1.5' class="ion-text-center">
           <div class='day-position'>
-            <ion-checkbox formControlName="tuesday" (ionChange)="selectDay($event)"></ion-checkbox>
-            <ion-label class='circle' [ngStyle]="changeBackgroundColor(habitForm.controls.tuesday.value)">
-             Tue
+            <ion-checkbox formControlName="Tuesday"></ion-checkbox>
+            <ion-label class='circle' [ngStyle]="change_background_color(habitForm.controls.Tuesday.value)">
+              Tue
             </ion-label>
           </div>
         </ion-col>
         <ion-col size='1.5' class="ion-align-self-center ion-text-center">
           <div class='day-position'>
-            <ion-label class='circle' [ngStyle]="changeBackgroundColor(habitForm.controls.wednesday.value)">
-              <ion-checkbox formControlName="wednesday"></ion-checkbox>
-              Wen
+            <ion-checkbox formControlName="Wednesday"></ion-checkbox>
+            <ion-label class='circle' [ngStyle]="change_background_color(habitForm.controls.Wednesday.value)">
+              Wed
             </ion-label>
           </div>
         </ion-col>
         <ion-col size='1.5' class="ion-text-center">
           <div class='day-position'>
-            <ion-checkbox formControlName="thursday"></ion-checkbox>
-            <ion-label class='circle' [ngStyle]="changeBackgroundColor(habitForm.controls.thursday.value)">
+            <ion-checkbox formControlName="Thursday"></ion-checkbox>
+            <ion-label class='circle' [ngStyle]="change_background_color(habitForm.controls.Thursday.value)">
               Thu
             </ion-label>
           </div>
         </ion-col>
         <ion-col size='1.5' class="ion-text-center">
           <div class='day-position'>
-            <ion-checkbox formControlName="friday"></ion-checkbox>
-            <ion-label class='circle' [ngStyle]="changeBackgroundColor(habitForm.controls.friday.value)">
+            <ion-checkbox formControlName="Friday"></ion-checkbox>
+            <ion-label class='circle' [ngStyle]="change_background_color(habitForm.controls.Friday.value)">
               Fri
             </ion-label>
           </div>
         </ion-col>
         <ion-col size='1.5' class="ion-text-center">
           <div class='day-position'>
-            <ion-checkbox formControlName="saturday"></ion-checkbox>
-            <ion-label class='circle' [ngStyle]="changeBackgroundColor(habitForm.controls.saturday.value)">
+            <ion-checkbox formControlName="Saturday"></ion-checkbox>
+            <ion-label class='circle' [ngStyle]="change_background_color(habitForm.controls.Saturday.value)">
               Sat
             </ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row class=ion-justify-content-center>
+        <ion-col class="ion-text-center" size='10' *ngIf='!isUpdate'>
+          <div class='ion-padding ion-margin'>
+            <ion-button expand="block" type="submit">Add</ion-button>
+          </div>
+        </ion-col>
+        <ion-col class="ion-text-center" size='6' *ngIf='isUpdate'>
+          <div class='ion-padding ion-margin'>
+            <ion-button expand="block" type="submit">Update</ion-button>
+          </div>
+        </ion-col>
+        <ion-col class="ion-text-center" size='6' *ngIf='isUpdate'>
+          <div class='ion-padding ion-margin'>
+            <ion-button expand="block" (click)='deleteHabit(habitForm)'>Delete</ion-button>
           </div>
         </ion-col>
       </ion-row>
     </ion-grid>
   </form>
 </ion-content>
-<ion-footer>
-  <ion-toolbar>
-    <ion-row class='ion-justify-content-center'>
-      <ion-col class="ion-text-center" size='4' *ngIf='!isUpdate'>
-        <div *ngIf="habitForm.invalid">
-          <ion-button fill='clear'>
-            <ion-icon name='add' slot='icon-only'></ion-icon>
-          </ion-button>
-        </div>
-        <div *ngIf="habitForm.valid">
-          <ion-button fill='clear' (click)='addHabit(habitForm)'>
-            <ion-icon name="done-all" slot='icon-only'></ion-icon>
-          </ion-button>
-        </div>
-      </ion-col>
-      <ion-col class="ion-text-center" size='4' *ngIf='isUpdate'>
-        <div *ngIf="habitForm.invalid">
-          <ion-button fill='clear'>
-            <ion-icon name="create" slot='icon-only'></ion-icon>
-          </ion-button>
-        </div>
-        <div *ngIf="habitForm.valid">
-          <ion-button fill='clear' (click)='updateHabit(habitForm)'>
-            <ion-icon name="done-all" slot='icon-only'></ion-icon>
-          </ion-button>
-        </div>
-      </ion-col>
-      <ion-col class="ion-text-center" size='4' *ngIf='isUpdate'>
-        <div>
-          <ion-button fill='clear' (click)='deleteHabit(habitForm)'>
-            <ion-icon name="trash" slot='icon-only'></ion-icon>
-          </ion-button>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-toolbar>
-
-</ion-footer>

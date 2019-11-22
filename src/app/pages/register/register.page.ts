@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { addYears, compareAsc } from "date-fns";
 import {
   FormGroup,
   FormBuilder,
@@ -8,36 +10,47 @@ import {
 import { MatchValidator } from "../../_helper/match-validator";
 import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
+import { DatePipe } from '@angular/common';
+import { AlertController } from '@ionic/angular';
 @Component({
   selector: "app-register",
   templateUrl: "./register.page.html",
   styleUrls: ["./register.page.scss"]
 })
 export class RegisterPage implements OnInit {
-
-  @ViewChild('registerFormCtrls') registerFormCtrls: ElementRef;
-
   registerForm: FormGroup;
-
   isSubmitted = false;
+  isIndividual=true;
+  termsAndConditionsUrl = "http://improvee.strikingly.com/terms-and-conditions"
   constructor(private formBuilder: FormBuilder,
     private router: Router,
+    private iab: InAppBrowser,
+    private alertController: AlertController,
     private authService: AuthService) { }
-
   ngOnInit() {
-    this.registerFormCtrls.nativeElement.classList.add('zoomInUp')
-    this.createFormGroup();
+    this.create_register_form_group();
   }
 
-  createFormGroup() {
-
+  get f() {
+    return this.registerForm.controls
+  }
+  goto_terms_and_conditions() {
+    let browser = this.iab.create(this.termsAndConditionsUrl);
+  }
+  create_register_form_group() {
     this.registerForm = this.formBuilder.group(
       {
         firstName: ["", Validators.required],
         lastName: ["", Validators.required],
-        email: ["", [Validators.required, Validators.email]],
+        email: ['', [Validators.required, Validators.email]],
+        phoneNumber: ["", [Validators.required, Validators.pattern(/^\d{7,8}$/)]],
+        height: ['', [Validators.required, Validators.min(100), Validators.max(230), Validators.pattern(/^\d*\.?\d*$/)]],
+        weight: ['', [Validators.required, Validators.min(30), Validators.max(200), Validators.pattern(/^\d*\.?\d*$/)]],
+        gender: ['male', Validators.required],
+        companyCode:[""],
+        dateOfBirth: [new Date().toISOString(), Validators.required],
         password: ["", [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ["", Validators.required]
+        confirmPassword: ["", Validators.required],
       },
       {
         validator: MatchValidator("password", "confirmPassword")
@@ -48,16 +61,41 @@ export class RegisterPage implements OnInit {
   /**
    * register
    * @function onSubmit
+   * @param firstName lastName email phoneNumber password
    */
-  onSubmit() {
+  async onSubmit() {
     this.isSubmitted = true;
     if (this.registerForm.invalid) return
-    this.authService.register(this.registerForm.value).subscribe(res => {
-      this.registerFormCtrls.nativeElement.classList.add('zoomOutRight')
-      setTimeout(() => {
-        this.router.navigateByUrl('/login')
-      }, 500);
+    console.log(this.registerForm.value)
+    let date = new Date(addYears(this.registerForm.controls['dateOfBirth'].value, 10))
+    if (compareAsc(date, new Date()) === 1) {
+      this.show_alert("choose right date of birth")
+      return
+    }
+    this.authService.register(this.registerForm.value).subscribe(success => {
+      if (success) {
+        this.router.navigateByUrl('/coachee/info');
+        this.isSubmitted=false
+      }
     })
 
+  }
+
+  async show_alert(msg) {
+    let alert = await this.alertController.create({
+      message: msg,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  choose_group(){
+    this.isIndividual=!this.isIndividual
+    if(!this.isIndividual){
+      this.registerForm.patchValue({
+        companyCode:''
+      })
+    }
+    console.log(this.f.companyCode.value)
   }
 }

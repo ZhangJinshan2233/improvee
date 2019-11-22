@@ -3,15 +3,17 @@
 // }
  
 
-ion-item ion-badge:first-of-type {
-    position: absolute;
-    --background: var(--ion-color-secondary);
-    left: 70%;
-    top:20%
-}
-
 .spinner-container {
     width: 100%;
     text-align: center;
     padding: 10px;
   }
+
+  ion-avatar {
+    height: 60px;
+    width: 60px
+}
+ion-item {
+    --background: transparent;
+}
+

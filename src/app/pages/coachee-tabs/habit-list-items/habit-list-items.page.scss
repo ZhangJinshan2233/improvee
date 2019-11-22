@@ -9,7 +9,6 @@ ion-list ion-item-sliding ion-item ion-card {
 
 .habit-title {
     margin: 0px 20px;
-    color: #10dc60;
 }
 
 .modal-week-label {
@@ -32,4 +31,15 @@ ion-list ion-item-sliding ion-item ion-card {
 }
 ion-label::first-letter {
     text-transform: uppercase !important;
+}
+
+ion-content{
+    --background: linear-gradient(30deg, rgb(253, 246, 246) 40%,#fdf1df 40%,#fdf1df 100%) !important;
+} 
+ion-list{
+    background-color:transparent !important;
+}
+
+ion-item{
+    --background:transparent !important;
 }

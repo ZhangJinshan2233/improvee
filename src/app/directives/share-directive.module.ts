@@ -2,13 +2,12 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HasRoleDirective } from "./has-role.directive";
 import { ScrollVanishDirective } from './scroll-vanish.directive';
-import { RulerPage } from "../pages/coachee-tabs/ruler/ruler.page";
 @NgModule({
-  declarations: [HasRoleDirective, ScrollVanishDirective,RulerPage],
+  declarations: [HasRoleDirective, ScrollVanishDirective],
   imports: [
     CommonModule
   ],
-  exports:[HasRoleDirective,ScrollVanishDirective,RulerPage],
+  exports:[HasRoleDirective,ScrollVanishDirective],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ShareDirectiveModule { }

@@ -5,45 +5,59 @@ import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet/ngx'
 import { CameraOptionsSetting } from "../../../_helper/cameraOptionsSetting";
 import { Camera } from "@ionic-native/Camera/ngx"
 import { AlertController } from '@ionic/angular';
-import { ActivatedRoute } from "@angular/router";
+import { CoachService } from '../../../services/coach.service'
+import { AuthService } from "../../../services/auth.service";
 @Component({
   selector: 'app-coach-profile',
   templateUrl: './coach-profile.page.html',
   styleUrls: ['./coach-profile.page.scss'],
 })
 export class CoachProfilePage implements OnInit {
-  coachProfile = '/assets/img/coach-profile.jpeg'
   nameForm: FormGroup;
-  isNameFormSubmitted = false;
   isNameFormShow = false;
-  profileImage = {
-    imgType: 'image/jpeg',
-    data: ''
-  }
+  enrolledNumber = 0;
+  expiredNumber = 0
   isAdmin = false
+  coach = {}
+  coachProfile="";
   constructor(private formBuilder: FormBuilder,
     private router: Router,
+    private auth: AuthService,
     private actionSheet: ActionSheet,
     private camera: Camera,
+    private coachService: CoachService,
     private alertCtrl: AlertController,
-    private activateRoute: ActivatedRoute
   ) { }
   ngOnInit() {
+    this.auth.get_user_profile().subscribe(res => {
+      this.coach = res['currentUser']
+      if (this.coach['imgData']) {
+        this.coachProfile = `data:image/jpeg;base64,${this.coach['imgData']}`
+      } else {
+        this.coachProfile = "/assets/img/noavatar.png"
+      }
+    })
+    this.coachService.get_enrolled_and_expired_members().subscribe(res => {
+      console.log(res)
+      this.enrolledNumber = res['enrolledNumber']
+      this.expiredNumber = res['expiredNumber']
+    })
     this.createFormGroup();
-
-    this.isAdmin = this.router.url.split('/').includes('adminCoach');
   }
   cancle() {
     this.isNameFormShow = !this.isNameFormShow
   }
   togglerNameForm() {
     this.isNameFormShow = !this.isNameFormShow
-    if (this.isNameFormShow)
-      this.nameForm.setValue({ 'firstName': 'Ruby', 'lastName': 'Teo' })
+    if (this.isNameFormShow) {
+      this.nameForm.patchValue({
+        firstName: this.coach['firstName'],
+        lastName: this.coach['lastName']
+      })
+    }
   }
 
   createFormGroup() {
-
     this.nameForm = this.formBuilder.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]]
@@ -51,8 +65,14 @@ export class CoachProfilePage implements OnInit {
   }
 
   submitNameForm() {
-    this.isNameFormSubmitted = true
     this.isNameFormShow = !this.isNameFormShow
+    this.auth.updateProfile(this.nameForm.value).subscribe(res=>{
+      if(res){
+        this.auth.get_user_profile().subscribe(res=>{
+          this.coach=res['currentUser']
+        })
+      }
+    })
   }
 
   logout() {
@@ -71,34 +91,41 @@ export class CoachProfilePage implements OnInit {
       let isCamera = false
       if (buttonIndex === 1) {
         isCamera = true;
-        this.getPicture(isCamera)
+        this.get_picture(isCamera)
       } else if (buttonIndex === 2) {
         isCamera = false;
-        this.getPicture(isCamera)
+        this.get_picture(isCamera)
       } else {
         return
       }
     });
   }
 
-  async getPicture(isCamera) {
 
+    /**
+   * @function getPicture
+   * @param {isCamera }:Boolbean
+   * @returns Observable
+   */
+  async get_picture(isCamera) {
     let caremaOptions = CameraOptionsSetting(isCamera, this.camera)
-
     try {
-      this.profileImage.data = await this.camera.getPicture(caremaOptions);
-      let imageSizeInByte = 4 * Math.ceil((this.profileImage.data.length) / 3) * 0.5624896334383812;
-      if (imageSizeInByte / (1024 * 1024) >= 8) {
+      let imgData = await this.camera.getPicture(caremaOptions);
+      let imageSizeInByte = 4 * Math.ceil((imgData.length) / 3) * 0.5624896334383812;
+      if (imageSizeInByte / (1024 * 1024) >= 8)
         this.showAlert("the size of image is too big")
-      } else {
-
-      }
-
-
+      this.auth.updateProfile({imgData:imgData}).subscribe(res=>{
+        this.auth.get_user_profile().subscribe(res=>{
+         
+          this.coach=res['currentUser']
+          console.log(this.coach['imgData'])
+        })
+      })
     } catch (err) {
       return
     }
   }
+   
 
 
   /**
@@ -114,5 +141,5 @@ export class CoachProfilePage implements OnInit {
     alert.then(alert => alert.present());
   }
 
-  
+
 }

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-
+import { FoodjournalPostDetailsPageModule } from "../foodjournal-post-details/foodjournal-post-details.module";
 import { CoacheeHomePage } from './coachee-home.page';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 const routes: Routes = [
@@ -19,20 +19,21 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    FoodjournalPostDetailsPageModule,
     NgCircleProgressModule.forRoot({
-      "backgroundPadding": -18,
+      "backgroundPadding": 7,
       "radius": 50,
-      "outerStrokeWidth": 10,
+      "space": -2,
+      "outerStrokeWidth": 2,
       "outerStrokeColor": "#FF6347",
-      "innerStrokeColor": "#32CD32",
+      "innerStrokeColor": "#e7e8ea",
       "innerStrokeWidth": 2,
-      "backgroundColor": "#F1F1F1",
+      // "backgroundColor": "#F1F1F1",
       "maxPercent": 100,
       "subtitleColor": "#61A9DC",
       "showSubtitle": true,
-      "showInnerStroke": false,
+      // "showInnerStroke": false,
       "lazy": false,
-      'subtitle':'Today completed'
     }),
     RouterModule.forChild(routes)
   ],

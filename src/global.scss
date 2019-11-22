@@ -9,25 +9,31 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
-@import '~animate.css/animate.min.css';
 
-ion-icon{
-    &[name*='custom-']{
-        height:1em;
-        width:1em;
+ion-button {
+    --background-activated: var(--ion-color-primary) !important
+}
+
+ion-icon {
+    &[name*='custom-'] {
+        height: 1em;
+        width: 1em;
     }
 
 }
+
 .text-primary {
     color: var(--ion-color-primary);
 }
 
 .invalid-feedback {
-    color: var(--ion-color-primary);
+    color: red;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 1em;
 }
-
+.is-invalid{
+    color:red
+}
 .week-day-circle {
     display: block;
     border-radius: 50%;
@@ -44,6 +50,7 @@ ion-icon{
 .habitlist-weekview-css {
     width: 100%
 }
+
 .day-header-week {
     // background-color: lightcoral;
     text-transform: uppercase;
@@ -55,3 +62,10 @@ ion-icon{
     color: #f4a933;
     padding: 10px;
 }
+
+.custom-popover .popover-content  {
+ width:80%
+}
+
+
+

@@ -7,7 +7,7 @@
     </ion-buttons>
     <div class="user-photo" [appScrollVanish]="scrollArea">
       <ion-avatar>
-        <ion-img [src]="currentUser?.profileImage?.data || '/assets/img/noavatar.png'"></ion-img>
+        <ion-img [src]="currentUser?.imgData || '/assets/img/noavatar.png'"></ion-img>
       </ion-avatar>
       <ion-button fill="outline" shape="round" size="small" (click)="updateProfileImage()">
         Add
@@ -38,7 +38,7 @@
           <ion-icon slot="start" name="person"></ion-icon>
           <ion-label>Name</ion-label>
           <ion-button slot="end" fill="clear" (click)="submitNameForm()">save</ion-button>
-          <ion-button slot="end" fill="clear" (click)="cancle()">cancle </ion-button>
+          <ion-button slot="end" fill="clear" (click)="cancel()">cancel </ion-button>
         </ion-item>
         <ion-item>
           <ion-input formControlName="firstName" type='text'

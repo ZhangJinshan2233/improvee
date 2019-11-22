@@ -6,6 +6,13 @@ ion-item {
     --background: transparent;
 }
 
-ion-label{
-    --color:var(--ion-color-light)!important;
+// ion-label{
+//     --color:var(--ion-color-light)!important;
+// }
+ion-badge{
+    --background: var(--ion-color-secondary);
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border-radius: 100%;
 }

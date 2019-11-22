@@ -1,4 +1,9 @@
-
+ion-content{
+    --background: linear-gradient(-60deg,#e8eaf3  45%, rgb(253, 246, 246) 45%) fixed !important;
+} 
+ion-list{
+    background-color:transparent !important;
+}
  ion-radio {
     height: 100%;
     width: 100%;

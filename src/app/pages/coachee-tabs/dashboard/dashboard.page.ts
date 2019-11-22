@@ -1,17 +1,22 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   trigger,
-  state,
   transition,
   style,
   animate,
   query,
   stagger,
   animateChild
-
 } from "@angular/animations";
-
+import { get_record_status } from "../../../_helper/indicatorRecordStatus";
+import * as _ from 'lodash'
+import { IndicatorRecordService } from '../../../services/indicator-record.service'
+import { IndicatorRecordDetailPage } from "../indicator-record-detail/indicator-record-detail.page";
+import { ModalController } from '@ionic/angular';
+import { customModalEnterAnimation } from 'src/app/_helper/customModalEnter';
+import { customModalLeaveAnimation } from 'src/app/_helper/customModalLeave';
+import { AuthService } from "../../../services/auth.service";
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
@@ -19,10 +24,10 @@ import {
   animations: [
     trigger('list', [
       transition(':enter', [
-        query('@items', stagger(200, animateChild()))
+        query('@indicatorRecords', stagger(200, animateChild()))
       ]),
     ]),
-    trigger('items', [
+    trigger('indicatorRecords', [
       transition(':enter', [
         style({ transform: 'scale(0.5)', opacity: 0 }),  // initial
         animate('500ms cubic-bezier(.8, -0.6, 0.2, 1.5)',
@@ -31,111 +36,111 @@ import {
     ])
   ]
 })
+
 export class DashboardPage implements OnInit {
-  constructor(private router: Router) { }
+  indicatorRecords = [];
+  currentUser: any;
+  constructor(private router: Router,
+    private indicatorRecordService: IndicatorRecordService,
+    private modalCtrl: ModalController,
+    private authService: AuthService) { }
+
+  ngOnInit() {
+    this.authService.get_user_profile().subscribe(res => {
+      this.currentUser = res['currentUser']
+      this.indicatorRecordService.get_all_indicator_records().subscribe(res => {
+        let changedStatusRecord = res['indicatorRecordByName'].map(item => {
+          return get_record_status(item, this.currentUser)
+        })
+        this.indicatorRecords =
+          _.chain(changedStatusRecord)
+            .groupBy('group')
+            .toPairs()
+            .map(item => _.zipObject(['group', 'indicators'], item))
+            .orderBy('group', 'desc')
+            .value();
+            this.indicatorRecords[0].open = true;
+      })
+      this.indicatorRecordService.newIndicatorRecordSubject.subscribe(res => {
+        let group = 0;
+        let indicator = 0
+        for (let i = 0; i < this.indicatorRecords.length; i++) {
+          for (let j = 0; j < this.indicatorRecords[i].indicators.length; j++) {
+            if (this.indicatorRecords[i].indicators[j].name === res) {
+              group = i;
+              indicator = j
+              break
+            }
+          }
+        }
+        this.indicatorRecordService.get_records_by_pagination(res, 0).subscribe(res => {
+          this.indicatorRecords[group].indicators[indicator] = res['onePageRecords'][0]
+          let newRecord = get_record_status(this.indicatorRecords[group].indicators[indicator], this.currentUser)
+          this.indicatorRecords[group].indicators[indicator].status = newRecord.status
+        })
+      })
+    })
+
+  }
+
   ionViewWillEnter() {
     let tabBar = document.querySelector('ion-tab-bar');
     tabBar.style.display = 'flex';
   }
-  ngOnInit() {
-    this.items[0].open = true;
-  }
-  gotoIndicatorPage(indicator) {
-    this.router.navigateByUrl(`/records/${indicator.indicatorName}`)
-  }
-  items: any[] = [
-    {
-      groupName: 'Wellness',
-      indicators: [
-        {
-          indicatorName: 'weight',
-          value: '68',
-          unit: 'kg',
-          createDate: '7/12/2019',
-          state: 'normal'
 
-        },
-        {
-          indicatorName: 'height',
-          value: '171',
-          unit: 'cm',
-          createDate: '7/12/2019',
-          state: 'normal'
-        },
-        {
-          indicatorName: 'BMI',
-          value: '25',
-          unit: '',
-          createDate: '7/12/2019',
-          state: 'over'
-        },
-        {
-          indicatorName: 'waist',
-          value: '89',
-          unit: 'cm',
-          createDate: '7/12/2019',
-          state: 'server'
-        }
-      ]
-    },
-    {
-      groupName: 'Medical',
-      indicators: [
-        {
-          indicatorName: 'HDL',
-          value: '4.5',
-          unit: 'mm/mmol',
-          createDate: '7/12/2019',
-          state: 'normal'
-        },
-        {
-          indicatorName: 'BP-sys',
-          value: '110',
-          unit: 'mm/mmol',
-          createDate: '7/12/2019',
-          state: 'normal'
-        },
-        {
-          indicatorName: 'BP-dys',
-          value: '89',
-          unit: 'mm/mmol',
-          createDate: '7/12/2019',
-          state: 'normal'
-        },
-        {
-          indicatorName: 'LDL',
-          value: '4.5',
-          unit: 'mm/mmol',
-          createDate: '7/12/2019',
-          state: 'server'
-        }
-      ]
-    }
-  ]
-
-  toggleSection(index) {
-    this.items[index].open = !this.items[index].open
-    if (this.items[index].open) {
-      for (let i = 0; i < this.items.length; i++) {
+  /**
+   * toggle section
+   * @param index 
+   */
+  toggle_section(index) {
+    this.indicatorRecords[index].open = !this.indicatorRecords[index].open
+    if (this.indicatorRecords[index].open) {
+      for (let i = 0; i < this.indicatorRecords.length; i++) {
         if (i != index) {
-          this.items[i].open = false;
+          this.indicatorRecords[i].open = false;
         }
       }
     }
   }
-
-  gotoIndicatorDetails(indicatorName) {
-    this.router.navigateByUrl(`/coachee/dashboard/indicator-details/${indicatorName}`)
+  /**
+   * go to indicator record page
+   * @param indicator 
+   * @param i =>which group
+   * @param j =>which indicator
+   */
+  goto_indicator_details(indicator, i, j) {
+    if (!indicator.value) {
+      this.add_record(indicator, i, j)
+    } else {
+      if (indicator.group === "wellness") {
+        this.router.navigateByUrl(`/coachee/dashboard/indicator-records/${indicator.name}`)
+      } else {
+        this.router.navigateByUrl(`/coachee/dashboard/indicator-record-history/${indicator.name}`)
+      }
+    }
   }
 
-  getStateOfIndicator(state) {
-    if (state === 'over') {
-      return 'primary'
-    } else if (state === 'server') {
-      return 'danger'
-    } else {
-      return undefined
-    }
+  /**
+   * add  new record
+   * @param indicator 
+   * @param i =>which group
+   * @param j =>which indicator
+   */
+  async add_record(indicator, i, j) {
+    const indicatorModal = await this.modalCtrl.create({
+      component: IndicatorRecordDetailPage,
+      enterAnimation: customModalEnterAnimation,
+      leaveAnimation: customModalLeaveAnimation,
+      componentProps: { indicator: indicator, mode: "add" }
+    });
 
+    await indicatorModal.present();
+    let { data } = await indicatorModal.onDidDismiss();
+    if (data) {
+      this.indicatorRecords[i].open = true;
+      this.indicatorRecords[i].indicators[j] = data.indicatorRecord;
+      let newRecord = get_record_status(this.indicatorRecords[i].indicators[j], this.currentUser)
+      this.indicatorRecords[i].indicators[j].status = newRecord.status
+    }
   }
 }

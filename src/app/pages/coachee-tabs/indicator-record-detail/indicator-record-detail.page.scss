@@ -1,0 +1,33 @@
+ion-footer ion-toolbar {
+    --background: rgb(253, 246, 246)
+}
+
+$border-style:1px dotted gray;
+
+.ion-row-border {
+    border-bottom: $border-style;
+}
+
+.ion-col-border {
+    border-right: $border-style;
+}
+
+ion-grid ion-row {
+    margin: 16px !important;
+}
+
+ion-grid ion-grid {
+    padding: 10px !important;
+}
+
+.invalid {
+    border: 1px solid #ea6153;
+}
+
+ion-item {
+    --background: transparent !important
+}
+
+ion-content {
+    --background: linear-gradient(30deg, #e8eaf3 40%, rgb(253, 246, 246) 40%) !important;
+}

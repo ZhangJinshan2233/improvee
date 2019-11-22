@@ -1,74 +1,76 @@
 <ion-content>
-  <ion-list>
-    <ion-item-group>
-      <ion-item-divider sticky=true class='ion-text-capitalize' color='primary'>
-        <h3>active challenges</h3>
-      </ion-item-divider>
-      <ion-list class='ion-no-margin'>
-        <ion-card *ngFor='let challenge of activeChallenges' color='secondary' class='ion-text-wrap'>
-          <ion-card-header class='ion-no-padding'>
-            <ion-card-title color='secondary'>
-              <ion-row class='ion-justify-content-between ion-align-items-center'>
-                <ion-col size='10'>
-                  <div>
-                    <ion-label color='dark' class='ion-text-capitalize'> {{challenge.title}}</ion-label>
-                  </div>
-                </ion-col>
-                <ion-col size='2'>
-                  <ion-button fill='clear' (click)="gotoActiveChallenge(challenge.title)">
-                    <ion-icon name='arrow-forward' slot='icon-only' color='dark'></ion-icon>
-                  </ion-button>
-                </ion-col>
-              </ion-row>
-            </ion-card-title>
-          </ion-card-header>
-          <ion-card-content class='ion-no-padding'>
-            <ion-grid>
-              <ion-row>
-                <ion-range disabled min="0" max="100" step="1" value=20>
-                </ion-range>
-              </ion-row>
-              <ion-row class="ion-margin">
-                <ion-col>
-                  <ion-card-subtitle>completed: 20%</ion-card-subtitle>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-card-content>
-        </ion-card>
-      </ion-list>
-    </ion-item-group>
-    <ion-item-group>
-      <ion-item-divider sticky=true class='ion-text-capitalize' color='primary'>
-        <h3>all challenges</h3>
-      </ion-item-divider>
-      <ion-list>
-        <ion-card *ngFor='let challenge of allChallenges' class="bg-img" class='ion-text-wrap'>
-
-          <ion-img [src]='challenge.imgUrl'></ion-img>
-          <ion-card-header class='ion-padding'>
-            <ion-card-title>
-              <ion-row class='ion-justify-content-between ion-align-items-center'>
-                <ion-col size='10'>
-                  <div>
-                    <ion-label color='dark' class='ion-text-capitalize'> {{challenge.title}}</ion-label>
-                  </div>
-                </ion-col>
-                <ion-col size='2'>
-                  <ion-button fill='clear' [routerLink]="['/coachee/challenges',challenge.id]">
-                    <ion-icon name='arrow-forward' slot='icon-only' color='dark'></ion-icon>
-                  </ion-button>
-                </ion-col>
-              </ion-row>
-            </ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content class='ion-padding'>
-            <ion-text>{{challenge.abstract}}</ion-text>
-          </ion-card-content>
-        </ion-card>
-      </ion-list>
-    </ion-item-group>
-  </ion-list>
-
+  <ion-grid>
+    <ion-row class='ion-padding'>
+      <ion-col>
+        <ion-label class='ion-text-center'>
+          <h1>
+            IT'S TIME TO STEP UP TO<br />
+            THE CHALLENGE
+          </h1>
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label class='ion-text-center'>
+          <p>
+            Be motivated to achieve your<br />
+            goals through fun health challenges.
+          </p>
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-item-group *ngIf="activeChallenges?.length>0">
+    <ion-item-divider>
+      <h5>MY DAILY CHALLENGES</h5>
+    </ion-item-divider>
+    <div class='ion-margin'>
+      <ion-card *ngFor='let activeChallenge of activeChallenges' class='ion-text-wrap'
+        (click)="goto_challenge_detail(activeChallenge._id)">
+        <ion-card-header class='ion-padding-start'>
+          <ion-card-title class='ion-text-start ion-text-capitalize'>Rate {{activeChallenge.categoryName}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="ion-padding-start">
+          <ion-row class='ion-align-items-center'>
+            <ion-col size='7'>
+              <div>
+                <ion-label>
+                  Average score:
+                </ion-label>
+              </div>
+            </ion-col>
+            <ion-col *ngIf="activeChallenge.averageRating>0">
+              <div>
+                <ion-label class='ion-label-font-size' color='dark'>
+                  {{activeChallenge.averageRating}}
+                </ion-label>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div>
+                <ion-icon name="heart" color='primary'></ion-icon>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-item-group>
+  <ion-item-group>
+    <ion-item-divider>
+      <h5>NEW CHALLENGES</h5>
+    </ion-item-divider>
+    <ion-card *ngFor='let challenge of allChallenges' class='ion-text-wrap'
+      [routerLink]="['./challengeCategories',challenge?._id]">
+      <ion-card-header class='ion-padding'>
+        <ion-card-title>
+          <ion-label class='ion-text-capitalize'> {{challenge.name}}</ion-label>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-img [src]='challenge?.image'></ion-img>
+      </ion-card-content>
+    </ion-card>
+  </ion-item-group>
 </ion-content>

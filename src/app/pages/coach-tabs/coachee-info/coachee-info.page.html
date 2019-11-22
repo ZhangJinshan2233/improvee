@@ -1,30 +1,35 @@
-<ion-card  [color]='bgColor' [@moveout]='status'>
+<ion-card [color]='bgColor'>
   <ion-card-content class='ion-no-padding'>
-    <ion-item lines='none' >
-      <ion-avatar slot='start' (click)='goToCoacheeDetails(coachee.id)'>
-        <img [src]='coachee.profileImage' alt="">
+    <ion-item lines='none'>
+      <ion-avatar slot='start' (click)='goToCoacheeDetails(coachee._id)'>
+        <ion-img [src]="coacheeProfileImg"></ion-img>
       </ion-avatar>
       <ion-label color='light'>
-        {{coachee.name}}<br>
-        <small>{{coachee.lastLogin | date}}</small>
+        {{coachee.name}}<br/>
+       <small>{{coachee.email}}</small> 
       </ion-label>
-      <ion-button fill='clear' color='light'>
+      <ion-button fill='clear' color='light' (click)="chat_with_coachee(coachee._id)">
         <ion-icon name="text" slot='icon-only'></ion-icon>
+        <div *ngIf="unreadMessageItems>0">
+          <ion-badge>{{coachee.unreadMessageItems}}</ion-badge>
+        </div>
       </ion-button>
     </ion-item>
-    <ion-grid >
+    <ion-grid>
       <ion-row>
         <ion-col class='ion-text-center ion-no-padding'>
           <ion-label>{{coachee.changedWeight}}</ion-label>
         </ion-col>
         <ion-col class='ion-text-center ion-no-padding'>
-          <ion-label>{{coachee.ongoingChallenges}}</ion-label>
+          <ion-label>{{coachee.unreadPostItems}}</ion-label>
         </ion-col>
         <ion-col class='ion-text-center ion-no-padding'>
-          <ion-label>{{coachee.completedHabits}}</ion-label>
+          <ion-label>{{coachee.averageCompletedPercent | percent}}</ion-label>
         </ion-col>
         <ion-col class='ion-text-center ion-no-padding'>
-          <ion-label>{{coachee.remainMembershipDays}}</ion-label>
+          <div>
+            <ion-label>{{coachee.remainingDaysOfMembership}}</ion-label>
+          </div>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -35,7 +40,7 @@
         </ion-col>
         <ion-col class='ion-text-center ion-no-padding'>
           <ion-label>
-            <small>Challenges</small>
+            <small>new post</small>
           </ion-label>
         </ion-col>
         <ion-col class='ion-text-center ion-no-padding'>
@@ -49,7 +54,6 @@
           </ion-label>
         </ion-col>
       </ion-row>
-
     </ion-grid>
   </ion-card-content>
 </ion-card>

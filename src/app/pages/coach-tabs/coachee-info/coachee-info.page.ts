@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import * as _ from 'lodash'
 import {
   transition,
   style,
@@ -32,17 +33,33 @@ export class CoacheeInfoPage implements OnInit {
   @Input('coachee') coachee: any
   @Input('bgColor') bgColor: any
   status: any
+  changedWeight = 0
+  unreadMessageItems = 0
+  unreadMessageEarliestDate: any;
+  unreadPostEarliestDate: any;
+  unreadPostItems = 0;
+  completedHabitPercent = 0
+  remainingDaysOfMembership = 0
   constructor(private router: Router) { }
 
+  coacheeProfileImg=''
   ngOnInit() {
     this.status = 'origal'
-    console.log(this.coachee)
+    if(this.coachee.imgData){
+      this.coacheeProfileImg=`data:image/jpeg;base64,${this.coachee['imgData']}`
+    }else{
+      this.coacheeProfileImg="/assets/img/noavatar.png"
+    }
   }
   goToCoacheeDetails(id) {
     this.status = 'move'
     setTimeout(() => {
-      this.router.navigateByUrl(`/coach/coach-home/${id}`)
+      this.router.navigateByUrl(`/coach/home/${id}`)
       this.status = 'origal'
     }, 500);
+  }
+
+  chat_with_coachee(id) {
+    this.router.navigateByUrl(`/coach/home/chat/${id}`)
   }
 }

@@ -66,13 +66,14 @@ export class ProfilePage implements OnInit {
     })
   }
 
-  cancle() {
+  cancel() {
     this.isNameFormShow = !this.isNameFormShow
   }
 
   logout() {
     this.auth.logout()
     this.router.navigateByUrl('/')
+
   }
 
   updateProfileImage() {
@@ -88,10 +89,10 @@ export class ProfilePage implements OnInit {
       if (buttonIndex === 1) {
         isCamera = true;
         this.getPicture(isCamera)
-      } else if(buttonIndex===2){
+      } else if (buttonIndex === 2) {
         isCamera = false;
         this.getPicture(isCamera)
-      }else{
+      } else {
         return
       }
     });
@@ -104,16 +105,16 @@ export class ProfilePage implements OnInit {
     try {
       this.profileImage.data = await this.camera.getPicture(caremaOptions);
       let imageSizeInByte = 4 * Math.ceil((this.profileImage.data.length) / 3) * 0.5624896334383812;
-      if (imageSizeInByte / (1024 * 1024) >= 8){
+      if (imageSizeInByte / (1024 * 1024) >= 8) {
         this.showAlert("the size of image is too big")
-      }else{
-        this.auth.updateProfile(this.profileImage).subscribe(res=>{
-          this.menuService.getUserInfo().subscribe(res=>{
+      } else {
+        this.auth.updateProfile(this.profileImage).subscribe(res => {
+          this.menuService.getUserInfo().subscribe(res => {
             this.currentUser['profileImage'] = res['currentUser']['profileImage']
           })
         })
       }
-      
+
 
     } catch (err) {
       return

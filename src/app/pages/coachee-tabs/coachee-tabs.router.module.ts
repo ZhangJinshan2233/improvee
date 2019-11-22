@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: 'coachee-home',
-        data: { allowUserType: [UserType.free, UserType.premium] },
+        data: { allowUserType: [UserType.coachee] },
         children: [
           {
             path: '',
@@ -25,38 +25,38 @@ const routes: Routes = [
             loadChildren: '../coachee-tabs/habit-list-items/habit-list-items.module#HabitListItemsPageModule'
           },
           {
-            path: 'activeChallenges/food journal',
-            loadChildren: '../coachee-tabs/timeline/timeline.module#TimelinePageModule',
+            path: 'activeChallenges/:challengeId',
+            loadChildren: '../coachee-tabs/foodjournal-post/foodjournal-post.module#FoodjournalPostPageModule'
           },
-          // {
-          //   path: 'chat',
-          //   loadChildren: '../coachee-tabs/chat/chat.module#ChatPageModule',
-          // }
-
+          {
+            path:'chat/:roomName',
+             loadChildren: '../coachee-tabs/chat/chat.module#ChatPageModule'
+          }
         ]
       },
       {
         path: 'dashboard',
-        data: { allowUserType: [UserType.free, UserType.premium] },
+        data: { allowUserType: [UserType.coachee] },
         children: [
           {
             path: '',
             loadChildren: '../coachee-tabs/dashboard/dashboard.module#DashboardPageModule',
           },
           {
-            path: 'indicator-details/:indicatorName',
-            loadChildren: '../coachee-tabs/indicator-details/indicator-details.module#IndicatorDetailsPageModule'
+            path: 'indicator-records/:name',
+            loadChildren: '../coachee-tabs/indicator-records/indicator-records.module#IndicatorRecordsPageModule'
           },
+
           {
-            path: 'indicator-details/indicator-history/:indicatorName',
-            loadChildren: '../coachee-tabs/indicator-history/indicator-history.module#IndicatorHistoryPageModule'
-          },
+            path: 'indicator-record-history/:name',
+            loadChildren: '../coachee-tabs/indicator-record-history/indicator-record-history.module#IndicatorRecordHistoryPageModule'
+          }
 
         ]
       },
       {
         path: 'menu',
-        data: { allowUserType: [UserType.free, UserType.premium] },
+        data: { allowUserType: [UserType.coachee] },
         children: [
           {
             path: '',
@@ -74,7 +74,7 @@ const routes: Routes = [
       },
       {
         path: 'info',
-        data: { allowUserType: [UserType.free, UserType.premium] },
+        data: { allowUserType: [UserType.coachee] },
         children: [
           {
             path: '',
@@ -86,20 +86,28 @@ const routes: Routes = [
       },
       {
         path: 'challenges',
-        data: { allowUserType: [UserType.free, UserType.premium] },
+        data: { allowUserType: [UserType.coachee] },
         children: [
           {
             path: '',
             loadChildren: '../coachee-tabs/challenges/challenges.module#ChallengesPageModule'
           },
           {
-            path: ':challengeId',
-            loadChildren: '../coachee-tabs/challenge-details/challenge-details.module#ChallengeDetailsPageModule'
+            path: 'activeChallenges/:challengeId',
+            loadChildren: '../coachee-tabs/foodjournal-post/foodjournal-post.module#FoodjournalPostPageModule'
           },
           {
-            path: 'activeChallenges/food journal',
-            loadChildren: '../coachee-tabs/timeline/timeline.module#TimelinePageModule',
-          }
+            path: 'challengeCategories/:challengeCategoryId',
+            loadChildren: '../coachee-tabs/challenge-category-details/challenge-category-details.module#ChallengeCategoryDetailsPageModule'
+          },
+          {
+            path: 'challengeCategories/:challengeCategoryId/histories',
+            loadChildren: '../coachee-tabs/challenge-history/challenge-history.module#ChallengeHistoryPageModule'
+          },
+          {
+            path: 'challengeCategories/:challengeCategoryId/histories/:challengeId',
+            loadChildren: '../coachee-tabs/foodjournal-post/foodjournal-post.module#FoodjournalPostPageModule'
+          },
         ]
       },
       {
@@ -107,8 +115,6 @@ const routes: Routes = [
         redirectTo: '/coachee/coachee-home',
         pathMatch: 'full'
       }
-
-
     ]
   },
   {

@@ -1,22 +1,36 @@
-ion-avatar{
-    width:80px;
-    height:80px
+ion-avatar {
+    margin: 0 auto;
+    width: 120px;
+    height: 120px;
 }
 
 ion-item{
     --background:transparent;
 }
 
-ion-item ion-label{
-    padding: 10px;
-    --color:var(--ion-color-primary) !important
+.button-container{
+    position: relative;
 }
-ion-button{
-    --color:var(--ion-color-dark)
+
+.edit-photo-button{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,100%)
 }
+// ion-item ion-label{
+//     padding: 10px;
+//     --color:var(--ion-color-primary) !important
+// }
+// ion-button{
+//     --color:var(--ion-color-dark)
+// }
 
 .is-valid{
     border:1px solid red
 }
 
 
+ion-label{
+    --color:var(--ion-color-dark)!important
+}

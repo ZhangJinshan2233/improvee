@@ -13,6 +13,7 @@ export class HabitItemDetailPage implements OnInit {
   constructor(private modalCtrl: ModalController,
     private navParams: NavParams,
     private formBuilder: FormBuilder
+
   ) { }
 
   ngOnInit() {

@@ -5,7 +5,10 @@
 export const environment = {
   production: false,
   url: 'http://192.168.1.235:3000'
-  // url: 'http://192.168.1.123:3000'
+    // url: 'http://192.168.1.123:3000'
+  // url: 'http://35.240.206.248'
+  
+
 };
 
 /*

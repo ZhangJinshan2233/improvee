@@ -1,18 +1,16 @@
 <ion-header>
-  <ion-toolbar slot='start' color="primary">
+  <ion-toolbar slot='start' color="secondary">
     <ion-buttons>
       <ion-back-button mode='md'></ion-back-button>
     </ion-buttons>
     <ion-item lines='none'>
       <ion-avatar slot='start'>
-        <img [src]='coachee?.profileImage' alt="">
+        <img *ngIf="coachee?.imgData" src="data:image/jpeg;base64,{{coachee?.imgData}}" alt="">
+        <img *ngIf="!coachee?.imgData" src='/assets/img/noavatar.png' alt="">
       </ion-avatar>
       <ion-label>
-        {{coachee.name}}
-        <br>
-        <small>Start: {{coachee.startDate |date}}</small>
-        <br>
-        <small>End: {{coachee.endDate |date}}</small>
+        {{coachee?.firstName}}{{coachee?.lastName}}<br />
+        <small>{{coachee?.email}}</small>
       </ion-label>
       <ion-button [routerLink]="['notes']">
         <ion-icon name="document" slot='icon-only'></ion-icon>
@@ -20,20 +18,19 @@
     </ion-item>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <ion-segment mode='md' (ionChange)='segmentChanged($event)' class='ion-padding-vertical' [(ngModel)]='segmentValue'>
+  <ion-segment mode='md' (ionChange)='segment_change($event)' class='ion-padding-vertical' [(ngModel)]='segmentValue'>
     <ion-segment-button value=0 [ngClass]="{'is-active':segmentValue==0 }">
-      <ion-label>Habit lists </ion-label>
+      <ion-label><small>Habits</small> </ion-label>
     </ion-segment-button>
     <ion-segment-button value=1 [ngClass]="{'is-active':segmentValue==1 }">
-      <ion-label>Challenges</ion-label>
+      <ion-label><small>Challenges</small> </ion-label>
     </ion-segment-button>
     <ion-segment-button value=2 [ngClass]="{'is-active':segmentValue==2 }">
-      <ion-label>Records</ion-label>
+      <ion-label><small>Records</small> </ion-label>
     </ion-segment-button>
     <ion-segment-button value=3 [ngClass]="{'is-active':segmentValue==3 }">
-      <ion-label>More</ion-label>
+      <ion-label><small>More</small> </ion-label>
     </ion-segment-button>
   </ion-segment>
   <ion-slides (ionSlideDidChange)="slideChanged()">
@@ -50,12 +47,12 @@
           <ion-col>
             <ion-list>
               <ion-item-group *ngFor='let dailyList of habitList'>
-                <ion-item-divider>
-                  <ion-label class='ion-text-capitalize'>{{dailyList.date}}</ion-label>
+                <ion-item-divider *ngIf='dailyList.habits.length>0'>
+                  <ion-label class='ion-text-capitalize'>{{dailyList.day}}</ion-label>
                 </ion-item-divider>
                 <ion-item *ngFor='let item of dailyList.habits' lines='none'>
-                  <ion-label *ngIf='!item.completed' class='ion-text-capitalize'>{{item.title}}</ion-label>
-                  <del *ngIf='item.completed' class='ion-text-capitalize'>{{item.title}}</del>
+                  <ion-label *ngIf='!item.status' class='ion-text-capitalize'>{{item.name}}</ion-label>
+                  <del *ngIf='item.status' class='ion-text-capitalize'>{{item.name}}</del>
                 </ion-item>
               </ion-item-group>
             </ion-list>
@@ -64,66 +61,152 @@
       </ion-grid>
     </ion-slide>
     <ion-slide>
-      <ion-list *ngIf='allChallenges.length'>
-        <ion-item-group *ngFor='let item of allChallenges '>
+      <ion-list>
+        <ion-item-group>
           <ion-item-divider>
-            <ion-label>{{item.title}}</ion-label>
+            <ion-label>Active challenges</ion-label>
           </ion-item-divider>
-          <ion-item *ngFor='let challenge of item.challenges' detail lines='none'>
-            <ion-label>
-              {{challenge.name}}
-            </ion-label>
-          </ion-item>
+          <ion-card *ngFor='let activeChallenge of activeChallenges' class='ion-text-wrap'
+            (click)="goto_challenge_detail(activeChallenge)">
+            <ion-card-header class='ion-padding-start'>
+              <ion-card-title class='ion-text-start ion-text-capitalize'>Rate {{activeChallenge.categoryName}}
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="ion-padding-start">
+              <ion-row class='ion-align-items-center'>
+                <ion-col size='7'>
+                  <div>
+                    <ion-label>
+                      Average score:
+                    </ion-label>
+                  </div>
+                </ion-col>
+                <ion-col *ngIf="activeChallenge.averageRating>0">
+                  <div>
+                    <ion-label class='ion-label-font-size' color='dark'>
+                      {{activeChallenge.averageRating}}
+                    </ion-label>
+                  </div>
+                </ion-col>
+                <ion-col>
+                  <div>
+                    <ion-icon name="heart" color='primary'></ion-icon>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-item-group>
+        <ion-item-group>
+          <ion-item-divider>
+            <ion-label>Non active challenges</ion-label>
+          </ion-item-divider>
+          <ion-card *ngFor="let nonactiveChallenge of nonactiveChallenges"
+            (click)="goto_challenge_detail(nonactiveChallenge)">
+            <ion-card-header>
+              <ion-card-title>{{nonactiveChallenge._challengeCategory.name}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content class='ion-no-padding'>
+              <ion-grid>
+                <ion-row class='ion-row-border'>
+                  <ion-col size='6' class="ion-text-center ion-col-border">
+                    <ion-label>Start Date</ion-label>
+                  </ion-col>
+                  <ion-col size='6' class="ion-text-center">
+                    <ion-label>End Date</ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size='6' class="ion-text-center ion-col-border">
+                    <ion-label>{{nonactiveChallenge.startDate|date}}</ion-label>
+                  </ion-col>
+                  <ion-col size='6' class="ion-text-center">
+                    <ion-label>{{nonactiveChallenge.endDate|date}}</ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row class='ion-align-items-center'>
+                  <ion-col size='7'>
+                    <div>
+                      <ion-label>
+                        Average score:
+                      </ion-label>
+                    </div>
+                  </ion-col>
+                  <ion-col *ngIf="nonactiveChallenge.averageRating" class="ion-margin">
+                    <div>
+                      <ion-label class='ion-label-font-size' color='dark'>
+                        {{nonactiveChallenge.averageRating}}
+                      </ion-label>
+                    </div>
+                  </ion-col>
+                  <ion-col class="ion-margin">
+                    <div>
+                      <ion-icon name="heart" color='primary'></ion-icon>
+                    </div>
+                  </ion-col>
+                </ion-row>
+                <ion-row class='ion-align-items-center'>
+                  <ion-col *ngIf="nonactiveChallenge.averageRating" class="ion-margin">
+                    <div>
+                      <ion-label class='ion-label-font-size' color='dark'>
+                        {{nonactiveChallenge.ratingDescription}}
+                      </ion-label>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
         </ion-item-group>
       </ion-list>
     </ion-slide>
     <ion-slide>
-      <ion-list *ngIf="items.length" class="ion-no-margin accordion-list ion-no-padding">
-        <ion-item-group *ngFor="let item of items let i=index">
-          <ion-item-divider (click)="toggleSection(i)"
-            [ngClass]="{'section-active': item.open,'section-inactive':!item.open}">
-            <ion-label>{{item.groupName}}</ion-label>
-            <ion-icon name="add" slot="end" *ngIf="!item.open"></ion-icon>
-            <ion-icon name="remove" slot="end" *ngIf="item.open"></ion-icon>
-          </ion-item-divider>
-          <div *ngIf="item.open">
-            <ion-card *ngFor="let indicator of item.indicators" (click)='gotoIndicatorDetails(indicator.indicatorName)'>
-              <ion-card-content>
-                <ion-grid>
-                  <ion-row class='ion-justify-content-between ion-align-items-center'>
-                    <ion-col>
-                      <ion-label class="ion-text-capitalize ion-text-start">
-                        {{indicator.indicatorName}}
-                      </ion-label>
-                    </ion-col>
-                    <ion-col class='ion-text-end'>
-                      <div>
-                        <ion-label class='indicator-value-font' [color]='getStateOfIndicator(indicator.state)'>
-                          {{indicator.value}}
+      <ion-list class="accordion-list ion-no-padding">
+        <ion-item-group *ngFor="let indicatorRecord of indicatorRecords let i=index" class='ion-margin-top'>
+          <ion-item (click)="toggle_section(i)"
+            [ngClass]="{'section-active': indicatorRecord.open,'section-inactive':!indicatorRecord.open}" lines="none">
+            <ion-label class="ion-text-capitalize">{{indicatorRecord.group}}</ion-label>
+            <ion-icon name="add" slot="end" *ngIf="!indicatorRecord.open"></ion-icon>
+            <ion-icon name="remove" slot="end" *ngIf="indicatorRecord.open"></ion-icon>
+          </ion-item>
+          <div *ngIf="indicatorRecord.indicators&&indicatorRecord.open">
+            <ion-list class="ion-no-margin accordion-list">
+              <ion-card *ngFor="let indicator of indicatorRecord.indicators let j=index" 
+                (click)='goto_indicator_details(indicator,i,j)' button=true>
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='ion-justify-content-between ion-align-items-center'>
+                      <ion-col>
+                        <ion-label class="ion-text-capitalize ion-text-start">
+                          {{indicator.name}}
                         </ion-label>
-                        <ion-label class='indicator-unit-font' [color]='getStateOfIndicator(indicator.state)'>
-                          <small>{{indicator.unit}}</small>
+                      </ion-col>
+                      <ion-col>
+                        <div class='ion-text-end' *ngIf="indicator.value">
+                          <ion-label class='indicator-value-font'>
+                            {{indicator.value}} <small>{{indicator.unit}}</small>
+                          </ion-label>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row class='ion-justify-content-between ion-align-items-center' *ngIf="indicator.value">
+                      <ion-col>
+                        <ion-label class="ion-text-start">
+                          <small>{{indicator.createDate | date}}</small>
                         </ion-label>
-                      </div>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row class='ion-justify-content-between ion-align-items-center'>
-                    <ion-col>
-                      <ion-label class="ion-text-start">
-                        <small>{{indicator.createDate | date}}</small>
-                      </ion-label>
-                    </ion-col>
-                    <ion-col>
-                      <div class='ion-text-end'>
-                        <ion-label>
-                          {{indicator.state}}
-                        </ion-label>
-                      </div>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-              </ion-card-content>
-            </ion-card>
+                      </ion-col>
+                      <ion-col *ngIf="indicator.group!=='fitness'">
+                        <div class='ion-text-end'>
+                          <ion-label>
+                            {{indicator.status}}
+                          </ion-label>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-card-content>
+              </ion-card>
+            </ion-list>
           </div>
         </ion-item-group>
       </ion-list>
@@ -131,8 +214,8 @@
     <ion-slide>
       <ion-list>
         <ion-item>
-          <ion-label>Last login</ion-label>
-          <ion-label>2019-9-10</ion-label>
+          <ion-label>Last time login</ion-label>
+          <ion-label>{{coachee?.lastTimeLogin|date}}</ion-label>
         </ion-item>
       </ion-list>
     </ion-slide>

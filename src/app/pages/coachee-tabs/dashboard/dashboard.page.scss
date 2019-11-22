@@ -1,13 +1,16 @@
-ion-content {
-    --background: var(--ion-color-light)
+ion-content{
+    --background: linear-gradient(30deg, rgb(253, 246, 246) 40%,#fdf1df 40%,#fdf1df 100%) !important;
+} 
+ion-list{
+    background-color:transparent !important;
 }
 
 .accordion-list {
-    --ion-item-background: #fff;
+    --ion-item-background:transparent;
 
     .section-inactive,
     .section-active {
-        --min-height: 58px
+        --min-height: 50px
     }
 }
 
@@ -16,12 +19,12 @@ ion-content {
 }
 
 .section-inactive {
-    --ion-item-background: #fff;
+    --ion-item-background:var(--ion-color-secondary);
     --ion-item-color: #000;
 }
 
 .section-active {
-    --ion-item-background: #ffc400;
+    --ion-item-background:var(--ion-color-primary);
     --ion-item-color: #fff;
     font-weight: 600;
 
@@ -36,4 +39,9 @@ ion-content {
 ion-card-content{
     padding-top:0px !important;
     padding-bottom:0px !important;
+}
+
+ion-item {
+    // --inner-padding-start: 10px;
+    border-radius: 8px;
 }

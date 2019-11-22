@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { LoginPage } from './login.page';
-
+import { ForgetPasswordPageModule } from "../forget-password/forget-password.module";
 const routes: Routes = [
   {
     path: '',
@@ -20,6 +20,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    ForgetPasswordPageModule,
     RouterModule.forChild(routes)
   ],
   declarations: [LoginPage]

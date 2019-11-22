@@ -8,11 +8,11 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
-
+import { environment } from "../environments/environment";
 /* import new Module component ... */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JWT_OPTIONS, JwtModule } from "@auth0/angular-jwt";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule} from "@angular/common/http";
 import { Storage, IonicStorageModule } from "@ionic/storage";
 import { ShareDirectiveModule } from "./directives/share-directive.module";
 import { Camera } from '@ionic-native/Camera/ngx';
@@ -20,13 +20,16 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ActionSheet } from '@ionic-native/action-sheet/ngx';
 import { WheelSelector } from '@ionic-native/wheel-selector/ngx';
 import { customAlertEnter } from "./_helper/customAlertEnter";
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
+const config: SocketIoConfig = { url: `${environment.url}/chat`, options: {} };
 export function jwtOptionsFactory(storage) {
   return {
     tokenGetter: () => {
-      return storage.get("access_token");
+      return storage.get("JWT_TOKEN")
     },
-    whitelistedDomains: ["192.168.1.235:3000"]
-    // whitelistedDomains: ["192.168.1.123:3000"]
+
+    whitelistedDomains: ["192.168.1.123:3000","192.168.1.235:3000","35.240.206.248"]
   };
 }
 @NgModule({
@@ -41,6 +44,7 @@ export function jwtOptionsFactory(storage) {
       alertEnter: customAlertEnter
     }),
     IonicStorageModule.forRoot(),
+    SocketIoModule.forRoot(config),
     JwtModule.forRoot({
       jwtOptionsProvider: {
         provide: JWT_OPTIONS,
@@ -58,6 +62,7 @@ export function jwtOptionsFactory(storage) {
     InAppBrowser,
     ActionSheet,
     WheelSelector,
+    OneSignal,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

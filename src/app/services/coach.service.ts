@@ -1,142 +1,164 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from "@angular/common/http";
+import { AlertController, LoadingController } from '@ionic/angular';
+import { mapTo, catchError, tap, mergeMap } from 'rxjs/operators';
+import { forkJoin, BehaviorSubject } from 'rxjs';
+import { format } from 'date-fns';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoachService {
+  currentCoachSubject = new BehaviorSubject<any>(null);
+  loading: any;
 
-  constructor() { }
-  habitlist = {
-    sunday: [
-      {
-        title: "drink water",
-        des: '',
-        completed: true
-      }
-    ],
-    monday: [
-      {
-        title: "drink water",
-        des: '',
-        completed: true
-      },
-      {
-        title: "eat healthy food",
-        des: '',
-        completed: false
-      }
-    ]
+  url = `${environment.url}/api`;
+  constructor(
+    private http: HttpClient,
+    private alertController: AlertController,
+    private loadingCtrl: LoadingController
+  ) { }
+
+  initialize_data() {
+    this.show_loading();
+    return forkJoin(this.http.get(`${this.url}/profile`),
+      this.http.get(`${this.url}/coach/coacheeList`)).pipe(
+        tap(() => {
+          this.loading.then(loading => {
+            loading.dismiss()
+          })
+        }),
+        catchError(e => {
+          let error = e.error;
+          if (!e.error) {
+            this.show_alert("internet error")
+            throw error;
+          }
+          this.show_alert(e.error);
+          throw error;
+        })
+      )
   }
-  allChallenges = [
-    {
-      title: 'Activated',
-      challenges: [
-        {
-          name: 'Food Journal'
-        }
-      ]
-    },
-    {
-      title: 'History',
-      challenges: [
-        {
-          name: 'Food Journal'
-        },
-        {
-          name: 'Sleep'
-        }
-      ]
-    }
-  ]
-  private users = [
-    {
-      id: '001',
-      name: 'Merry',
-      profileImage: '/assets/img/user3.jpg',
-      completedHabits: 0.6,
-      changedWeight: 6,
-      ongoingChallenges: 1,
-      lastLogin: '5/21/2019',
-      startDate: '5/21/2019',
-      endDate: '7/2/2019',
-      remainMembershipDays: 22
-    },
-    {
-      id: '002',
-      name: 'Ruby',
-      profileImage: '/assets/img/user1.jpeg',
-      completedHabits: 0.7,
-      changedWeight: 6,
-      ongoingChallenges: 2,
-      lastLogin: '5-21-2019',
-      startDate: '5/21/2019',
-      endDate: '7/2/2019',
-      remainMembershipDays: 19
-    },
-    {
-      id: '003',
-      name: 'Ani',
-      profileImage: '/assets/img/user2.jpg',
-      completedHabits: 1,
-      changedWeight: 5,
-      ongoingChallenges: 3,
-      lastLogin: '5/21/2019',
-      startDate: '5/21/2019',
-      endDate: '7/2/2019',
-      remainMembershipDays: 29
-    },
-    {
-      id: '004',
-      name: 'Ameli',
-      profileImage: '/assets/img/user4.jpeg',
-      completedHabits: 0,
-      changedWeight: 2,
-      ongoingChallenges: 1,
-      lastLogin: '5/21/2019',
-      startDate: '5/21/2019',
-      endDate: '7/2/2019',
-      remainMembershipDays: 25
-    },
-    {
-      id: '005',
-      name: 'Luke',
-      profileImage: '/assets/img/user5.jpeg',
-      completedHabits: 1,
-      changedWeight: 8,
-      ongoingChallenges: 0,
-      lastLogin: '5/21/2019',
-      startDate: '5/21/2019',
-      endDate: '7/2/2019',
-      remainMembershipDays: 1
-    }
-  ]
-
-  getAllUsers() {
-    return this.users
+  get_coachees(skipNum) {
+    return this.http.get(`${this.url}/coach/coacheeList/?skipNum=${skipNum}`).pipe(
+      catchError(e => {
+        let error = e.error.message;
+        throw error;
+      })
+    )
+  }
+  get_coachee_by_id(coacheeId) {
+    return this.http.get(`${this.url}/coachee/${coacheeId}`).pipe(
+      catchError(e => {
+        let error = e.error.message;
+        throw error;
+      })
+    )
+  }
+  get_unread_notifitation(author) {
+    return this.http.get(`${this.url}/unreadNotifications/?author=${author}`).pipe(
+      tap((res) => {
+      })
+    )
   }
 
-  findOne(id) {
-    return this.users.find((item) => {
-      return item.id == id
+  coachee_details_get_coachee_and__week_habitlist(coacheeId) {
+    this.show_loading();
+    return forkJoin(this.http.get(`${this.url}/coach/coacheeList/${coacheeId}`), this.http.get(`${this.url}/habitlistRecord/search/week/${coacheeId}`)).pipe(
+      tap(() => {
+        this.loading.then(loading => {
+          loading.dismiss()
+        })
+      }),
+      catchError(e => {
+        let error = e.error;
+        if (!e.error) {
+          this.show_alert("internet error")
+          throw error;
+        }
+        this.show_alert(e.error);
+        throw error;
+      })
+    )
+  }
+  coachee_details_get_activechallenges_and__nonactivechallenges(coacheeId) {
+    this.show_loading();
+    return forkJoin(this.http.get(`${this.url}/challenges/active/?coacheeId=${coacheeId}`),
+      this.http.get(`${this.url}/challenges/nonactive/?coacheeId=${coacheeId}`)).pipe(
+        tap(() => {
+          this.loading.then(loading => {
+            loading.dismiss()
+          })
+        }),
+        catchError(e => {
+          let error = e.error;
+          if (!e.error) {
+            this.show_alert("internet error")
+            throw error;
+          }
+          this.show_alert(e.error);
+          throw error;
+        })
+      )
+  }
+
+  coachee_details_get_indicators_record(coacheeId) {
+    this.show_loading();
+    return this.http.get(`${this.url}/indicatorRecords/?coacheeId=${coacheeId}`).pipe(
+      tap(() => {
+        this.loading.then(loading => {
+          loading.dismiss()
+        })
+      }),
+      catchError(e => {
+        let error = e.error;
+        if (!e.error) {
+          this.show_alert("internet error")
+          throw error;
+        }
+        this.show_alert(e.error);
+        throw error;
+      })
+    )
+  }
+
+  get_enrolled_and_expired_members(){
+    this.show_loading();
+    return this.http.get(`${this.url}/coach/coacheeList/count`).pipe(
+      tap(() => {
+        this.loading.then(loading => {
+          loading.dismiss()
+        })
+      }),
+      catchError(e => {
+        let error = e.error;
+        if (!e.error) {
+          this.show_alert("internet error")
+          throw error;
+        }
+        this.show_alert(e.error);
+        throw error;
+      })
+    )
+  }
+  async show_alert(msg) {
+    let alert = await this.alertController.create({
+      message: msg,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  show_loading() {
+    this.loading = this.loadingCtrl.create({
+      message: 'Please wait...',
+      spinner: 'crescent',
+    })
+    this.loading.then(loading => {
+      loading.present()
     })
   }
 
-  filterItems(searchTerm) {
-    return this.users.filter((item) => {
-      return item.name.toLowerCase().includes(searchTerm.toLowerCase())
-    })
-  }
 
-  getAllHabits() {
-    return Object.entries(this.habitlist).reduce((acc, current, index) => {
-      let temp = {}
-      temp['date'] = current[0];
-      temp['habits'] = current[1];
-      return [...acc, temp]
-    }, [])
-  }
-
-  getChallenges() {
-    return this.allChallenges
-  }
 }
