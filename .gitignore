@@ -20,7 +20,7 @@ npm-debug.log*
 .versions/
 coverage/
 www/
-src/environments
+src/environments/environment.ts
 node_modules/
 tmp/
 temp/
