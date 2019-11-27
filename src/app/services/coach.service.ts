@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from "@angular/common/http";
 import { AlertController, LoadingController } from '@ionic/angular';
-import { mapTo, catchError, tap, mergeMap } from 'rxjs/operators';
+import { catchError, tap} from 'rxjs/operators';
 import { forkJoin, BehaviorSubject } from 'rxjs';
-import { format } from 'date-fns';
-
 @Injectable({
   providedIn: 'root'
 })

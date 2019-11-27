@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ChallengeCategoryService } from 'src/app/services/challenge-category.service';
 import { ChallengeService } from '../../../services/challenge.service'
 import { MenuService } from "../../../services/menu.service";
 import {
@@ -18,7 +17,6 @@ export class ChallengeCategoryDetailsPage implements OnInit {
   isMember=false;
   currentUser:any
   constructor(private activatedRouter: ActivatedRoute,
-    private categoryService: ChallengeCategoryService,
     private challengeService: ChallengeService,
     private router: Router,
     private menuService:MenuService
@@ -34,7 +32,7 @@ export class ChallengeCategoryDetailsPage implements OnInit {
 
     this.challengeService.get_categories_by_id_and_active_challenges(id).subscribe(res => {
       this.activeChallenges = res[1]['activeChallenges']
-      this.challengeCategory = res[0]['challengeCategory']
+      this.challengeCategory = res[0]['category']
       for (let i = 0; i < this.activeChallenges.length; i++) {
         if (this.activeChallenges[i].categoryName === this.challengeCategory.name) {
           this.isActive = true;

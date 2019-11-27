@@ -8,25 +8,17 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <form [formGroup]='noteForm' novalidate (ngSubmit)='onSubmit()'>
     <ion-list>
       <ion-item>
-        <ion-label position="stacked" color='primary'>DATE</ion-label>
-        <ion-datetime display-format="MM/DD/YYYY" formControlName='date'
-          [ngClass]="{'is-valid':isSubmitted && noteForm.controls['date'].errors}"></ion-datetime>
+        <ion-label position="stacked" color='primary'>TITLE</ion-label>
+        <ion-textarea rows='3' spellCheck='true' formControlName="title"
+          [ngClass]="{'is-valid':isSubmitted && noteForm.controls['title'].errors}">
+        </ion-textarea>
       </ion-item>
-      <div *ngIf="isSubmitted && noteForm.controls['date'].errors" padding class="invalid-feedback">
-        <div *ngIf=" noteForm.controls['date'].errors.required">date is required</div>
-      </div>
-      <ion-item>
-        <ion-label position="stacked" color='primary'>TIME</ion-label>
-        <ion-datetime display-format="h:mm a" formControlName="time"
-          [ngClass]="{'is-valid':isSubmitted && noteForm.controls['time'].errors}"></ion-datetime>
-      </ion-item>
-      <div *ngIf="isSubmitted && noteForm.controls['time'].errors" padding class="invalid-feedback">
-        <div *ngIf=" noteForm.controls['time'].errors.required">time is required</div>
+      <div *ngIf="isSubmitted && noteForm.controls['concluded'].errors" padding class="invalid-feedback">
+        <div *ngIf=" noteForm.controls['concluded'].errors.required">concluded is required</div>
       </div>
       <ion-item>
         <ion-label position="stacked" color='primary'>DISCUSSED</ion-label>
@@ -57,7 +49,7 @@
       </div>
     </ion-list>
     <div class='ion-padding ion-margin'>
-      <ion-button color='primary' size='large' expand="block" type="submit">Add</ion-button>
+      <ion-button color='primary' size='large' expand="block" type="submit">Submit</ion-button>
     </div>
   </form>
 </ion-content>

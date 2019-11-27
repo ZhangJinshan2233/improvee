@@ -4,10 +4,11 @@
 
 export const environment = {
   production: false,
-  url: 'http://192.168.1.235:3000'
-    // url: 'http://192.168.1.123:3000'
-  // url: 'http://35.240.206.248'
-  
+  // url: 'http://192.168.1.235:3000'
+  // url: 'http://192.168.1.124:3000'
+  url: 'http://35.240.206.248',
+  ONESIGNAL_ID:"2679e88f-acf0-4ea1-a42a-35fbff80ff9f",
+  ANDROID_ID:"999837406727"
 
 };
 

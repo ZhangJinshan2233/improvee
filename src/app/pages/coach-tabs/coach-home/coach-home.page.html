@@ -1,44 +1,101 @@
-<ion-header>
-  <ion-toolbar color="secondary">
-    <ion-avatar slot='start'>
-      <ion-img [src]="coachProfile"></ion-img>
-    </ion-avatar>
-    <ion-label>
-      {{currentUser?.firstName}}{{currentUser?.lastName}}<br>
-      <small>{{currentUser?.email}}</small>
-    </ion-label>
-  </ion-toolbar>
-</ion-header>
 <ion-content>
-  <ion-grid>
-    <ion-row class='ion-align-items-center'>
-      <ion-col class='ion-no-padding' size='10'>
-        <ion-searchbar mode='ios' debounce="500" [(ngModel)]='searchTerm' [animated]=true (ionChange)='filterItems()'
-          (ionInput)='onSearchInput()'></ion-searchbar>
-      </ion-col>
-      <ion-col class='ion-no-padding'>
-        <ion-item lines='none' style='position:relative'>
-          <ion-icon name='flask' color='primary'></ion-icon>
-          <ion-select placeholder="" style='opacity: 0; position:absolute' [interfaceOptions]='customAlertOptions'
-            (ionChange)="filterByOption($event)">
-            <ion-select-option value="changedWeight">changed weight</ion-select-option>
-            <ion-select-option value="unreadMessageEarliestDate">unread message date</ion-select-option>
-            <ion-select-option value="unreadPostEarliestDate">unread post date</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <div *ngIf="searching" class="spinner-container">
-    <ion-spinner></ion-spinner>
+  <div *ngIf="isImageLoaded">
+    <ion-header>
+      <ion-toolbar color="secondary">
+        <ion-avatar slot='start'>
+          <ion-img [src]="coachProfile"></ion-img>
+        </ion-avatar>
+        <ion-label>
+          {{currentUser?.firstName}}{{currentUser?.lastName}}<br>
+          <small>{{currentUser?.email}}</small>
+        </ion-label>
+      </ion-toolbar>
+    </ion-header>
+    <ion-grid>
+      <ion-row class='ion-align-items-center'>
+        <ion-col class='ion-no-padding' size='10'>
+          <ion-searchbar mode='ios' debounce="500" [(ngModel)]='searchTerm' [animated]=true (ionChange)='filterItems()'
+            (ionInput)='onSearchInput()'></ion-searchbar>
+        </ion-col>
+        <ion-col class='ion-no-padding'>
+          <ion-item lines='none' style='position:relative'>
+            <ion-icon name='flask' color='primary'></ion-icon>
+            <ion-select placeholder="" style='opacity: 0; position:absolute' [interfaceOptions]='customAlertOptions'
+              (ionChange)="filterByOption($event)">
+              <ion-select-option value="changedWeight">changed weight</ion-select-option>
+              <ion-select-option value="unreadMessageEarliestDate">unread message date</ion-select-option>
+              <ion-select-option value="unreadPostEarliestDate">unread post date</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <div *ngIf="searching" class="spinner-container">
+      <ion-spinner></ion-spinner>
+    </div>
+    <ion-list>
+      <app-coachee-info *ngFor='let coachee of coachees; let even=even' [coachee]='coachee'
+        [bgColor]="even? 'success':'medium'">
+      </app-coachee-info>
+    </ion-list>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="load_more_coachees($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </div>
-  <ion-list>
-    <app-coachee-info *ngFor='let coachee of coachees; let even=even' [coachee]='coachee'
-      [bgColor]="even? 'success':'medium'" >
-    </app-coachee-info>
-  </ion-list>
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="load_more_coachees($event)">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+
+  <!-- Skeleton screen -->
+  <div *ngIf="!isImageLoaded">
+    <div class="ion-padding custom-skeleton">
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+      <ion-skeleton-text animated></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+    </div>
+    <ion-list>
+      <ion-list-header>
+        <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+      </ion-list-header>
+      <ion-item>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>

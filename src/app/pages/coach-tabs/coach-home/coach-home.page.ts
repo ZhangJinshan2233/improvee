@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CoachService } from "../../../services/coach.service";
 import { Router } from '@angular/router';
 import { compareAsc } from 'date-fns'
-import { LoadingController } from '@ionic/angular';
+
 @Component({
   selector: 'app-coach-home',
   templateUrl: './coach-home.page.html',
@@ -10,6 +10,7 @@ import { LoadingController } from '@ionic/angular';
 })
 export class CoachHomePage implements OnInit {
   coachProfile = ""
+  isImageLoaded=false
   coachees = []
   currentUser: any
   unreadMessages = 5;
@@ -22,7 +23,6 @@ export class CoachHomePage implements OnInit {
     header: 'Filter'
   };
   constructor(private coachService: CoachService,
-    private loadingCtrl: LoadingController,
     private router: Router) { }
 
   ngOnInit() {
@@ -33,6 +33,7 @@ export class CoachHomePage implements OnInit {
       } else {
         this.coachProfile = "/assets/img/noavatar.png"
       }
+      this.isImageLoaded=true
       this.coachees = res[1]['coachees']
       this.skipNum += res[1]['coachees'].length
       this.allCoachees = res[1]['coachees']

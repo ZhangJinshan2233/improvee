@@ -1,18 +1,12 @@
 <ion-header>
   <ion-toolbar color="primary" slot='start'>
     <ion-title class='ion-text-start ion-no-padding'>
-    UP COACH
+      UP COACH
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content >
-  <div class="content-container">
-    <ion-fab vertical="top" horizontal="end" slot="fixed">
-      <ion-fab-button (click)="goto_chat()" #cart>
-        <div *ngIf='unReadMessageNumber>0' class="volume-high-length">{{ unReadMessageNumber}}</div>
-        <ion-icon name="volume-high" class="volume-high-icon"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
+<ion-content>
+  <div *ngIf="isImageLoaded" class="content-container">
     <!-- habit list  -->
     <ion-item-group>
       <ion-item lines='none' class='ion-margin'>
@@ -34,7 +28,7 @@
         </circle-progress>
         <ion-button slot='end' size="default" fill='outline' shape="round"
           [routerLink]="['/coachee/coachee-home/habitlist']" routerDirection="forward">
-          Log my habits
+          Log habits
         </ion-button>
       </ion-item>
     </ion-item-group>
@@ -94,5 +88,64 @@
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </div>
-
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="goto_chat()" #cart>
+        <div *ngIf='unReadMessageNumber>0' class="volume-high-length">{{ unReadMessageNumber}}</div>
+        <ion-icon name="volume-high" class="volume-high-icon"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  <!-- Skeleton screen -->
+  <div *ngIf="!isImageLoaded">
+    <div class="ion-padding custom-skeleton">
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+      <ion-skeleton-text animated></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+    </div>
+    <ion-list>
+      <ion-list-header>
+        <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+      </ion-list-header>
+      <ion-item>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>

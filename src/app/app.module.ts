@@ -20,6 +20,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ActionSheet } from '@ionic-native/action-sheet/ngx';
 import { WheelSelector } from '@ionic-native/wheel-selector/ngx';
 import { customAlertEnter } from "./_helper/customAlertEnter";
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 const config: SocketIoConfig = { url: `${environment.url}/chat`, options: {} };
@@ -28,8 +29,7 @@ export function jwtOptionsFactory(storage) {
     tokenGetter: () => {
       return storage.get("JWT_TOKEN")
     },
-
-    whitelistedDomains: ["192.168.1.123:3000","192.168.1.235:3000","35.240.206.248"]
+    whitelistedDomains: ["192.168.1.124:3000","192.168.1.235:3000","35.240.206.248"]
   };
 }
 @NgModule({
@@ -60,6 +60,7 @@ export function jwtOptionsFactory(storage) {
     SplashScreen,
     Camera,
     InAppBrowser,
+    EmailComposer,
     ActionSheet,
     WheelSelector,
     OneSignal,

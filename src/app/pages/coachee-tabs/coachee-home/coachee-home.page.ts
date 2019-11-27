@@ -29,7 +29,8 @@ export class CoacheeHomePage implements OnInit {
   currentUser: any
   skipNum = 0;
   healthyTips = []
-  activeChallenges = []
+  activeChallenges = [];
+  isImageLoaded=false
   constructor(private router: Router, private render: Renderer2,
     private challengeService: ChallengeService,
     private tipsService: HealthyTipsService,
@@ -41,8 +42,10 @@ export class CoacheeHomePage implements OnInit {
   ngOnInit() {
     this.coacheeService.initialize_data().subscribe(res => {
       this.currentUser = res[0]['currentUser'];
+      this.isImageLoaded=true
       if (this.currentUser._coach.imgData) {
         this.coachProfile = `data:image/jpeg;base64,${this.currentUser._coach.imgData}`
+     
       } else {
         this.coachProfile = 'http://user-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_1440,w_720,f_auto,q_auto/88884/145502_842983.png'
       }
@@ -105,7 +108,6 @@ export class CoacheeHomePage implements OnInit {
   }
 
   goto_healthy_tip(url) {
-    console.log(url)
     const browser = this.iab.create(url);
   }
 

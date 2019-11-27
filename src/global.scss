@@ -14,6 +14,14 @@ ion-button {
     --background-activated: var(--ion-color-primary) !important
 }
 
+.custom-skeleton ion-skeleton-text {
+    line-height: 13px;
+}
+
+.custom-skeleton ion-skeleton-text:last-child {
+    margin-bottom: 5px;
+}
+
 ion-icon {
     &[name*='custom-'] {
         height: 1em;
@@ -21,19 +29,16 @@ ion-icon {
     }
 
 }
-
-.text-primary {
-    color: var(--ion-color-primary);
-}
-
 .invalid-feedback {
     color: red;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 1em;
 }
-.is-invalid{
-    color:red
+
+.is-invalid {
+    color: red
 }
+
 .week-day-circle {
     display: block;
     border-radius: 50%;
@@ -63,9 +68,6 @@ ion-icon {
     padding: 10px;
 }
 
-.custom-popover .popover-content  {
- width:80%
+.custom-popover .popover-content {
+    width: 80%
 }
-
-
-

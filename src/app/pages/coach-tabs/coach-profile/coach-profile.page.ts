@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet/ngx';
 import { CameraOptionsSetting } from "../../../_helper/cameraOptionsSetting";
 import { Camera } from "@ionic-native/Camera/ngx"
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { CoachService } from '../../../services/coach.service'
 import { AuthService } from "../../../services/auth.service";
 @Component({
@@ -19,7 +19,7 @@ export class CoachProfilePage implements OnInit {
   expiredNumber = 0
   isAdmin = false
   coach = {}
-  coachProfile="";
+  coachProfile = "";
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private auth: AuthService,
@@ -27,6 +27,7 @@ export class CoachProfilePage implements OnInit {
     private camera: Camera,
     private coachService: CoachService,
     private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController
   ) { }
   ngOnInit() {
     this.auth.get_user_profile().subscribe(res => {
@@ -66,20 +67,21 @@ export class CoachProfilePage implements OnInit {
 
   submitNameForm() {
     this.isNameFormShow = !this.isNameFormShow
-    this.auth.updateProfile(this.nameForm.value).subscribe(res=>{
-      if(res){
-        this.auth.get_user_profile().subscribe(res=>{
-          this.coach=res['currentUser']
+    this.auth.updateProfile(this.nameForm.value).subscribe(res => {
+      if (res) {
+        this.auth.get_user_profile().subscribe(res => {
+          this.coach = res['currentUser']
         })
       }
     })
   }
 
   logout() {
+    this.auth.logout()
     this.router.navigateByUrl('/')
   }
 
-  updateProfileImage() {
+  update_profileImage() {
     let buttonLabels = ['Take picture', 'Select picture'];
     const options: ActionSheetOptions = {
       title: 'Profile picture',
@@ -102,11 +104,11 @@ export class CoachProfilePage implements OnInit {
   }
 
 
-    /**
-   * @function getPicture
-   * @param {isCamera }:Boolbean
-   * @returns Observable
-   */
+  /**
+ * @function getPicture
+ * @param {isCamera }:Boolbean
+ * @returns Observable
+ */
   async get_picture(isCamera) {
     let caremaOptions = CameraOptionsSetting(isCamera, this.camera)
     try {
@@ -114,18 +116,23 @@ export class CoachProfilePage implements OnInit {
       let imageSizeInByte = 4 * Math.ceil((imgData.length) / 3) * 0.5624896334383812;
       if (imageSizeInByte / (1024 * 1024) >= 8)
         this.showAlert("the size of image is too big")
-      this.auth.updateProfile({imgData:imgData}).subscribe(res=>{
-        this.auth.get_user_profile().subscribe(res=>{
-         
-          this.coach=res['currentUser']
-          console.log(this.coach['imgData'])
+      let loading = await this.loadingCtrl.create({
+        message: 'Please wait...',
+        spinner: 'crescent',
+      })
+      await loading.present()
+      this.auth.updateProfile({ imgData: imgData }).subscribe(res => {
+        this.auth.get_user_profile().subscribe(res => {
+          this.loadingCtrl.dismiss()
+          this.coach = res['currentUser']
+          this.coachProfile = `data:image/jpeg;base64,${this.coach['imgData']}`
         })
       })
     } catch (err) {
       return
     }
   }
-   
+
 
 
   /**

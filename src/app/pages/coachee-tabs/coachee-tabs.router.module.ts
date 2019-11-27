@@ -67,7 +67,7 @@ const routes: Routes = [
             loadChildren: '../coachee-tabs/profile/profile.module#ProfilePageModule',
           },
           {
-            path: 'profile/changePassword',
+            path: 'changePassword',
             loadChildren: '../coachee-tabs/change-password/change-password.module#ChangePasswordPageModule'
           }
         ]

@@ -38,7 +38,7 @@ export class ChangePasswordPage implements OnInit {
     if (this.passwordForm.invalid) return
     this.auth.changePassword(this.passwordForm.value).subscribe(res => {
       if(this.isCoachee){
-        this.router.navigateByUrl('coachee/menu/profile')
+        this.router.navigateByUrl('coachee/menu')
       }else{
         this.router.navigateByUrl('coach/profile')
       }

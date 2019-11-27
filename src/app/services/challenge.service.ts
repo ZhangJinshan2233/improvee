@@ -47,7 +47,7 @@ export class ChallengeService {
   get_categories_and_active_categories() {
     this.show_loading()
     return forkJoin(this.http.get(`${this.url}/challenges/active`),
-      this.http.get(`${this.url}/challengeCategories`)).pipe(
+      this.http.get(`${this.url}/categories/?kind=ChallengeCategory`)).pipe(
         tap(() => {
           this.loading.then(loading => {
             loading.dismiss()
@@ -68,9 +68,9 @@ export class ChallengeService {
    * get categories by challenge id and active challenges
    * @param challengeCategoryId 
    */
-  get_categories_by_id_and_active_challenges(challengeCategoryId) {
+  get_categories_by_id_and_active_challenges(categoryId) {
     this.show_loading()
-    return forkJoin(this.http.get(`${this.url}/challengeCategories/${challengeCategoryId}`),
+    return forkJoin(this.http.get(`${this.url}/categories/${categoryId}`),
       this.http.get(`${this.url}/challenges/active`)).pipe(
         tap(() => {
           this.loading.then(loading => {

@@ -1,39 +1,83 @@
-<!-- <ion-header>
-  <ion-toolbar>
-   
-  </ion-toolbar>
-</ion-header> -->
-
 <ion-content #scrollArea [fullscreen]="true" [scrollEvents]='true' class="ion-padding-top">
-  <ion-grid>
-    <ion-row align-items-center>
-      <ion-col>
+  <ion-header>
+    <ion-toolbar *ngIf="isImageLoaded">
+      <ion-buttons slot="start">
+        <ion-button color="primary">
+          <ion-back-button></ion-back-button>
+        </ion-button>
+      </ion-buttons>
+      <div [appScrollVanish]="scrollArea" class='ion-text-center'>
         <ion-avatar>
-          <ion-img [src]="currentUser?.profileImage?.data || noavatar "></ion-img>
+          <img [src]="coacheeProfile">
         </ion-avatar>
-      </ion-col>
-      <ion-col>
-        <h3 class="text-primary">{{currentUser.firstName}}{{currentUser.lastName}}</h3>
-        <ion-note class="text-primary">{{currentUser.email}}</ion-note>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-list>
-    <ion-item  [routerLink]="['/coachee/menu/profile']" routerDirection="forward">
-      <ion-icon slot="start" name="person"></ion-icon>
-      <ion-label>my profile</ion-label>
+        <ion-button fill="outline" shape="round" size="small" (click)=" update_profileImage()" color='dark'>
+          Edit
+        </ion-button>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+  <ion-list *ngIf="isImageLoaded">
+    <ion-item [routerLink]="['/coachee/menu/profile']" routerDirection="forward">
+      <ion-icon slot="start" name="person" color='primary'></ion-icon>
+      <ion-label>My profile</ion-label>
     </ion-item>
-    <ion-item  routerDirection="forward">
+    <ion-item routerDirection="forward" (click)="send_email()">
       <ion-icon slot="start" name="mail"></ion-icon>
-      <ion-label>contact us</ion-label>
+      <ion-label>Contact us</ion-label>
     </ion-item>
-    <ion-item  routerDirection="forward">
-      <ion-icon slot="start" name="lock"></ion-icon>
-      <ion-label>privacy policy</ion-label>
-    </ion-item>
-    <ion-item  routerDirection="forward">
+    <ion-item routerDirection="forward" (click)="rate_app()">
       <ion-icon slot="start" name="star"></ion-icon>
-      <ion-label>rating us</ion-label>
+      <ion-label>Rating us</ion-label>
+    </ion-item>
+    <ion-item [routerLink]="['/coachee/menu/changePassword']" routerDirection="forward">
+      <ion-icon slot="start" name="lock"></ion-icon>
+      <ion-label>Change password</ion-label>
+    </ion-item>
+    <ion-item (click)="log_out()">
+      <ion-icon slot="start" name="log-out"></ion-icon>
+      <ion-label>Log out</ion-label>
     </ion-item>
   </ion-list>
+
+  <!-- Skeleton screen -->
+  <div *ngIf="!isImageLoaded">
+    <div class="ion-padding custom-skeleton">
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+      <ion-skeleton-text animated></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+    </div>
+    <ion-list>
+      <ion-list-header>
+        <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+      </ion-list-header>
+      <ion-item>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>

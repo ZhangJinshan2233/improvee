@@ -8,21 +8,22 @@
 </ion-header>
 <ion-content>
   <ion-list>
-    <ion-card *ngFor='let note of notes; let even=even'
-     [color]="even? 'success':'medium'"
-     (click)="updateNote(note)"
-     >
+    <ion-card *ngFor='let note of notes; let even=even; index as i' [color]="even? 'success':'medium'" (click)="updateNote(note,i)">
       <ion-card-content>
         <ion-label class='ion-text-uppercase'>
           {{note.title}}
           <br>
-          <small>{{note.date |date}}</small>
+          <small>{{note.createdDate |date}}</small>
         </ion-label>
       </ion-card-content>
     </ion-card>
   </ion-list>
+  <ion-infinite-scroll threshold="40px" (ionInfinite)="load_more_notes($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
   <ion-fab vertical='bottom' horizontal='end' slot='fixed'>
-    <ion-fab-button (click)='createNewNote()'>
+    <ion-fab-button (click)='create_new_note()'>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

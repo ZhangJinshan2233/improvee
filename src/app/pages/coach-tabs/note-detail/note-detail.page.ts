@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
+import { NotesService } from "../../../services/notes.service";
 import {
   FormBuilder,
   FormGroup,
@@ -12,38 +13,36 @@ import {
   styleUrls: ['./note-detail.page.scss'],
 })
 export class NoteDetailPage implements OnInit {
-
-  date: any;
-  time: any;
   status = '';
   note: any;
   noteForm: FormGroup;
-  isSubmitted = false
+  isSubmitted = false;
+  coacheeId = ""
   constructor(private modalCtrl: ModalController,
     private navPara: NavParams,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private noteService: NotesService
   ) { }
 
   ngOnInit() {
     this.createNoteForm()
-    let note = this.navPara.get('note');
-    let { date, time, discussed, concluded, next } = note
-    this.noteForm.setValue({
-      date: date || '',
-      time: time || "",
+    this.note = this.navPara.get('note');
+    let { title, discussed, concluded, next } = this.note
+    this.noteForm.patchValue({
+      title: title || '',
       discussed: discussed || '',
       concluded: concluded || '',
       next: next || ''
     })
     this.status = this.navPara.get('status');
+    this.coacheeId = this.navPara.get('coacheeId')
   }
   async closeNoteModal() {
     await this.modalCtrl.dismiss()
   }
   createNoteForm() {
     this.noteForm = this.formBuilder.group({
-      date: ['', Validators.required],
-      time: ['', Validators.required],
+      title: ['', Validators.required],
       discussed: ['', Validators.required],
       concluded: ['', Validators.required],
       next: ['', Validators.required]
@@ -53,7 +52,22 @@ export class NoteDetailPage implements OnInit {
   onSubmit() {
     this.isSubmitted = true;
     if (this.noteForm.invalid) return
-    this.closeNoteModal()
+    if (this.status === "Create") {
+      this.noteService.create_note({ _coachee: this.coacheeId, ...this.noteForm.value }).subscribe(res => {
+        if (res['newNote']) {
+          this.modalCtrl.dismiss({
+            newNote: res['newNote']
+          })
+        }
+      })
+    } else {
+      this.noteService.update_note(this.note._id, this.noteForm.value).subscribe(res => {
+        if (res) {
+          this.modalCtrl.dismiss({
+            newNote: this.noteForm.value
+          })
+        }
+      })
+    }
   }
-
 }

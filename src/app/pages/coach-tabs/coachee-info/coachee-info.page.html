@@ -2,7 +2,7 @@
   <ion-card-content class='ion-no-padding'>
     <ion-item lines='none'>
       <ion-avatar slot='start' (click)='goToCoacheeDetails(coachee._id)'>
-        <ion-img [src]="coacheeProfileImg"></ion-img>
+        <img [src]="coacheeProfileImg">
       </ion-avatar>
       <ion-label color='light'>
         {{coachee.name}}<br/>

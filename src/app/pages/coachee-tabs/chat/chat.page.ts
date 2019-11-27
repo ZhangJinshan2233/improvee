@@ -24,6 +24,7 @@ export class ChatPage implements OnInit {
   chatRoom: any;
   isCoachee = false;
   skipNum = 0;
+  isImageLoaded=false
   // recipients: any
   canSendMessage: boolean = true;
   constructor(private chatService: ChatService,
@@ -44,6 +45,7 @@ export class ChatPage implements OnInit {
     })
     this.authSertvice.get_user_profile().subscribe(res => {
       this.currentUser = res['currentUser'];
+      this.isImageLoaded=true
       if (this.currentUser._coach.imgData) {
         this.coachProfile = `data:image/jpeg;base64,${this.currentUser._coach.imgData}`
       } else {

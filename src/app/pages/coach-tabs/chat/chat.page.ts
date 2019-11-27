@@ -15,7 +15,7 @@ import * as _ from 'lodash';
 export class ChatPage implements OnInit {
   @ViewChild(IonContent, { static: false }) messagesContent: IonContent;
   @ViewChild(IonRefresher, { static: false }) refresher: IonRefresher
-  coacheeProfile = '/assets/img/coach-profile.jpeg'
+  // coacheeProfile = '/assets/img/coach-profile.jpeg'
   currentUser: any
   newMsg: any;
   isCamera: boolean;
