@@ -8,7 +8,7 @@
 </ion-header>
 <ion-content>
   <ion-list *ngFor="let record of records let i=index" class='ion-no-margin'>
-    <ion-card (click)="update_record(record,i)" *ngIf="!isObsolete" button=true>
+    <ion-card (click)="update_record(record,i)" *ngIf="!isObsolete" [disabled]=!isCoachee>
       <ion-card-content class="ion-padding-horizontal">
         <ion-grid>
           <ion-row>

@@ -36,7 +36,8 @@ export class IndicatorRecordsPage implements OnInit {
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
   @ViewChild('monthChartCanvas', { static: false }) monthChartCanvas: ElementRef;
   @ViewChild('yearChartCanvas', { static: false }) yearChartCanvas: ElementRef;
-
+  isYearSegmentClicked = false
+  isMonthSegmentClicked = false
   indicator = {
     name: '',
     value: null,
@@ -100,7 +101,6 @@ export class IndicatorRecordsPage implements OnInit {
     this.currentYear = format(new Date(), 'MM/dd/yyyy');
     let monthViewXaxis = []
     let recordValues = []
-    console.log()
     this.indicatorRecordService.get_indicator_records_of_current_month(this.indicator.name,
       format(new Date(startOfMonth(new Date(this.currentMonth))), 'MM/dd/yyyy'),
       format(new Date(endOfMonth(new Date(this.currentMonth))), 'MM/dd/yyyy')).subscribe(res => {
@@ -122,6 +122,7 @@ export class IndicatorRecordsPage implements OnInit {
           monthViewXaxis[i] = i + 1
         }
         this.create_month_chart(this.monthChartCanvas.nativeElement, monthViewXaxis, recordValues)
+        this.isMonthSegmentClicked = true
       })
   }
 
@@ -134,15 +135,25 @@ export class IndicatorRecordsPage implements OnInit {
     this.slides.lockSwipes(false);
     await this.slides.slideTo(this.selectedSegment);
     this.slides.lockSwipes(true);
-    if (this.selectedSegment == 1 && !this.yearLineChart) {
+    if (this.selectedSegment == 0 && this.isMonthSegmentClicked) {
+      let monthViewXaxis = []
       let recordValues = []
-      this.indicatorRecordService.get_indicator_records_of_current_year(this.indicator.name, 
-        format(new Date(startOfYear(new Date(this.currentMonth))), 'MM/dd/yyyy'),
-        format(new Date(lastDayOfYear(new Date(this.currentMonth))), 'MM/dd/yyyy')).subscribe(res => {
-        if ((res['indicatorRecords']).length > 0) this.isShowYearChart = true
-        recordValues = set_year_record_value((res['indicatorRecords']));
-        this.create_year_chart(this.yearChartCanvas.nativeElement, this.yearViewXaxis, recordValues);
-      })
+      this.setMonthChart(monthViewXaxis, recordValues)
+    }
+    if (this.selectedSegment == 1 && this.isYearSegmentClicked && this.yearLineChart) {
+      let recordValues = []
+      this.setYearChart(recordValues)
+    }
+    if (this.selectedSegment == 1 && !this.yearLineChart && !this.isYearSegmentClicked) {
+      this.isYearSegmentClicked = true
+      let recordValues = []
+      this.indicatorRecordService.get_indicator_records_of_current_year(this.indicator.name,
+        format(new Date(startOfYear(new Date(this.currentYear))), 'MM/dd/yyyy'),
+        format(new Date(lastDayOfYear(new Date(this.currentYear))), 'MM/dd/yyyy')).subscribe(res => {
+          if ((res['indicatorRecords']).length > 0) this.isShowYearChart = true
+          recordValues = set_year_record_value((res['indicatorRecords']));
+          this.create_year_chart(this.yearChartCanvas.nativeElement, this.yearViewXaxis, recordValues);
+        })
     }
   }
 
@@ -217,7 +228,6 @@ export class IndicatorRecordsPage implements OnInit {
     this.isLastYear = false;
     let recordValues = [];
     this.currentYear = format(new Date(subYears(new Date(this.currentYear), 1)), 'MM/dd/yyyy');
-
     this.setYearChart(recordValues)
   }
 
@@ -322,7 +332,7 @@ export class IndicatorRecordsPage implements OnInit {
             this.setMonthChart(monthViewXaxis, monthRecordValues)
           }
         } else {
-          let isDateSameYear = isSameYear(data.indicatorRecord.createDate, this.currentMonth)
+          let isDateSameYear = isSameYear(new Date(data.indicatorRecord.createDate), new Date(this.currentMonth))
           if (isDateSameYear) {
             let yearRecordCValues = []
             this.setYearChart(yearRecordCValues)
@@ -352,21 +362,21 @@ export class IndicatorRecordsPage implements OnInit {
    * @param recordValues 
    */
   setMonthChart(monthViewXaxis, recordValues) {
-    this.indicatorRecordService.get_indicator_records_of_current_month(this.indicator.name, 
+    this.indicatorRecordService.get_indicator_records_of_current_month(this.indicator.name,
       format(new Date(startOfMonth(new Date(this.currentMonth))), 'MM/dd/yyyy'),
       format(new Date(endOfMonth(new Date(this.currentMonth))), 'MM/dd/yyyy')).subscribe(res => {
-      recordValues = set_month_record_value(res['indicatorRecords'], this.currentMonth)
-      if (res['indicatorRecords'].length <= 0) {
-        this.isShowMonthChart = false
-      } else {
-        this.isShowMonthChart = true
-      }
-      let days = getDaysInMonth(new Date(this.currentMonth))
-      for (let i = 0; i < days; i++) {
-        monthViewXaxis[i] = i + 1
-      }
-      this.update_chart(this.monthLineChart, monthViewXaxis, recordValues)
-    })
+        recordValues = set_month_record_value(res['indicatorRecords'], this.currentMonth)
+        if (res['indicatorRecords'].length <= 0) {
+          this.isShowMonthChart = false
+        } else {
+          this.isShowMonthChart = true
+        }
+        let days = getDaysInMonth(new Date(this.currentMonth))
+        for (let i = 0; i < days; i++) {
+          monthViewXaxis[i] = i + 1
+        }
+        this.update_chart(this.monthLineChart, monthViewXaxis, recordValues)
+      })
   }
 
   /**
@@ -375,15 +385,15 @@ export class IndicatorRecordsPage implements OnInit {
    */
   setYearChart(recordValues) {
     this.indicatorRecordService.get_indicator_records_of_current_year(this.indicator.name,
-      format(new Date(startOfYear(new Date(this.currentMonth))), 'MM/dd/yyyy'),
-      format(new Date(lastDayOfYear(new Date(this.currentMonth))), 'MM/dd/yyyy')).subscribe(res => {
-      if (res['indicatorRecords'].length <= 0) {
-        this.isShowYearChart = false
-      } else {
-        this.isShowYearChart = true
-      }
-      recordValues = set_year_record_value(res['indicatorRecords']);
-      this.update_chart(this.yearLineChart, this.yearViewXaxis, recordValues)
-    })
+      format(new Date(startOfYear(new Date(this.currentYear))), 'MM/dd/yyyy'),
+      format(new Date(lastDayOfYear(new Date(this.currentYear))), 'MM/dd/yyyy')).subscribe(res => {
+        if (res['indicatorRecords'].length <= 0) {
+          this.isShowYearChart = false
+        } else {
+          this.isShowYearChart = true
+        }
+        recordValues = set_year_record_value(res['indicatorRecords']);
+        this.update_chart(this.yearLineChart, this.yearViewXaxis, recordValues)
+      })
   }
 }

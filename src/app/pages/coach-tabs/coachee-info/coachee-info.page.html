@@ -10,7 +10,7 @@
       </ion-label>
       <ion-button fill='clear' color='light' (click)="chat_with_coachee(coachee._id)">
         <ion-icon name="text" slot='icon-only'></ion-icon>
-        <div *ngIf="unreadMessageItems>0">
+        <div *ngIf="coachee.unreadMessageItems>0">
           <ion-badge>{{coachee.unreadMessageItems}}</ion-badge>
         </div>
       </ion-button>
