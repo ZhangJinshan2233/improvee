@@ -45,7 +45,7 @@
           <ion-thumbnail slot="start">
             <img [src]='activeChallenge.categoryImage'>
           </ion-thumbnail>
-          <ion-label slot='end'>{{activeChallenge.categoryName}}</ion-label>
+          <ion-label>{{activeChallenge.categoryName}}</ion-label>
         </ion-item>
       </div>
       <div *ngIf="!activeChallenges.length>0">
@@ -77,7 +77,7 @@
           <ion-card-content class="ion-text-wrap">
             {{tip?.description}}
           </ion-card-content>
-          <ion-button fill='clear' size='small' (click)=" goto_healthy_tip(tip.url)" class="ion-text-uppercase">
+          <ion-button fill='clear' size='small' (click)=" goto_healthy_tip(tip?.url)" class="ion-text-uppercase">
             Read more
           </ion-button>
         </ion-card>

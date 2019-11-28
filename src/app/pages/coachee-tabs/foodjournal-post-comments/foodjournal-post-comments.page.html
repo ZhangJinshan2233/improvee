@@ -14,9 +14,9 @@
       <ion-avatar>
         <img [src]="comment?.sender?.image || noavatar" alt="">
       </ion-avatar>
-      <ion-label text-wrap>
+      <ion-label class='ion-text-wrap'>
         <h5>
-          <b>{{comment.sender.firstName}} {{comment.sender.lastName}}</b> {{comment.content}}
+          <b><small>{{comment.sender.firstName}} {{comment.sender.lastName}}</small></b> {{comment.content}}
         </h5>
         <ion-note style="font-size: 0.7em">
           {{comment.createDate | timeAgo}}

@@ -55,10 +55,16 @@ export class CoacheeInfoPage implements OnInit {
   }
   goToCoacheeDetails(id) {
     this.status = 'move'
-    setTimeout(() => {
-      this.router.navigateByUrl(`/coach/home/${id}`)
-      this.status = 'origal'
-    }, 500);
+    this.chatService.remove_unread_nmessages(this.coachee._id,"message").subscribe(res=>{
+      if(res){
+        this.coachee.unreadPostItems=0;
+        this.router.navigateByUrl(`/coach/home/${id}`)
+      }
+    })
+    // setTimeout(() => {
+    //   this.router.navigateByUrl(`/coach/home/${id}`)
+    //   this.status = 'origal'
+    // }, 500);
   }
 
   chat_with_coachee(id) {

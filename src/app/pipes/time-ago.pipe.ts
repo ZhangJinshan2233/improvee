@@ -13,7 +13,7 @@ export class TimeAgoPipe implements PipeTransform {
     if (isYesterday(new Date(value))) {
       return 'yesterday';
     }
-    return differenceInDays(Date.now(), value) > 1 ?
+    return differenceInDays(Date.now(), new Date(value)) > 1 ?
       format(new Date(value), 'MMM D, YYYY, H:mm:ss A') : formatDistanceToNow(new Date(value), { addSuffix: true });
   }
 }

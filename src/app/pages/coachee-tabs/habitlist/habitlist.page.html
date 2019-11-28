@@ -13,8 +13,8 @@
 <ion-content>
   <ion-grid>
     <ion-row class='ion-justify-content-between ion-margin-bottom'>
-      <ion-col size='2'>
-        <ion-button fill='outline' expend='block' [disabled]="isSubmitted" (click)="get_pre_week()" size='small'>
+      <ion-col size='2' class='ion-text-center'>
+        <ion-button fill='clear' [disabled]="isSubmitted" (click)="get_pre_week()" size='small'>
           <ion-icon name="arrow-dropleft" mode='md' slot='icon-only'></ion-icon>
         </ion-button>
       </ion-col>
@@ -23,34 +23,34 @@
           <ion-label color='dark' style="font-size:1.2em">{{currentDate |date:'MMM/yyyy'}}</ion-label>
         </div>
       </ion-col>
-      <ion-col size='2' class='ion-text-right'>
+      <ion-col size='2' class='ion-text-center'>
         <div>
-          <ion-button fill='outline' (click)="get_next_week()" size='small' [disabled]="isLastWeek || isSubmitted" >
+          <ion-button fill='clear' (click)="get_next_week()" size='small' [disabled]="isLastWeek || isSubmitted" >
             <ion-icon name="arrow-dropright" mode='md' slot='icon-only'></ion-icon>
           </ion-button>
         </div>
       </ion-col>
     </ion-row>
     <ion-row class='ion-justify-content-between'>
-      <ion-col size='1.5' class='ion-text-center ion-label-css'>
+      <ion-col size='1.5' class='ion-text-center week-day-label'>
         <ion-label color='dark'>Sun</ion-label>
       </ion-col>
-      <ion-col size='1.5' class='ion-text-center ion-label-css'>
+      <ion-col size='1.5' class='ion-text-center week-day-label'>
         <ion-label color='dark'>Mon</ion-label>
       </ion-col>
-      <ion-col size='1.5' class='ion-text-center ion-label-css'>
+      <ion-col size='1.5' class='ion-text-center week-day-label'>
         <ion-label color='dark'>Tue</ion-label>
       </ion-col>
-      <ion-col size='1.5' class='ion-text-center ion-label-css'>
+      <ion-col size='1.5' class='ion-text-center week-day-label'>
         <ion-label color='dark'>Wed</ion-label>
       </ion-col>
-      <ion-col size='1.5' class='ion-text-center ion-label-css'>
+      <ion-col size='1.5' class='ion-text-center week-day-label'>
         <ion-label color='dark'>Thu</ion-label>
       </ion-col>
-      <ion-col size='1.5' class='ion-text-center ion-label-css'>
+      <ion-col size='1.5' class='ion-text-center week-day-label'>
         <ion-label color='dark'>Fri</ion-label>
       </ion-col>
-      <ion-col size='1.5' class='ion-text-center ion-label-css'>
+      <ion-col size='1.5' class='ion-text-center week-day-label'>
         <ion-label color='dark'>Sat</ion-label>
       </ion-col>
     </ion-row>

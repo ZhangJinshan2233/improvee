@@ -110,7 +110,9 @@ export class CoacheeHomePage implements OnInit {
   }
 
   goto_healthy_tip(url) {
+    if(!url) return
     const browser = this.iab.create(url);
+    browser.close()
   }
 
   goto_chat() {

@@ -22,7 +22,7 @@ const routes: Routes = [
     FoodjournalPostDetailsPageModule,
     NgCircleProgressModule.forRoot({
       "backgroundPadding": 7,
-      "radius": 50,
+      "radius": 40,
       "space": -2,
       "outerStrokeWidth": 2,
       "outerStrokeColor": "#FF6347",
