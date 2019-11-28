@@ -4,6 +4,7 @@ import { ChallengeService } from "../../../services/challenge.service";
 import { HealthyTipsService } from "../../../services/healthy-tips.service";
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { CoacheeService } from "../../../services/coachee.service";
+import { ChatService } from "../../../services/chat.service";
 import * as _ from "lodash";
 import { HabitlistRecordService } from '../../../services/habitlist-record.service'
 import {
@@ -36,6 +37,7 @@ export class CoacheeHomePage implements OnInit {
     private tipsService: HealthyTipsService,
     private coacheeService: CoacheeService,
     private habitrecordService: HabitlistRecordService,
+    private chatService:ChatService,
     private iab: InAppBrowser) {
   }
 
@@ -112,7 +114,7 @@ export class CoacheeHomePage implements OnInit {
   }
 
   goto_chat() {
-    this.coacheeService.remove_unread_nmessages(this.currentUser._coach._id).subscribe(res => {
+    this.chatService.remove_unread_nmessages(this.currentUser._coach._id).subscribe(res => {
       this.unReadMessageNumber = 0;
       this.router.navigateByUrl(`coachee/coachee-home/chat/${this.currentUser._id}`)
     })

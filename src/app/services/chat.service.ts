@@ -11,7 +11,7 @@ import { AlertController, LoadingController } from '@ionic/angular';
 export class ChatService {
   loading: any
   userId:any
-  url = `${environment.url}/api/chat`;
+  url = `${environment.url}/api`;
   constructor(private socket: Socket,
     private http: HttpClient,
     private alertCtrl:AlertController,
@@ -21,7 +21,7 @@ export class ChatService {
   }
 
   goto_chat_room(roomName) {
-    return this.http.get(`${this.url}/rooms/${roomName}`).pipe(
+    return this.http.get(`${this.url}/chat/rooms/${roomName}`).pipe(
       catchError(e => {
         let error = e.error.message;
         throw error;
@@ -50,7 +50,7 @@ export class ChatService {
   }
 
   create_new_message(message){
-    return this.http.post(`${this.url}/messages`,message).pipe(
+    return this.http.post(`${this.url}/chat/messages`,message).pipe(
       mapTo(true),
       catchError(e => {
         let error = e.error.message;
@@ -60,7 +60,7 @@ export class ChatService {
     )
   }
   get_messages_pagination(chatRoomId,skipNum){
-    return this.http.get(`${this.url}/messages/${chatRoomId}/?skipNum=${skipNum}`).pipe(
+    return this.http.get(`${this.url}/chat/messages/${chatRoomId}/?skipNum=${skipNum}`).pipe(
       catchError(e => {
         let error = e.error.message;
         this.show_alert(error);
@@ -68,6 +68,21 @@ export class ChatService {
       })
     )
    } 
+   remove_unread_nmessages(author,type="message") {
+    return this.http.delete(`${this.url}/unreadNotifications/?author=${author}&type=${type}`).pipe(
+      mapTo(true),
+      catchError(e => {
+        let error = e.error;
+        if (!e.error) {
+          this.show_alert("internet error")
+          throw error;
+        }
+        this.show_alert(e.error);
+        throw error;
+      })
+    )
+  }
+
   async show_alert(msg) {
     let alert = await this.alertCtrl.create({
       message: msg,

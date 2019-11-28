@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CoachService } from "../../../services/coach.service";
-import { Router } from '@angular/router';
 import { compareAsc } from 'date-fns'
 
 @Component({
@@ -10,7 +9,7 @@ import { compareAsc } from 'date-fns'
 })
 export class CoachHomePage implements OnInit {
   coachProfile = ""
-  isImageLoaded=false
+  isImageLoaded = false
   coachees = []
   currentUser: any
   unreadMessages = 5;
@@ -22,8 +21,7 @@ export class CoachHomePage implements OnInit {
   customAlertOptions: any = {
     header: 'Filter'
   };
-  constructor(private coachService: CoachService,
-    private router: Router) { }
+  constructor(private coachService: CoachService) { }
 
   ngOnInit() {
     this.coachService.initialize_data().subscribe(res => {
@@ -33,7 +31,7 @@ export class CoachHomePage implements OnInit {
       } else {
         this.coachProfile = "/assets/img/noavatar.png"
       }
-      this.isImageLoaded=true
+      this.isImageLoaded = true
       this.coachees = res[1]['coachees']
       this.skipNum += res[1]['coachees'].length
       this.allCoachees = res[1]['coachees']
@@ -84,15 +82,6 @@ export class CoachHomePage implements OnInit {
         return item1[this.filtedTerm] - item2[this.filtedTerm]
       }
     })
-  }
-  goToCoacheeDetails(id) {
-
-    this.router.navigateByUrl(`/coach/home/${id}`)
-
-  }
-
-  chat_with_coachee(id) {
-    this.router.navigateByUrl(`/coach/home/chat/${id}`)
   }
 }
 

@@ -82,20 +82,7 @@ export class CoacheeService {
     )
   }
 
-  remove_unread_nmessages(author,type="message") {
-    return this.http.delete(`${this.url}/unreadNotifications/?author=${author}&type=${type}`).pipe(
-      mapTo(true),
-      catchError(e => {
-        let error = e.error;
-        if (!e.error) {
-          this.show_alert("internet error")
-          throw error;
-        }
-        this.show_alert(e.error);
-        throw error;
-      })
-    )
-  }
+  
   async show_alert(msg) {
     let alert = await this.alertController.create({
       message: msg,

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { ChatService } from "../../../services/chat.service";
 import * as _ from 'lodash'
 import {
   transition,
@@ -40,7 +41,8 @@ export class CoacheeInfoPage implements OnInit {
   unreadPostItems = 0;
   completedHabitPercent = 0
   remainingDaysOfMembership = 0
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+    private chatService:ChatService) { }
 
   coacheeProfileImg=''
   ngOnInit() {
@@ -60,6 +62,12 @@ export class CoacheeInfoPage implements OnInit {
   }
 
   chat_with_coachee(id) {
-    this.router.navigateByUrl(`/coach/home/chat/${id}`)
+    this.chatService.remove_unread_nmessages(this.coachee._id,"message").subscribe(res=>{
+      if(res){
+        this.coachee.unreadMessageItems=0;
+        this.router.navigateByUrl(`/coach/home/chat/${id}`)
+      }
+    })
+   
   }
 }
