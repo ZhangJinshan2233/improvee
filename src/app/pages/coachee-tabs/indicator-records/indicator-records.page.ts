@@ -317,7 +317,7 @@ export class IndicatorRecordsPage implements OnInit {
         if (this.selectedSegment == 0) {
           let monthViewXaxis = []
           let monthRecordValues = []
-          let isDateSameMonth = isSameMonth(data.indicatorRecord.createDate, this.currentMonth)
+          let isDateSameMonth = isSameMonth(new Date(data.indicatorRecord.createDate), new Date(this.currentMonth))
           if (isDateSameMonth) {
             this.setMonthChart(monthViewXaxis, monthRecordValues)
           }

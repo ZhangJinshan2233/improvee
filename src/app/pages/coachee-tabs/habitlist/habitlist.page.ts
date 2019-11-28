@@ -109,8 +109,8 @@ export class HabitlistPage implements OnInit {
    */
   get_week(currentDate) {
     this.currentDate = new Date(currentDate);
-    this.currentDay = getDay(this.currentDate).toString()
-    let lastDayWeek = format(lastDayOfWeek(this.currentDate), 'MM/dd/yyyy');
+    this.currentDay = getDay(new Date(this.currentDate)).toString()
+    let lastDayWeek = format(new Date(lastDayOfWeek(new Date(this.currentDate))), 'MM/dd/yyyy');
     this.week.Sat = lastDayWeek
     this.week.Sun = format(subDays(new Date(lastDayWeek), 6), 'MM/dd/yyyy');
     this.week.Mon = format(subDays(new Date(lastDayWeek), 5), 'MM/dd/yyyy');
@@ -121,7 +121,7 @@ export class HabitlistPage implements OnInit {
 
     //prevent click the day which bigger than today and diasbled ion select
     for (let day in this.week) {
-      if (compareAsc(this.week[day], new Date()) >= 0) {
+      if (compareAsc(new Date(this.week[day]), new Date()) >= 0) {
         this.weekdayStatus[day] = true
       } else {
         this.weekdayStatus[day] = false
@@ -130,7 +130,7 @@ export class HabitlistPage implements OnInit {
   }
 
   get_current_date_habits(date) {
-    this.lastTimeDay = getDay(date).toString()
+    this.lastTimeDay = getDay(new Date(date)).toString()
     this.habitRecordService.get_habitlist_record_by_date(date).subscribe(res => {
       if (res['habitsOfScheduleDay']) {
         this.habitlistRecord = res['habitsOfScheduleDay']

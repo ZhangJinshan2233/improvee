@@ -77,7 +77,7 @@ export class CoachHomePage implements OnInit {
     console.log(this.filtedTerm)
     this.coachees.sort((item1, item2) => {
       if (this.filtedTerm === 'unreadMessageEarliestDate' || this.filtedTerm === 'unreadPostEarliestDate') {
-        return compareAsc(item1[this.filtedTerm], item2[this.filtedTerm])
+        return compareAsc(new Date(item1[this.filtedTerm]), new Date(item2[this.filtedTerm]))
       } else {
         return item1[this.filtedTerm] - item2[this.filtedTerm]
       }

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ChallengeService } from '../../../services/challenge.service'
 import { MenuService } from "../../../services/menu.service";
 import {
-  addDays, compareAsc
+  addDays
 } from 'date-fns';
 @Component({
   selector: 'app-challenge-category-details',

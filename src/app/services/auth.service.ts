@@ -10,7 +10,6 @@ import { HttpClient } from "@angular/common/http";
 import { User } from '../model/user';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { Router } from '@angular/router';
-import { compareDesc } from 'date-fns'
 const JWT_TOKEN = 'JWT_TOKEN';
 const PASSWORD = 'PASSWORD'
 @Injectable({
