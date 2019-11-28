@@ -76,7 +76,7 @@ export class CoacheeHomePage implements OnInit {
     this.habitrecordService.updateHabitlistObservable.subscribe(res => {
       console.log(res)
       if (res) {
-        this.habitrecordService.get_habitlist_record_by_date(format(new Date(), 'MM/DD/YYYY')).subscribe(res => {
+        this.habitrecordService.get_habitlist_record_by_date(format(new Date(), 'MM/dd/yyyy')).subscribe(res => {
           let todayHabitlist = res['habitsOfScheduleDay'].habits;
           let todayCompoletedHabitList = _.filter(todayHabitlist, (item) => {
             return item.status

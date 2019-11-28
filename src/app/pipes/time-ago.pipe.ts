@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { format, distanceInWordsToNow, differenceInDays, isYesterday, isToday } from 'date-fns';
+import { format, formatDistanceToNow, differenceInDays, isYesterday, isToday } from 'date-fns';
 @Pipe({
   name: 'timeAgo'
 })
@@ -10,7 +10,7 @@ export class TimeAgoPipe implements PipeTransform {
       return 'yesterday';
     }
     return differenceInDays(Date.now(), value) > 1 ?
-      format(value, 'MMM D, YYYY, H:mm:ss A') : distanceInWordsToNow(value, { addSuffix: true });
+      format(value, 'MMM D, YYYY, H:mm:ss A') : formatDistanceToNow(value, { addSuffix: true });
   }
 }
 

@@ -75,22 +75,22 @@ export class HabitlistPage implements OnInit {
     this.isSubmitted=true
     this.isLastWeek = false;
     //judge current day is eaqule to today and prevent exectue two time in the fist loading
-    let preWeekDay = format(new Date(subDays(new Date(this.currentDate), 7)), 'MM/DD/YYYY');
+    let preWeekDay = format(new Date(subDays(new Date(this.currentDate), 7)), 'MM/dd/yyyy');
     this.get_week(preWeekDay)
     if (this.currentDay === getDay(new Date()).toString() && this.lastTimeDay === getDay(new Date()).toString()) {
-      this.get_current_date_habits(format(this.currentDate, 'MM/DD/YYYY'))
+      this.get_current_date_habits(format(this.currentDate, 'MM/dd/yyyy'))
     }
   }
 
   get_next_week() {
     this.isSubmitted=true
-    let nextWeekDay = format(new Date(addDays(new Date(this.currentDate), 7)), 'MM/DD/YYYY');
-    if (nextWeekDay == format(new Date(), 'MM/DD/YYYY')) {
+    let nextWeekDay = format(new Date(addDays(new Date(this.currentDate), 7)), 'MM/dd/yyyy');
+    if (nextWeekDay == format(new Date(), 'MM/dd/yyyy')) {
       this.isLastWeek = true
     }
     this.get_week(nextWeekDay)
     if (this.currentDay === getDay(new Date()).toString() && this.lastTimeDay === getDay(new Date()).toString()) {
-      this.get_current_date_habits(format(this.currentDate, 'MM/DD/YYYY'))
+      this.get_current_date_habits(format(this.currentDate, 'MM/dd/yyyy'))
     }
   }
 
@@ -98,7 +98,7 @@ export class HabitlistPage implements OnInit {
     this.isLastWeek = true
     this.get_week(new Date());
     // if (!this.isInitialized) {
-    //   this.get_current_date_habits(format(this.currentDate, 'MM/DD/YYYY'))
+    //   this.get_current_date_habits(format(this.currentDate, 'MM/dd/yyyy'))
     //   this.isInitialized = true
     // }
     // this.isInitialized = false
@@ -110,14 +110,14 @@ export class HabitlistPage implements OnInit {
   get_week(currentDate) {
     this.currentDate = new Date(currentDate);
     this.currentDay = getDay(this.currentDate).toString()
-    let lastDayWeek = format(lastDayOfWeek(this.currentDate), 'MM/DD/YYYY');
+    let lastDayWeek = format(lastDayOfWeek(this.currentDate), 'MM/dd/yyyy');
     this.week.Sat = lastDayWeek
-    this.week.Sun = format(subDays(new Date(lastDayWeek), 6), 'MM/DD/YYYY');
-    this.week.Mon = format(subDays(new Date(lastDayWeek), 5), 'MM/DD/YYYY');
-    this.week.Tue = format(subDays(new Date(lastDayWeek), 4), 'MM/DD/YYYY');
-    this.week.Wed = format(subDays(new Date(lastDayWeek), 3), 'MM/DD/YYYY');
-    this.week.Thu = format(subDays(new Date(lastDayWeek), 2), 'MM/DD/YYYY');
-    this.week.Fri = format(subDays(new Date(lastDayWeek), 1), 'MM/DD/YYYY');
+    this.week.Sun = format(subDays(new Date(lastDayWeek), 6), 'MM/dd/yyyy');
+    this.week.Mon = format(subDays(new Date(lastDayWeek), 5), 'MM/dd/yyyy');
+    this.week.Tue = format(subDays(new Date(lastDayWeek), 4), 'MM/dd/yyyy');
+    this.week.Wed = format(subDays(new Date(lastDayWeek), 3), 'MM/dd/yyyy');
+    this.week.Thu = format(subDays(new Date(lastDayWeek), 2), 'MM/dd/yyyy');
+    this.week.Fri = format(subDays(new Date(lastDayWeek), 1), 'MM/dd/yyyy');
 
     //prevent click the day which bigger than today and diasbled ion select
     for (let day in this.week) {

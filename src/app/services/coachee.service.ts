@@ -24,7 +24,7 @@ export class CoacheeService {
   initialize_data() {
     this.show_loading();
     return forkJoin(this.http.get(`${this.url}/profile`),
-      this.http.get(`${this.url}/habitlistRecord?scheduleDay=${format(new Date(), 'MM/DD/YYYY')}`),
+      this.http.get(`${this.url}/habitlistRecord?scheduleDay=${format(new Date(), 'MM/dd/yyyy')}`),
       this.http.get(`${this.url}/challenges/active`),
       this.http.get(`${this.url}/healthyTips`),
     ).pipe(
