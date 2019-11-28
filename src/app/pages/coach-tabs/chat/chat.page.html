@@ -14,13 +14,13 @@
   </ion-refresher>
   <ion-grid>
     <ion-row *ngFor="let message of messages">
-      <ion-col size="9" *ngIf="message.author !== currentUser._id" class="message other-message">
+      <ion-col size="9" *ngIf="message.author !== currentUser?._id" class="message other-message">
         <b>{{ message.name }}</b><br>
         <span *ngIf='!message.isImage'>{{ message.content }}</span>
         <ion-img *ngIf='message.isImage' src="data:image/jpeg;base64,{{message.content}}"></ion-img>
         <div class="time ion-text-right"><br>{{ message.createdAt | date:'short' }}</div>
       </ion-col>
-      <ion-col offset="3" size="9" *ngIf="message.author === currentUser._id" class="message my-message">
+      <ion-col offset="3" size="9" *ngIf="message.author === currentUser?._id" class="message my-message">
         <b>{{ message.name}}</b><br>
         <span *ngIf='!message.isImage'>{{ message.content }}</span>
         <ion-img *ngIf='message.isImage' src="data:image/jpeg;base64,{{message.content}}"></ion-img>
