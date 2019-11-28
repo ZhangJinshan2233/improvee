@@ -4,7 +4,7 @@ import {
 
 export function set_month_record_value(indicatorRecordArray, currentMonth) {
 
-  let daysOfMonth = getDaysInMonth(currentMonth);
+  let daysOfMonth = getDaysInMonth(new Date(currentMonth));
   let recordValues = new Array(daysOfMonth);
   recordValues.fill(null);
   indicatorRecordArray.forEach(indicatorRecord => {

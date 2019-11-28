@@ -19,7 +19,8 @@ import {
   isSameYear,
   startOfYear,
   lastDayOfYear,
-  compareDesc,
+  compareDesc
+
 } from 'date-fns';
 import { set_month_record_value, set_year_record_value } from "../../../_helper/setIndicatorRecordFormatOfChart";
 import { IndicatorService } from "../../../services/indicator.service";
@@ -95,30 +96,33 @@ export class IndicatorRecordsPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.currentMonth = format(new Date(), 'MM/DD/YYYY');
-    this.currentYear = format(new Date(), 'MM/DD/YYYY');
+    this.currentMonth = format(new Date(), 'MM/dd/yyyy');
+    this.currentYear = format(new Date(), 'MM/dd/yyyy');
     let monthViewXaxis = []
     let recordValues = []
-    this.indicatorRecordService.get_indicator_records_of_current_month(this.indicator.name, startOfMonth(this.currentMonth), endOfMonth(this.currentMonth)).subscribe(res => {
-      recordValues = set_month_record_value(res['indicatorRecords'], this.currentMonth)
-      if (res['indicatorRecords'].length > 0) {
-        this.isShowMonthChart = true;
-        //set latest record
-        if (this.indicator.name === "weight") {
-          this.indicatorRecordService.coachee_get_indiator_latest_record("weight").subscribe(res => {
-            this.latestRecord = res['indicatorRecord'];
-            this.BMIStatus = set_weight_status(this.latestRecord.value, this.currentUser.height)
-            this.BMI = (this.latestRecord.value * 10000 / (this.currentUser.height * this.currentUser.height)).toFixed(0)
-            this.changedValue = (+this.latestRecord.value) - this.currentUser.weight
-          })
+    console.log()
+    this.indicatorRecordService.get_indicator_records_of_current_month(this.indicator.name,
+      format(new Date(startOfMonth(new Date(this.currentMonth))), 'MM/dd/yyyy'),
+      format(new Date(endOfMonth(new Date(this.currentMonth))), 'MM/dd/yyyy')).subscribe(res => {
+        recordValues = set_month_record_value(res['indicatorRecords'], this.currentMonth)
+        if (res['indicatorRecords'].length > 0) {
+          this.isShowMonthChart = true;
+          //set latest record
+          if (this.indicator.name === "weight") {
+            this.indicatorRecordService.coachee_get_indiator_latest_record("weight").subscribe(res => {
+              this.latestRecord = res['indicatorRecord'];
+              this.BMIStatus = set_weight_status(this.latestRecord.value, this.currentUser.height)
+              this.BMI = (this.latestRecord.value * 10000 / (this.currentUser.height * this.currentUser.height)).toFixed(0)
+              this.changedValue = (+this.latestRecord.value) - this.currentUser.weight
+            })
+          }
         }
-      }
-      let days = getDaysInMonth(new Date(this.currentMonth))
-      for (let i = 0; i < days; i++) {
-        monthViewXaxis[i] = i + 1
-      }
-      this.create_month_chart(this.monthChartCanvas.nativeElement, monthViewXaxis, recordValues)
-    })
+        let days = getDaysInMonth(new Date(this.currentMonth))
+        for (let i = 0; i < days; i++) {
+          monthViewXaxis[i] = i + 1
+        }
+        this.create_month_chart(this.monthChartCanvas.nativeElement, monthViewXaxis, recordValues)
+      })
   }
 
   /**
@@ -132,7 +136,9 @@ export class IndicatorRecordsPage implements OnInit {
     this.slides.lockSwipes(true);
     if (this.selectedSegment == 1 && !this.yearLineChart) {
       let recordValues = []
-      this.indicatorRecordService.get_indicator_records_of_current_year(this.indicator.name, startOfYear(this.currentYear), lastDayOfYear(this.currentYear)).subscribe(res => {
+      this.indicatorRecordService.get_indicator_records_of_current_year(this.indicator.name, 
+        format(new Date(startOfYear(new Date(this.currentMonth))), 'MM/dd/yyyy'),
+        format(new Date(lastDayOfYear(new Date(this.currentMonth))), 'MM/dd/yyyy')).subscribe(res => {
         if ((res['indicatorRecords']).length > 0) this.isShowYearChart = true
         recordValues = set_year_record_value((res['indicatorRecords']));
         this.create_year_chart(this.yearChartCanvas.nativeElement, this.yearViewXaxis, recordValues);
@@ -147,7 +153,7 @@ export class IndicatorRecordsPage implements OnInit {
     this.isLastMonth = false;
     let monthViewXaxis = []
     let recordValues = []
-    this.currentMonth = format(new Date(subMonths(new Date(this.currentMonth), 1)), 'MM/DD/YYYY');
+    this.currentMonth = format(new Date(subMonths(new Date(this.currentMonth), 1)), 'MM/dd/yyyy');
     this.setMonthChart(monthViewXaxis, recordValues)
   }
   /**
@@ -156,8 +162,8 @@ export class IndicatorRecordsPage implements OnInit {
   get_next_month() {
     let recordValues = []
     let monthViewXaxis = []
-    this.currentMonth = format(new Date(subMonths(new Date(this.currentMonth), -1)), 'MM/DD/YYYY')
-    if (this.currentMonth === format(new Date(), 'MM/DD/YYYY')) {
+    this.currentMonth = format(new Date(subMonths(new Date(this.currentMonth), -1)), 'MM/dd/yyyy')
+    if (this.currentMonth === format(new Date(), 'MM/dd/yyyy')) {
       this.isLastMonth = true
     }
     this.setMonthChart(monthViewXaxis, recordValues)
@@ -210,7 +216,7 @@ export class IndicatorRecordsPage implements OnInit {
   get_pre_year() {
     this.isLastYear = false;
     let recordValues = [];
-    this.currentYear = format(new Date(subYears(new Date(this.currentYear), 1)), 'MM/DD/YYYY');
+    this.currentYear = format(new Date(subYears(new Date(this.currentYear), 1)), 'MM/dd/yyyy');
 
     this.setYearChart(recordValues)
   }
@@ -220,8 +226,8 @@ export class IndicatorRecordsPage implements OnInit {
    */
   get_next_year() {
     let recordValues = []
-    this.currentYear = format(new Date(subYears(new Date(this.currentYear), -1)), 'MM/DD/YYYY')
-    if (this.currentYear === format(new Date(), 'MM/DD/YYYY')) {
+    this.currentYear = format(new Date(subYears(new Date(this.currentYear), -1)), 'MM/dd/yyyy')
+    if (this.currentYear === format(new Date(), 'MM/dd/yyyy')) {
       this.isLastYear = true
     }
     this.setYearChart(recordValues)
@@ -346,7 +352,9 @@ export class IndicatorRecordsPage implements OnInit {
    * @param recordValues 
    */
   setMonthChart(monthViewXaxis, recordValues) {
-    this.indicatorRecordService.get_indicator_records_of_current_month(this.indicator.name, startOfMonth(this.currentMonth), endOfMonth(this.currentMonth)).subscribe(res => {
+    this.indicatorRecordService.get_indicator_records_of_current_month(this.indicator.name, 
+      format(new Date(startOfMonth(new Date(this.currentMonth))), 'MM/dd/yyyy'),
+      format(new Date(endOfMonth(new Date(this.currentMonth))), 'MM/dd/yyyy')).subscribe(res => {
       recordValues = set_month_record_value(res['indicatorRecords'], this.currentMonth)
       if (res['indicatorRecords'].length <= 0) {
         this.isShowMonthChart = false
@@ -366,7 +374,9 @@ export class IndicatorRecordsPage implements OnInit {
    * @param recordValues 
    */
   setYearChart(recordValues) {
-    this.indicatorRecordService.get_indicator_records_of_current_year(this.indicator.name, startOfYear(this.currentYear), lastDayOfYear(this.currentYear)).subscribe(res => {
+    this.indicatorRecordService.get_indicator_records_of_current_year(this.indicator.name,
+      format(new Date(startOfYear(new Date(this.currentMonth))), 'MM/dd/yyyy'),
+      format(new Date(lastDayOfYear(new Date(this.currentMonth))), 'MM/dd/yyyy')).subscribe(res => {
       if (res['indicatorRecords'].length <= 0) {
         this.isShowYearChart = false
       } else {
