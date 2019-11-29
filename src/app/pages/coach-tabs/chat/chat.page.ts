@@ -4,9 +4,9 @@ import { ChatService } from "../../../services/chat.service";
 import { Camera } from '@ionic-native/Camera/ngx';
 import { CameraOptionsSetting } from '../../../_helper/cameraOptionsSetting';
 import { AttachmentPopoverPage } from "../../share/attachment-popover/attachment-popover.page";
-import { MenuService } from '../../../services/menu.service'
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.page.html',
@@ -27,7 +27,7 @@ export class ChatPage implements OnInit {
   // recipients:any;
   constructor(private chatService: ChatService,
     private camera: Camera,
-    private menuSertvice: MenuService,
+    private authService:AuthService,
     private activtedRouter: ActivatedRoute,
     private alertController: AlertController,
     private loadingCtrl: LoadingController,
@@ -35,7 +35,7 @@ export class ChatPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.menuSertvice.getUserInfo().subscribe(res => {
+    this.authService.get_user_profile().subscribe(res => {
       this.currentUser = res['currentUser']
     })
   }

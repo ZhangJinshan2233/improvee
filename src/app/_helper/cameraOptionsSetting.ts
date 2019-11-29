@@ -1,5 +1,9 @@
 import { Camera, CameraOptions } from "@ionic-native/Camera/ngx";
-
+/**
+ * set carema options s
+ * @param isCamera 
+ * @param camera 
+ */
 export function CameraOptionsSetting(isCamera?: boolean, camera?: Camera) {
 
   let sourceType: any

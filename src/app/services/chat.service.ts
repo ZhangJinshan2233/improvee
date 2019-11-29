@@ -21,8 +21,17 @@ export class ChatService {
   }
 
   goto_chat_room(roomName) {
+    this.show_loading()
     return this.http.get(`${this.url}/chat/rooms/${roomName}`).pipe(
+      tap(()=>{
+        this.loading.then(loading => {
+          loading.dismiss()
+        })
+      }),
       catchError(e => {
+        this.loading.then(loading => {
+          loading.dismiss()
+        })
         let error = e.error.message;
         throw error;
       })
@@ -59,6 +68,7 @@ export class ChatService {
       })
     )
   }
+  
   get_messages_pagination(chatRoomId,skipNum){
     return this.http.get(`${this.url}/chat/messages/${chatRoomId}/?skipNum=${skipNum}`).pipe(
       catchError(e => {

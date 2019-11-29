@@ -21,6 +21,9 @@ export class CoacheeService {
     private loadingCtrl: LoadingController
   ) { }
 
+  /**
+   * initialize coachee home component
+   */
   initialize_data() {
     this.show_loading();
     return forkJoin(this.http.get(`${this.url}/profile`),
@@ -45,6 +48,11 @@ export class CoacheeService {
     )
   }
 
+  /**
+   * 
+   * @param author 
+   * @param type 
+   */
   get_unread_messages(author, type = "message") {
     return this.http.get(`${this.url}/unreadNotifications/?author=${author}&type=${type}`).pipe(
       catchError(e => {
@@ -58,6 +66,11 @@ export class CoacheeService {
       })
     )
   }
+
+  /**
+   * for registration
+   * @param profileInfo 
+   */
   update_assessments_and_recommended_habit(profileInfo) {
     this.show_loading();
     return this.http.post(`${this.url}/profile`, profileInfo).pipe(

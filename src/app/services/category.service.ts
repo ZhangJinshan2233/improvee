@@ -20,8 +20,17 @@ export class CategoryService {
    * @param newCategory 
    */
   create_category(category, kind) {
+    this.show_loading()
     return this.http.post(`${this.url}`, { ...category, kind }).pipe(
+      tap(() => {
+        this.loading.then(loading => {
+          loading.dismiss()
+        })
+      }),
       catchError(e => {
+        this.loading.then(loading => {
+          loading.dismiss()
+        })
         let error = e.error.message;
         this.show_alert(error);
         throw error;
@@ -73,9 +82,24 @@ export class CategoryService {
     )
   }
 
+  /**
+   * update category
+   * @param categoryId
+   * @param kind 
+   * @param changedFields 
+   */
   update_category(categoryId, kind, changedFields) {
+    this.show_loading()
     return this.http.put(`${this.url}/${categoryId}/?kind=${kind}`, changedFields).pipe(
+      tap(() => {
+        this.loading.then(loading => {
+          loading.dismiss()
+        })
+      }),
       catchError(e => {
+        this.loading.then(loading => {
+          loading.dismiss()
+        })
         let error = e.error.message;
         this.show_alert(error);
         throw error;

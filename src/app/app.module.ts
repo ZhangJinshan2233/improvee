@@ -23,6 +23,7 @@ import { customAlertEnter } from "./_helper/customAlertEnter";
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 const config: SocketIoConfig = { url: `${environment.url}/chat`, options: {} };
 export function jwtOptionsFactory(storage) {
   return {
@@ -64,6 +65,7 @@ export function jwtOptionsFactory(storage) {
     ActionSheet,
     WheelSelector,
     OneSignal,
+    AppVersion,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

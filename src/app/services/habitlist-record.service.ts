@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from "@angular/common/http";
 import { AlertController, LoadingController } from '@ionic/angular';
-import { mapTo, catchError, tap, mergeMap } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 
 @Injectable({
@@ -12,7 +12,7 @@ import { Subject, Observable } from 'rxjs';
 export class HabitlistRecordService {
 
   loading: any
-  updateHabitlistObservable=new Subject<any>()
+  updateHabitlistObservable = new Subject<any>()
   url = `${environment.url}/api`;
   constructor(
     private http: HttpClient,
@@ -20,6 +20,10 @@ export class HabitlistRecordService {
     private loadingCtrl: LoadingController
   ) { }
 
+  /**
+   * 
+   * @param create Date :date
+   */
   create_habitlist_record(createDate) {
     this.show_loading();
     return this.http.post(`${this.url}/habitlistRecord`, createDate).pipe(
@@ -38,14 +42,10 @@ export class HabitlistRecordService {
       })
     );
   }
-  async show_alert(msg) {
-    let alert = await this.alertController.create({
-      message: msg,
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
-
+  /**
+   * 
+   * @param date 
+   */
   get_habitlist_record_by_date(date) {
     return this.http.get(`${this.url}/habitlistRecord/?scheduleDay=${date}`).pipe(
       catchError(e => {
@@ -56,7 +56,12 @@ export class HabitlistRecordService {
     )
   }
 
-  coach_get_habitlist_record_by_date(date,coachee) {
+  /**
+   * 
+   * @param date 
+   * @param coachee 
+   */
+  coach_get_habitlist_record_by_date(date, coachee) {
     return this.http.get(`${this.url}/habitlistRecord/?scheduleDay=${date}&coachee=${coachee}`).pipe(
       catchError(e => {
         let error = e.error.message;
@@ -65,6 +70,11 @@ export class HabitlistRecordService {
       })
     )
   }
+  /**
+   * 
+   * @param habitlist id 
+   * @param haibt Object 
+   */
   update_habitlist_item_status(habitlistId, haibtObject) {
     return this.http.put(`${this.url}/habitlistRecord/${habitlistId}`, haibtObject).pipe(
       tap(() => {
@@ -86,5 +96,13 @@ export class HabitlistRecordService {
     this.loading.then(loading => {
       loading.present()
     })
+  }
+
+  async show_alert(msg) {
+    let alert = await this.alertController.create({
+      message: msg,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }

@@ -18,6 +18,10 @@ export class IndicatorRecordService {
     private loadingCtrl: LoadingController
   ) { }
 
+  /**
+   * 
+   * @param record  Object 
+   */
   create_new_record(recordObject: {
     name?: string,
     value?: number,
@@ -41,7 +45,12 @@ export class IndicatorRecordService {
       })
     )
   }
-  update_record(indicatorId,recordObject) {
+  /**
+   * 
+   * @param indicator cid 
+   * @param record Object 
+   */
+  update_record(indicatorId, recordObject) {
     this.show_loading();
     return this.http.put(`${this.url}/${indicatorId}`, recordObject).pipe(
       tap(() => {
@@ -59,6 +68,12 @@ export class IndicatorRecordService {
       })
     )
   }
+  /**
+   * 
+   * @param indicator name 
+   * @param start Date 
+   * @param end Date 
+   */
   get_indicator_records_of_current_month(indicatorName, startDate, endDate) {
 
     this.show_loading();
@@ -78,7 +93,12 @@ export class IndicatorRecordService {
       })
     )
   };
-  
+  /**
+   * 
+   * @param indicator name 
+   * @param start Date 
+   * @param end Date 
+   */
   get_indicator_records_of_current_year(indicatorName, startDate, endDate) {
     this.show_loading();
     return this.http.get(`${this.url}/search/year/${indicatorName}/?startDate=${startDate}&endDate=${endDate}`).pipe(
@@ -97,6 +117,9 @@ export class IndicatorRecordService {
       })
     )
   };
+  /**
+   * 
+   */
   get_all_indicator_records() {
     this.show_loading();
     return this.http.get(`${this.url}`).pipe(
@@ -116,7 +139,13 @@ export class IndicatorRecordService {
     )
   }
 
-  get_records_by_pagination(indicatorName, skipNum,coacheeId="") {
+  /**
+   * 
+   * @param indicator name 
+   * @param skip numbers 
+   * @param coachee id 
+   */
+  get_records_by_pagination(indicatorName, skipNum, coacheeId = "") {
     return this.http.get(`${this.url}/pagination/${indicatorName}?skipNum=${skipNum}&coacheeId=${coacheeId}`).pipe(
       catchError(e => {
         let { message } = e.error;
@@ -126,7 +155,11 @@ export class IndicatorRecordService {
     )
   }
 
-  coachee_get_indiator_latest_record(indicatorName){
+  /**
+   * 
+   * @param indicator name 
+   */
+  coachee_get_indiator_latest_record(indicatorName) {
     return this.http.get(`${this.url}/search/latest/${indicatorName}`).pipe(
       catchError(e => {
         let { message } = e.error;
@@ -135,7 +168,13 @@ export class IndicatorRecordService {
       })
     )
   }
-  coach_get_indiator_latest_record(indicatorName,coacheeId){
+
+  /**
+   * 
+   * @param indicator name 
+   * @param coachee id 
+   */
+  coach_get_indiator_latest_record(indicatorName, coacheeId) {
     return this.http.get(`${this.url}/search/latest/${indicatorName}/?coachee=${coacheeId}`).pipe(
       catchError(e => {
         let { message } = e.error;

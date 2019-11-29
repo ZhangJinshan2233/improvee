@@ -19,6 +19,10 @@ export class HabitService {
     private loadingCtrl: LoadingController
   ) { }
 
+  /**
+   * 
+   * @param new habit object
+   */
   create_habit(newHabit) {
     return this.http.post(`${this.url}`, newHabit).pipe(
       catchError(e => {
@@ -28,6 +32,9 @@ export class HabitService {
       })
     )
   }
+  /**
+   * 
+   */
   get_habits() {
     return this.http.get(`${this.url}`).pipe(
       catchError(e => {
@@ -37,9 +44,15 @@ export class HabitService {
       })
     )
   }
+
+  /**
+   * 
+   * @param habit id:string 
+   * @param changedFields 
+   */
   update_habit(habitId, changedFields) {
     return this.http.put(`${this.url}/${habitId}`, changedFields).pipe(
-      debounce(()=> interval(500)),
+      debounce(() => interval(500)),
       catchError(e => {
         let error = e.error.message;
         this.show_alert(error);

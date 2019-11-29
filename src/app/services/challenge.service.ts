@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from "@angular/common/http";
 import { AlertController, LoadingController } from '@ionic/angular';
-import { mapTo, catchError, tap, merge, } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { Subject, forkJoin } from 'rxjs';
 
 @Injectable({
@@ -42,7 +42,7 @@ export class ChallengeService {
   }
 
   /**
-   * 
+   * get categories and active categories
    */
   get_categories_and_active_categories() {
     this.show_loading()
@@ -134,102 +134,128 @@ export class ChallengeService {
     )
   }
 
- get_posts_pagination(challengeId,skipNum){
-  return this.http.get(`${this.url}/challenges/${challengeId}/posts?skipNum=${skipNum}`).pipe(
-    catchError(e => {
-      let error = e.error.message;
-      this.show_alert(error);
-      throw error;
-    })
-  )
- } 
-
- create_new_comment(postId,comment){
-   return this.http.post(`${this.url}/challenges/posts/${postId}/comments`,comment).pipe(
-    catchError(e => {
-      let error = e.error.message;
-      this.show_alert(error);
-      throw error;
-    })
-   )
- }
-
- get_comments(postId){
-  this.show_loading()
-  return this.http.get(`${this.url}/challenges/posts/${postId}/comments`).pipe(
-    tap(() => {
-      this.loading.then(loading => {
-        loading.dismiss()
-      })
-    }),
-    catchError(e => {
-      this.loading.then(loading => {
-        loading.dismiss()
-      })
-      let error = e.error.message;
-      this.show_alert(error);
-      throw error;
-    })
-  )
- }
-
- create_comment(postId,content){
-  this.show_loading()
-  return this.http.post(`${this.url}/challenges/posts/${postId}/comments`,content).pipe(
-    tap(() => {
-      this.loading.then(loading => {
-        loading.dismiss()
-      })
-    }),
-    catchError(e => {
-      this.loading.then(loading => {
-        loading.dismiss()
-      })
-      let error = e.error.message;
-      this.show_alert(error);
-      throw error;
-    })
-  )
- }
-
- get_nonactiveChallenge_by_challengeCategoryId(challengeCategoryId){
-  this.show_loading()
-  return this.http.get(`${this.url}/challenges/nonactive/?challengeCategoryId=${challengeCategoryId}`).pipe(
-    tap(() => {
-      this.loading.then(loading => {
-        loading.dismiss()
-      })
-    }),
-    catchError(e => {
-      this.loading.then(loading => {
-        loading.dismiss()
-      })
-      let error = e.error.message;
-      this.show_alert(error);
-      throw error;
-    })
-  )
- }
-
- rate_post(postId,rating){
-  this.show_loading();
-  return this.http.put(`${this.url}/challenges/posts/${postId}/rating`,{rating:rating}).pipe(
-    tap(() => {
-      this.loading.then(loading => {
-        loading.dismiss()
-      })
-    }),
-    catchError(e => {
-      let error = e.error;
-      if (!e.error) {
-        this.show_alert("internet error")
+  /**
+   * get posts 
+   */
+  get_posts_pagination(challengeId, skipNum) {
+    return this.http.get(`${this.url}/challenges/${challengeId}/posts?skipNum=${skipNum}`).pipe(
+      catchError(e => {
+        let error = e.error.message;
+        this.show_alert(error);
         throw error;
-      }
-      this.show_alert(e.error);
-      throw error;
-    })
-  )
-}
+      })
+    )
+  }
+  /**
+   * create new comment
+   * @param postId 
+   * @param comment 
+   */
+  create_new_comment(postId, comment) {
+    return this.http.post(`${this.url}/challenges/posts/${postId}/comments`, comment).pipe(
+      catchError(e => {
+        let error = e.error.message;
+        this.show_alert(error);
+        throw error;
+      })
+    )
+  }
+
+  /**
+   * get comments
+   * @param post id
+   */
+  get_comments(postId) {
+    this.show_loading()
+    return this.http.get(`${this.url}/challenges/posts/${postId}/comments`).pipe(
+      tap(() => {
+        this.loading.then(loading => {
+          loading.dismiss()
+        })
+      }),
+      catchError(e => {
+        this.loading.then(loading => {
+          loading.dismiss()
+        })
+        let error = e.error.message;
+        this.show_alert(error);
+        throw error;
+      })
+    )
+  }
+
+  /**
+   * create comment
+   * @param post id
+   * @param content 
+   */
+  create_comment(postId, content) {
+    this.show_loading()
+    return this.http.post(`${this.url}/challenges/posts/${postId}/comments`, content).pipe(
+      tap(() => {
+        this.loading.then(loading => {
+          loading.dismiss()
+        })
+      }),
+      catchError(e => {
+        this.loading.then(loading => {
+          loading.dismiss()
+        })
+        let error = e.error.message;
+        this.show_alert(error);
+        throw error;
+      })
+    )
+  }
+
+  /**
+   *
+   * @param challengeCategory id
+   */
+  get_nonactiveChallenge_by_challengeCategoryId(challengeCategoryId) {
+    this.show_loading()
+    return this.http.get(`${this.url}/challenges/nonactive/?challengeCategoryId=${challengeCategoryId}`).pipe(
+      tap(() => {
+        this.loading.then(loading => {
+          loading.dismiss()
+        })
+      }),
+      catchError(e => {
+        this.loading.then(loading => {
+          loading.dismiss()
+        })
+        let error = e.error.message;
+        this.show_alert(error);
+        throw error;
+      })
+    )
+  }
+
+  /**
+   * rate post
+   * @param post id :string
+   * @param rating :number
+   */
+  rate_post(postId, rating) {
+    this.show_loading();
+    return this.http.put(`${this.url}/challenges/posts/${postId}/rating`, { rating: rating }).pipe(
+      tap(() => {
+        this.loading.then(loading => {
+          loading.dismiss()
+        })
+      }),
+      catchError(e => {
+        let error = e.error;
+        if (!e.error) {
+          this.show_alert("internet error")
+          throw error;
+        }
+        this.show_alert(e.error);
+        throw error;
+      })
+    )
+  }
+
   async show_alert(msg) {
     let alert = await this.alertController.create({
       message: msg,

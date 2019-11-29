@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-
 import { Platform, AlertController, LoadingController } from "@ionic/angular";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Storage } from "@ionic/storage";
@@ -93,7 +92,7 @@ export class AuthService {
         return this.http.post(`${this.url}/signin`, { email: credentialInfo.email, password: credentialInfo.password })
       }),
       tap((tokens) => {
-        this.doLoginUser(tokens)
+        this.do_login_user(tokens)
         this.loading.then(loading => {
           loading.dismiss()
         })
@@ -132,7 +131,7 @@ export class AuthService {
     return this.http.post(`${this.url}/signin`, credentialInfo)
       .pipe(
         tap(token => {
-          this.doLoginUser(token)
+          this.do_login_user(token)
           this.isLogged.next(true)
           this.loading.then(loading => {
             loading.dismiss()
@@ -247,17 +246,17 @@ export class AuthService {
     })
   }
 
-  private doLoginUser(token: any) {
+  private do_login_user(token: any) {
     let user = this.helper.decodeToken(token.access_token);
     this.oneSignal.sendTag('userID', user._id)
     this.currentUserSubject.next(user)
-    this.storeToken(token);
+    this.store_token(token);
   }
-  getJwtToken() {
+  get_jwt_token() {
     return this.storage.get(JWT_TOKEN);
   }
 
-  private storeToken(token: any) {
+  private store_token(token: any) {
     this.storage.set(JWT_TOKEN, token.access_token);
   }
   auto_login_after_read_message() {

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from "@angular/common/http";
-import { AlertController, LoadingController } from '@ionic/angular';
-import { mapTo, catchError, tap, mergeMap } from 'rxjs/operators';
+import { AlertController } from '@ionic/angular';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +13,13 @@ export class IndicatorService {
   url = `${environment.url}/api/indicators`;
   constructor(
     private http: HttpClient,
-    private alertController: AlertController,
-    private loadingCtrl: LoadingController
+    private alertController: AlertController
   ) { }
 
+  /**
+   * 
+   * @param indicator name 
+   */
   get_indicator_info_by_name(indicatorName) {
     return this.http.get(`${this.url}/?name=${indicatorName}`).pipe(
       catchError(e => {

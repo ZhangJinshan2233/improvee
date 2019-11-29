@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { AppVersion } from '@ionic-native/app-version/ngx';
 import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -16,8 +16,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private oneSignal: OneSignal,
-    private alertCtrl: AlertController,
-    private authService:AuthService
+    private appVersion: AppVersion
   ) {
     this.initializeApp();
   }
@@ -27,6 +26,7 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       if (this.platform.is('cordova')) {
+        console.log(this.appVersion.getVersionNumber())
         this.setupPush();
       }
     });
