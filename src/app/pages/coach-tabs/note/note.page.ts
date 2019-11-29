@@ -29,6 +29,10 @@ export class NotePage implements OnInit {
     })
   }
 
+  /**
+   * 
+   * @param infiniteScrollEvent 
+   */
   load_more_notes(infiniteScrollEvent) {
     this.notesService.get_notes_pagination(this.coacheeId, this.skipNum).subscribe(res => {
       if (res['notes'].length >= 1) {
@@ -41,14 +45,29 @@ export class NotePage implements OnInit {
       }
     })
   }
+  /**
+   * 
+   */
   create_new_note() {
-    this.openNoteDetailModal({}, 'Create', this.coacheeId,)
+    this.openNoteDetailModal({}, 'Create', this.coacheeId)
   }
 
-  updateNote(note,i) {
-    this.openNoteDetailModal(note,'Update', this.coacheeId,i)
+  /**
+   * 
+   * @param note 
+   * @param i 
+   */
+  updateNote(note, i) {
+    this.openNoteDetailModal(note, 'Update', this.coacheeId, i)
   }
-  async openNoteDetailModal(note, status, coacheeId,i?) {
+  /**
+   * 
+   * @param note 
+   * @param status 
+   * @param coachee id 
+   * @param i 
+   */
+  async openNoteDetailModal(note, status, coacheeId, i?) {
     let noteModal = await this.modalCtrl.create({
       component: NoteDetailPage,
       enterAnimation: customModalEnterAnimation,
@@ -66,13 +85,12 @@ export class NotePage implements OnInit {
         this.notes.unshift(data['newNote'])
       } else {
         console.log(this.notes[i])
-        let { title, discussed, concluded, next }=data['newNote'];
-        this.notes[i]['title']=title
-        this.notes[i]['discussed']=discussed
-        this.notes[i]['concluded']=concluded
-        this.notes[i]['next']=next
+        let { title, discussed, concluded, next } = data['newNote'];
+        this.notes[i]['title'] = title
+        this.notes[i]['discussed'] = discussed
+        this.notes[i]['concluded'] = concluded
+        this.notes[i]['next'] = next
       }
-
     }
   }
 }

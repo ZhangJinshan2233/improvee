@@ -42,22 +42,26 @@ export class CoacheeInfoPage implements OnInit {
   completedHabitPercent = 0
   remainingDaysOfMembership = 0
   constructor(private router: Router,
-    private chatService:ChatService) { }
+    private chatService: ChatService) { }
 
-  coacheeProfileImg=''
+  coacheeProfileImg = ''
   ngOnInit() {
     this.status = 'origal'
-    if(this.coachee.imgData){
-      this.coacheeProfileImg=`data:image/jpeg;base64,${this.coachee['imgData']}`
-    }else{
-      this.coacheeProfileImg="/assets/img/noavatar.png"
+    if (this.coachee.imgData) {
+      this.coacheeProfileImg = `data:image/jpeg;base64,${this.coachee['imgData']}`
+    } else {
+      this.coacheeProfileImg = "/assets/img/noavatar.png"
     }
   }
+  /**
+   * 
+   * @param coachee id 
+   */
   goToCoacheeDetails(id) {
     this.status = 'move'
-    this.chatService.remove_unread_nmessages(this.coachee._id,"message").subscribe(res=>{
-      if(res){
-        this.coachee.unreadPostItems=0;
+    this.chatService.remove_unread_nmessages(this.coachee._id, "message").subscribe(res => {
+      if (res) {
+        this.coachee.unreadPostItems = 0;
         this.router.navigateByUrl(`/coach/home/${id}`)
       }
     })
@@ -67,13 +71,17 @@ export class CoacheeInfoPage implements OnInit {
     // }, 500);
   }
 
+  /**
+   * 
+   * @param coachee id 
+   */
   chat_with_coachee(id) {
-    this.chatService.remove_unread_nmessages(this.coachee._id,"message").subscribe(res=>{
-      if(res){
-        this.coachee.unreadMessageItems=0;
+    this.chatService.remove_unread_nmessages(this.coachee._id, "message").subscribe(res => {
+      if (res) {
+        this.coachee.unreadMessageItems = 0;
         this.router.navigateByUrl(`/coach/home/chat/${id}`)
       }
     })
-   
+
   }
 }

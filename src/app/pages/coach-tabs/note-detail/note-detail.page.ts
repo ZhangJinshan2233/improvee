@@ -40,6 +40,7 @@ export class NoteDetailPage implements OnInit {
   async closeNoteModal() {
     await this.modalCtrl.dismiss()
   }
+
   createNoteForm() {
     this.noteForm = this.formBuilder.group({
       title: ['', Validators.required],

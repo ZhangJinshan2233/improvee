@@ -29,6 +29,7 @@ export class CoachProfilePage implements OnInit {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController
   ) { }
+
   ngOnInit() {
     this.auth.get_user_profile().subscribe(res => {
       this.coach = res['currentUser']
@@ -45,9 +46,13 @@ export class CoachProfilePage implements OnInit {
     })
     this.createFormGroup();
   }
+
   cancle() {
     this.isNameFormShow = !this.isNameFormShow
   }
+  /**
+   * 
+   */
   togglerNameForm() {
     this.isNameFormShow = !this.isNameFormShow
     if (this.isNameFormShow) {
@@ -58,6 +63,9 @@ export class CoachProfilePage implements OnInit {
     }
   }
 
+  /**
+   * 
+   */
   createFormGroup() {
     this.nameForm = this.formBuilder.group({
       firstName: ['', [Validators.required]],
@@ -65,6 +73,9 @@ export class CoachProfilePage implements OnInit {
     })
   }
 
+  /**
+   * 
+   */
   submitNameForm() {
     this.isNameFormShow = !this.isNameFormShow
     this.auth.updateProfile(this.nameForm.value).subscribe(res => {
@@ -81,6 +92,9 @@ export class CoachProfilePage implements OnInit {
     this.router.navigateByUrl('/')
   }
 
+  /**
+   * 
+   */
   update_profileImage() {
     let buttonLabels = ['Take picture', 'Select picture'];
     const options: ActionSheetOptions = {

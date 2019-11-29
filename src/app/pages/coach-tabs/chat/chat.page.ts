@@ -27,7 +27,7 @@ export class ChatPage implements OnInit {
   // recipients:any;
   constructor(private chatService: ChatService,
     private camera: Camera,
-    private authService:AuthService,
+    private authService: AuthService,
     private activtedRouter: ActivatedRoute,
     private alertController: AlertController,
     private loadingCtrl: LoadingController,
@@ -51,7 +51,7 @@ export class ChatPage implements OnInit {
     let roomName = this.activtedRouter.snapshot.params['coacheeId']
     this.chatService.goto_chat_room(roomName).subscribe(res => {
       this.chatRoom = res['chatRoom'];
-     
+
       // this.recipients =_.find(this.chatRoom.participants,function(participant){
       //   return participant.participantModel==="Coachee";
       // })
@@ -59,6 +59,10 @@ export class ChatPage implements OnInit {
       this.first_loading_messages(this.chatRoom._id)
     })
   }
+  /**
+   * 
+   * @param chatRoom id
+   */
   async first_loading_messages(chatRoomId) {
     let first_loading = await this.loadingCtrl.create({
       message: 'Loading Data...'
@@ -74,11 +78,9 @@ export class ChatPage implements OnInit {
   }
 
   /**
-  * get more posts when scroll down 
-  * @function load more posts
-  * @param infiniteScrollEvent 
-  * @returns Array
-  */
+   * 
+   * @param $refreshEvent 
+   */
   load_more_messages($refreshEvent) {
     this.chatService.get_messages_pagination(this.chatRoom._id, this.skipNum).subscribe(res => {
       if (res['messages'].length >= 1) {
@@ -91,6 +93,7 @@ export class ChatPage implements OnInit {
       }
     })
   }
+
   select_picture() {
     this.isCamera = false;
     this.send_image(this.isCamera)
@@ -110,7 +113,7 @@ export class ChatPage implements OnInit {
       chatRoomId: this.chatRoom._id,
       name: this.currentUser.firstName + " " + this.currentUser.lastName,
       isImage: isImage,
-      recipientId:this.chatRoom.name,
+      recipientId: this.chatRoom.name,
       content: this.newMsg,
       author: this.currentUser._id,
       authorModel: 'Coach',
@@ -158,18 +161,9 @@ export class ChatPage implements OnInit {
   }
 
   /**
-  * @function showAlert
-  * @param msg 
-  * @returns void
-  */
-  showAlert(msg) {
-    let alert = this.alertController.create({
-      message: msg,
-      buttons: ['OK']
-    });
-    alert.then(alert => alert.present());
-  }
-
+   * take or pick image to send
+   * @param event 
+   */
   async send_attachement(event) {
     let popover = await this.popContrl.create({
       component: AttachmentPopoverPage,
@@ -192,5 +186,18 @@ export class ChatPage implements OnInit {
   }
   ngOnDestroy() {
     this.chatService.leave_chat_room(this.chatRoom._id)
+  }
+
+  /**
+ * @function showAlert
+ * @param msg 
+ * @returns void
+ */
+  showAlert(msg) {
+    let alert = this.alertController.create({
+      message: msg,
+      buttons: ['OK']
+    });
+    alert.then(alert => alert.present());
   }
 }

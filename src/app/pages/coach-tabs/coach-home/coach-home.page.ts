@@ -38,6 +38,10 @@ export class CoachHomePage implements OnInit {
     })
   }
 
+  /**
+   * 
+   * @param infiniteScrollEvent 
+   */
   load_more_coachees(infiniteScrollEvent) {
     this.coachService.get_coachees(this.skipNum).subscribe(res => {
       if (res['coachees'].length >= 1) {
@@ -55,13 +59,18 @@ export class CoachHomePage implements OnInit {
     let tabBar = document.querySelector('ion-tab-bar');
     tabBar.style.display = 'flex'
   }
+
   ionViewDidLoad() {
     this.filterItems()
   }
+
   onSearchInput() {
     this.searching = true
   }
 
+  /**
+   * filter items
+   */
   filterItems() {
     this.searching = false
     if (this.searchTerm === "") {
@@ -72,6 +81,10 @@ export class CoachHomePage implements OnInit {
     })
   }
 
+  /**
+   * 
+   * @param event 
+   */
   filterByOption(event) {
     this.filtedTerm = event.target.value
     console.log(this.filtedTerm)

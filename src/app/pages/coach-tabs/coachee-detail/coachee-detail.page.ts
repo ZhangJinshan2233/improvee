@@ -2,12 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CoachService } from "../../../services/coach.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
-import { Chart, ChartOptions } from 'chart.js';
+import { Chart } from 'chart.js';
 import * as _ from 'lodash'
-import {
-  format,
-  subDays
-} from "date-fns";
 import { get_record_status } from 'src/app/_helper/indicatorRecordStatus';
 @Component({
   selector: 'app-coachee-detail',
@@ -58,7 +54,10 @@ export class CoacheeDetailPage implements OnInit {
       this.create_habitList_chart(this.habistListCanvas.nativeElement, this.habitListAxisData, this.habitListDataset)
     })
   }
-
+  /**
+   * 
+   * @param $event 
+   */
   async segment_change($event) {
     switch ($event.target.value) {
       case '0':
@@ -100,10 +99,17 @@ export class CoacheeDetailPage implements OnInit {
     await this.slides.slideTo(this.segmentValue)
   }
 
+  /**
+   * 
+   * @param $event 
+   */
   async slideChanged($event) {
     this.segmentValue = await this.slides.getActiveIndex();
   }
 
+  /**
+   * 
+   */
   create_habitList_chart(chartview, axisData, dataset) {
     this.habitListChart = new Chart(chartview, {
       type: 'bar',
@@ -163,11 +169,11 @@ export class CoacheeDetailPage implements OnInit {
     if (challengeCategoryName === "Food Journal") {
       this.router.navigateByUrl(`coach/home/${this.coachee._id}/challenges/foodJournal/${challenge._id}`)
     }
-    console.log(challenge)
   }
-  gotoIndicatorPage(indicator) {
-
-  }
+  /**
+   * 
+   * @param index 
+   */
   toggleSection(index) {
     this.items[index].open = !this.items[index].open
     if (this.items[index].open) {
@@ -178,11 +184,18 @@ export class CoacheeDetailPage implements OnInit {
       }
     }
   }
-
+/**
+ * 
+ * @param indicator name 
+ */
   gotoIndicatorDetails(indicatorName) {
     this.router.navigateByUrl(`coach/home/${this.coachee.id}/indicators/${indicatorName}`)
   }
 
+  /**
+   * 
+   * @param state 
+   */
   getStateOfIndicator(state) {
     if (state === 'over') {
       return 'primary'
