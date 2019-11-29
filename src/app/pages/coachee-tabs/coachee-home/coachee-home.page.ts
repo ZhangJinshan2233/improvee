@@ -31,23 +31,23 @@ export class CoacheeHomePage implements OnInit {
   skipNum = 0;
   healthyTips = []
   activeChallenges = [];
-  isImageLoaded=false
+  isImageLoaded = false
   constructor(private router: Router, private render: Renderer2,
     private challengeService: ChallengeService,
     private tipsService: HealthyTipsService,
     private coacheeService: CoacheeService,
     private habitrecordService: HabitlistRecordService,
-    private chatService:ChatService,
+    private chatService: ChatService,
     private iab: InAppBrowser) {
   }
 
   ngOnInit() {
     this.coacheeService.initialize_data().subscribe(res => {
       this.currentUser = res[0]['currentUser'];
-      this.isImageLoaded=true
+      this.isImageLoaded = true
       if (this.currentUser._coach.imgData) {
         this.coachProfile = `data:image/jpeg;base64,${this.currentUser._coach.imgData}`
-     
+
       } else {
         this.coachProfile = 'http://user-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_1440,w_720,f_auto,q_auto/88884/145502_842983.png'
       }
@@ -97,6 +97,10 @@ export class CoacheeHomePage implements OnInit {
     this.router.navigateByUrl(`coachee/coachee-home/activeChallenges/${activeChallengeId}`)
   }
 
+  /**
+   * 
+   * @param infiniteScrollEvent 
+   */
   load_more_healthyTips(infiniteScrollEvent) {
     this.tipsService.get_healthyTips_pagination(this.skipNum).subscribe(res => {
       if (res['healthyTips'].length >= 1) {
@@ -109,12 +113,19 @@ export class CoacheeHomePage implements OnInit {
     })
   }
 
+  /**
+   * 
+   * @param url 
+   */
   goto_healthy_tip(url) {
-    if(!url) return
+    if (!url) return
     const browser = this.iab.create(url);
     browser.close()
   }
 
+  /**
+   * 
+   */
   goto_chat() {
     this.chatService.remove_unread_nmessages(this.currentUser._coach._id).subscribe(res => {
       this.unReadMessageNumber = 0;

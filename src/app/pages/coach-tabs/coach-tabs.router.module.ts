@@ -38,7 +38,7 @@ const routes: Routes = [
                 path: 'challenges/foodJournal/:challengeId',
                 loadChildren: '../coachee-tabs/foodjournal-post/foodjournal-post.module#FoodjournalPostPageModule'
               },
-              
+
             ]
           },
 

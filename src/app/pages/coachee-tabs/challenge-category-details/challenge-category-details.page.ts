@@ -41,6 +41,9 @@ export class ChallengeCategoryDetailsPage implements OnInit {
       }
     })
   }
+  /**
+   * 
+   */
   create_new_challenge() {
     let { _id: challengeCategoryId, duration } = this.challengeCategory
     let startDate = new Date();

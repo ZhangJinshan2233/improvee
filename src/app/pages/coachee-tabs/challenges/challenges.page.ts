@@ -25,6 +25,7 @@ export class ChallengesPage implements OnInit {
       }
     })
   }
+
   ionViewWillEnter() {
     let tabBar = document.querySelector('ion-tab-bar');
     tabBar.style.display = 'flex';
@@ -33,8 +34,5 @@ export class ChallengesPage implements OnInit {
 
   goto_challenge_detail(activeChallengeId){
     this.router.navigateByUrl(`coachee/challenges/activeChallenges/${activeChallengeId}`)
-  }
-  logRatingChange($event) {
-
   }
 }

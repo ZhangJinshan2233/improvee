@@ -24,8 +24,7 @@ export class ChatPage implements OnInit {
   chatRoom: any;
   isCoachee = false;
   skipNum = 0;
-  isImageLoaded=false
-  // recipients: any
+  isImageLoaded = false
   canSendMessage: boolean = true;
   constructor(private chatService: ChatService,
     private camera: Camera,
@@ -45,7 +44,7 @@ export class ChatPage implements OnInit {
     })
     this.authSertvice.get_user_profile().subscribe(res => {
       this.currentUser = res['currentUser'];
-      this.isImageLoaded=true
+      this.isImageLoaded = true
       if (this.currentUser._coach.imgData) {
         this.coachProfile = `data:image/jpeg;base64,${this.currentUser._coach.imgData}`
       } else {
@@ -56,14 +55,15 @@ export class ChatPage implements OnInit {
       }
       this.chatService.goto_chat_room(this.currentUser._id).subscribe(res => {
         this.chatRoom = res['chatRoom'];
-        // this.recipients = _.find(this.chatRoom.participants, function (participant) {
-        //   return participant.participantModel === "Coach";
-        // })
         this.chatService.join_chat_room(this.chatRoom._id)
         this.first_loading_messages(this.chatRoom._id)
       })
     })
   }
+  /**
+   * 
+   * @param chat Room Id 
+   */
   async first_loading_messages(chatRoomId) {
     let first_loading = await this.loadingCtrl.create({
       message: 'Loading Data...'
@@ -80,10 +80,9 @@ export class ChatPage implements OnInit {
   }
 
   /**
-  * get more messages when scroll down 
-  * @function load more posts
-  * @returns Array
-  */
+   * 
+   * @param $refreshEvent 
+   */
   load_more_messages($refreshEvent) {
     this.chatService.get_messages_pagination(this.chatRoom._id, this.skipNum).subscribe(res => {
       if (res['messages'].length >= 1) {
@@ -109,7 +108,10 @@ export class ChatPage implements OnInit {
   send_text_message() {
     this.send_message(false)
   }
-
+  /**
+   * 
+   * @param isImage 
+   */
   send_message(isImage) {
     let messageInfo = {
       chatRoomId: this.chatRoom._id,
@@ -194,6 +196,9 @@ export class ChatPage implements OnInit {
     }
 
   }
+  /**
+   * 
+   */
   ngOnDestroy() {
     this.chatService.leave_chat_room(this.chatRoom._id)
   }

@@ -9,17 +9,17 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ChallengeHistoryPage implements OnInit {
 
-   nonactiveChallenges=[];
-   challengeCategoryId='';
+  nonactiveChallenges = [];
+  challengeCategoryId = '';
   constructor(
     private challengeService: ChallengeService,
     private activateRouter: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    this.challengeCategoryId=this.activateRouter.snapshot.params['challengeCategoryId']
-    this.challengeService.get_nonactiveChallenge_by_challengeCategoryId(this.challengeCategoryId).subscribe(res=>{
-      this.nonactiveChallenges=res['nonactiveChallenges']
+    this.challengeCategoryId = this.activateRouter.snapshot.params['challengeCategoryId']
+    this.challengeService.get_nonactiveChallenge_by_challengeCategoryId(this.challengeCategoryId).subscribe(res => {
+      this.nonactiveChallenges = res['nonactiveChallenges']
       console.log(this.nonactiveChallenges)
     })
   }

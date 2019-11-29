@@ -12,13 +12,13 @@ export class ChangePasswordPage implements OnInit {
 
   passwordForm: FormGroup;
   isSubmitted = false;
-  isCoachee=true
+  isCoachee = true
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private auth: AuthService) { }
 
   ngOnInit() {
-    this.isCoachee= this.router.url.split('/').includes('coachee')
+    this.isCoachee = this.router.url.split('/').includes('coachee')
     this.createPasswordForm()
   }
 
@@ -37,9 +37,9 @@ export class ChangePasswordPage implements OnInit {
     this.isSubmitted = true;
     if (this.passwordForm.invalid) return
     this.auth.changePassword(this.passwordForm.value).subscribe(res => {
-      if(this.isCoachee){
+      if (this.isCoachee) {
         this.router.navigateByUrl('coachee/menu')
-      }else{
+      } else {
         this.router.navigateByUrl('coach/profile')
       }
     })

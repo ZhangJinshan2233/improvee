@@ -120,6 +120,9 @@ export class IndicatorRecordHistoryPage implements OnInit {
     })
   }
 
+  /**
+   * 
+   */
   async add_record() {
     const indicatorModal = await this.modalCtrl.create({
       component: IndicatorRecordDetailPage,
@@ -143,6 +146,11 @@ export class IndicatorRecordHistoryPage implements OnInit {
     }
   }
 
+  /**
+   * 
+   * @param record 
+   * @param i 
+   */
   async update_record(record, i) {
     const indicatorModal = await this.modalCtrl.create({
       component: IndicatorRecordDetailPage,

@@ -59,7 +59,7 @@ export class DashboardPage implements OnInit {
             .map(item => _.zipObject(['group', 'indicators'], item))
             .orderBy('group', 'desc')
             .value();
-            this.indicatorRecords[0].open = true;
+        this.indicatorRecords[0].open = true;
       })
       this.indicatorRecordService.newIndicatorRecordSubject.subscribe(res => {
         let group = 0;

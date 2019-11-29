@@ -80,6 +80,9 @@ export class FoodjournalPostPage implements OnInit {
       }
     })
   }
+  /**
+   * add new post
+   */
   async add_post() {
     const postModal = await this.modalCtrl.create({
       component: FoodjournalPostDetailsPage,
@@ -121,13 +124,22 @@ export class FoodjournalPostPage implements OnInit {
       }
     }
   }
+  /**
+   * 
+   * @param postId 
+   * @param rating 
+   */
   logRatingChange(postId, rating) {
-    console.log(postId)
     this.challengeService.rate_post(postId, rating).subscribe(res => {
       console.log(res)
     })
   }
 
+  /**
+   * 
+   * @param postId 
+   * @param i 
+   */
   async add_comment(postId, i) {
     const commentModal = await this.modalCtrl.create({
       component: FoodjournalPostCommentsPage,

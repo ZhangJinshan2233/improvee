@@ -28,7 +28,7 @@ import { HabitlistRecordService } from "../../../services/habitlist-record.servi
   ]
 })
 export class HabitlistPage implements OnInit {
-  isSubmitted=false //prevent user double clicking 
+  isSubmitted = false //prevent user double clicking 
   habitlistRecord: any;
   currentDay: any
   currentDate: any;
@@ -55,7 +55,10 @@ export class HabitlistPage implements OnInit {
   }
   //deal with ionSelect method execute two times in the first loading
   isInitialized = true
-
+  constructor(private router: Router,
+    private habitRecordService: HabitlistRecordService
+  ) {
+  }
   ngOnInit() {
 
     this.get_current_week()
@@ -64,15 +67,11 @@ export class HabitlistPage implements OnInit {
 
     tabBar.style.display = 'none';
   }
-
-  constructor(private router: Router,
-    private habitRecordService: HabitlistRecordService
-  ) {
-  }
-
-
+  /**
+   * 
+   */
   get_pre_week() {
-    this.isSubmitted=true
+    this.isSubmitted = true
     this.isLastWeek = false;
     //judge current day is eaqule to today and prevent exectue two time in the fist loading
     let preWeekDay = format(new Date(subDays(new Date(this.currentDate), 7)), 'MM/dd/yyyy');
@@ -81,9 +80,11 @@ export class HabitlistPage implements OnInit {
       this.get_current_date_habits(format(this.currentDate, 'MM/dd/yyyy'))
     }
   }
-
+/**
+ * 
+ */
   get_next_week() {
-    this.isSubmitted=true
+    this.isSubmitted = true
     let nextWeekDay = format(new Date(addDays(new Date(this.currentDate), 7)), 'MM/dd/yyyy');
     if (nextWeekDay == format(new Date(), 'MM/dd/yyyy')) {
       this.isLastWeek = true
@@ -93,7 +94,9 @@ export class HabitlistPage implements OnInit {
       this.get_current_date_habits(format(this.currentDate, 'MM/dd/yyyy'))
     }
   }
-
+/**
+ * 
+ */
   get_current_week() {
     this.isLastWeek = true
     this.get_week(new Date());
@@ -129,26 +132,37 @@ export class HabitlistPage implements OnInit {
     }
   }
 
+  /**
+   * 
+   * @param date 
+   */
   get_current_date_habits(date) {
     this.lastTimeDay = getDay(new Date(date)).toString()
     this.habitRecordService.get_habitlist_record_by_date(date).subscribe(res => {
       if (res['habitsOfScheduleDay']) {
         this.habitlistRecord = res['habitsOfScheduleDay']
-        this.isSubmitted=false
+        this.isSubmitted = false
       } else {
         this.habitRecordService.create_habitlist_record({ createDate: date }).subscribe(res => {
           this.habitlistRecord = res['habitsOfScheduleDay']
-          this.isSubmitted=false
+          this.isSubmitted = false
         })
       }
     })
   }
+  /**
+   * 
+   * @param habit 
+   */
   update_habit_item(habit) {
     console.log(this.isInitialized)
     this.habitRecordService.update_habitlist_item_status(this.habitlistRecord._id, habit).subscribe(res => {
       console.log(res)
     })
   }
+  /**
+   * 
+   */
   gotoHabitListItemsPage() {
     this.router.navigateByUrl('')
   }

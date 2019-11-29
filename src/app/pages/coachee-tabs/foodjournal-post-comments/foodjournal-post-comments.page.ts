@@ -29,6 +29,13 @@ export class FoodjournalPostCommentsPage implements OnInit {
   ) {
     this.postId = '';
   }
+  ngOnInit() {
+    this.create_comment_form()
+    this.get_comments()
+    this.modalContent.scrollEvents = true;
+    this.postId = this.navParams.get('postId')
+  }
+
   ionViewDidEnter() {
 
     this.modalContent.scrollToBottom()
@@ -52,18 +59,13 @@ export class FoodjournalPostCommentsPage implements OnInit {
       content: ['', Validators.required]
     })
   }
-  ngOnInit() {
-    this.create_comment_form()
-    this.get_comments()
-    this.modalContent.scrollEvents = true;
-    this.postId = this.navParams.get('postId')
-  }
 
   get_comments() {
     this.challengeService.get_comments(this.postId).subscribe(res => {
       this.comments = res['comments']
     })
   }
+  
   submit_comment_form() {
     this.challengeService.create_new_comment(this.postId, this.commentForm.value).subscribe(res => {
       this.comments.push(res['comment'])
