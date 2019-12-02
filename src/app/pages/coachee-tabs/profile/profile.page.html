@@ -8,76 +8,78 @@
 </ion-header>
 <ion-content>
   <div *ngIf="isLoaded">
-    <ion-list class='ion-no-margin'>
-      <form novalidate [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-        <ion-item>
-          <ion-label position='floating'>First name</ion-label>
-          <ion-input type="text" formControlName="firstName" placeholder="First name"
-            [ngClass]="{ 'is-invalid': isSubmitted&& f.firstName.errors }"></ion-input>
-        </ion-item>
-        <div *ngIf="isSubmitted && f.firstName.errors" class="invalid-feedback ion-padding">
-          <div *ngIf="f.firstName.errors.required">First name is required</div>
-        </div>
-        <ion-item>
-          <ion-label position='floating'>Last name</ion-label>
-          <ion-input type="text" formControlName="lastName" placeholder="Last name"
-            [ngClass]="{ 'is-invalid': isSubmitted&& f.lastName.errors }">
-          </ion-input>
-        </ion-item>
-        <div *ngIf="isSubmitted&& f.lastName.errors" class="invalid-feedback ion-padding">
-          <div *ngIf="f.lastName.errors.required">Last name is required</div>
-        </div>
-        <ion-item>
-          <ion-label position='floating'>Phone number</ion-label>
-          <ion-input type='text' formControlName='phoneNumber' placeholder='Phone number'></ion-input>
-        </ion-item>
-        <div *ngIf="isSubmitted && f.phoneNumber.errors" class='invalid-feedback ion-padding'>
-          <div *ngIf="f.phoneNumber.errors.required">phone number is required</div>
-          <div *ngIf="f.phoneNumber.errors.pattern">phone number is 8 numbers</div>
-        </div>
-        <ion-item>
-          <ion-label position='floating'>Height</ion-label>
-          <ion-input type='text' formControlName='height' placeholder='Height (cm)'></ion-input>
-        </ion-item>
-        <div *ngIf="isSubmitted && f.height.errors" class='invalid-feedback ion-padding'>
-          <div *ngIf="f.height.errors.required">height is required</div>
-          <div *ngIf="f.height.errors.min">height is invalid</div>
-          <div *ngIf="f.height.errors.max">height is invalid</div>
-          <div *ngIf="f.height.errors.pattern">height is invalid</div>
-        </div>
-        <ion-item>
-          <ion-label position='floating'>Weight</ion-label>
-          <ion-input type='text' formControlName='weight' placeholder='Weight (Kg)'></ion-input>
-        </ion-item>
-        <div *ngIf="isSubmitted && f.weight.errors" class='invalid-feedback ion-padding'>
-          <div *ngIf="f.weight.errors.required">Weight is required</div>
-          <div *ngIf="f.weight.errors.min">Weight is invalid</div>
-          <div *ngIf="f.weight.errors.max">Weight is invalid</div>
-          <div *ngIf="f.weight.errors.pattern">Weight is invalid</div>
-        </div>
-        <ion-item>
-          <ion-label position='floating'>Gender</ion-label>
-          <ion-select placeholder="Select One" formControlName="gender">
-            <ion-select-option value="female">Female</ion-select-option>
-            <ion-select-option value="male">Male</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <div *ngIf="isSubmitted&& f.gender.errors" class="invalid-feedback ion-padding">
-          <div *ngIf="f.gender.errors.required">gender is required</div>
-        </div>
-        <ion-item>
-          <ion-label position='floating'>DOB</ion-label>
-          <ion-datetime display-format="MMM DD, YYYY" formControlName="dateOfBirth">
-          </ion-datetime>
-        </ion-item>
-        <div *ngIf="isSubmitted&& f.dateOfBirth.errors" class="invalid-feedback ion-padding">
-          <div *ngIf="f.dateOfBirth.errors.required">date of birth is required</div>
-        </div>
-        <div class='ion-padding'>
-          <ion-button color='secondary' shape='round' size='default' expand="block" type="submit">Submit</ion-button>
-        </div>
-      </form>
-    </ion-list>
+    <ion-card>
+      <ion-list class='ion-no-margin'>
+        <form novalidate [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+          <ion-item>
+            <ion-label position='floating'>First name</ion-label>
+            <ion-input type="text" formControlName="firstName" placeholder="First name"
+              [ngClass]="{ 'is-invalid': isSubmitted&& f.firstName.errors }"></ion-input>
+          </ion-item>
+          <div *ngIf="isSubmitted && f.firstName.errors" class="invalid-feedback ion-padding">
+            <div *ngIf="f.firstName.errors.required">First name is required</div>
+          </div>
+          <ion-item>
+            <ion-label position='floating'>Last name</ion-label>
+            <ion-input type="text" formControlName="lastName" placeholder="Last name"
+              [ngClass]="{ 'is-invalid': isSubmitted&& f.lastName.errors }">
+            </ion-input>
+          </ion-item>
+          <div *ngIf="isSubmitted&& f.lastName.errors" class="invalid-feedback ion-padding">
+            <div *ngIf="f.lastName.errors.required">Last name is required</div>
+          </div>
+          <ion-item>
+            <ion-label position='floating'>Phone number</ion-label>
+            <ion-input type='text' formControlName='phoneNumber' placeholder='Phone number'></ion-input>
+          </ion-item>
+          <div *ngIf="isSubmitted && f.phoneNumber.errors" class='invalid-feedback ion-padding'>
+            <div *ngIf="f.phoneNumber.errors.required">phone number is required</div>
+            <div *ngIf="f.phoneNumber.errors.pattern">phone number is 8 numbers</div>
+          </div>
+          <ion-item>
+            <ion-label position='floating'>Height</ion-label>
+            <ion-input type='text' formControlName='height' placeholder='Height (cm)'></ion-input>
+          </ion-item>
+          <div *ngIf="isSubmitted && f.height.errors" class='invalid-feedback ion-padding'>
+            <div *ngIf="f.height.errors.required">height is required</div>
+            <div *ngIf="f.height.errors.min">height is invalid</div>
+            <div *ngIf="f.height.errors.max">height is invalid</div>
+            <div *ngIf="f.height.errors.pattern">height is invalid</div>
+          </div>
+          <ion-item>
+            <ion-label position='floating'>Weight</ion-label>
+            <ion-input type='text' formControlName='weight' placeholder='Weight (Kg)'></ion-input>
+          </ion-item>
+          <div *ngIf="isSubmitted && f.weight.errors" class='invalid-feedback ion-padding'>
+            <div *ngIf="f.weight.errors.required">Weight is required</div>
+            <div *ngIf="f.weight.errors.min">Weight is invalid</div>
+            <div *ngIf="f.weight.errors.max">Weight is invalid</div>
+            <div *ngIf="f.weight.errors.pattern">Weight is invalid</div>
+          </div>
+          <ion-item>
+            <ion-label position='floating'>Gender</ion-label>
+            <ion-select placeholder="Select One" formControlName="gender">
+              <ion-select-option value="female">Female</ion-select-option>
+              <ion-select-option value="male">Male</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="isSubmitted&& f.gender.errors" class="invalid-feedback ion-padding">
+            <div *ngIf="f.gender.errors.required">gender is required</div>
+          </div>
+          <ion-item>
+            <ion-label position='floating'>DOB</ion-label>
+            <ion-datetime display-format="MMM DD, YYYY" formControlName="dateOfBirth">
+            </ion-datetime>
+          </ion-item>
+          <div *ngIf="isSubmitted&& f.dateOfBirth.errors" class="invalid-feedback ion-padding">
+            <div *ngIf="f.dateOfBirth.errors.required">date of birth is required</div>
+          </div>
+          <div class='ion-padding'>
+            <ion-button color='secondary' shape='round' size='default' expand="block" type="submit">Submit</ion-button>
+          </div>
+        </form>
+      </ion-list>
+    </ion-card>
   </div>
 
   <!-- Skeleton screen -->
