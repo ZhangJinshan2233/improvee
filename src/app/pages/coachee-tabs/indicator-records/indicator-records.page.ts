@@ -113,7 +113,7 @@ export class IndicatorRecordsPage implements OnInit {
               this.latestRecord = res['indicatorRecord'];
               this.BMIStatus = set_weight_status(this.latestRecord.value, this.currentUser.height)
               this.BMI = (this.latestRecord.value * 10000 / (this.currentUser.height * this.currentUser.height)).toFixed(0)
-              this.changedValue = (+this.latestRecord.value) - this.currentUser.weight
+              this.changedValue = ((+this.latestRecord.value) - this.currentUser.weight).toFixed(1)
             })
           }
         }
@@ -320,7 +320,7 @@ export class IndicatorRecordsPage implements OnInit {
             this.latestRecord = data.indicatorRecord
             this.BMI = (+this.latestRecord.value * 10000 / (this.currentUser.height * this.currentUser.height)).toFixed(0)
             this.BMIStatus = set_weight_status(this.latestRecord.value, this.currentUser.height)
-            this.changedValue = (+this.latestRecord.value) - this.currentUser.weight
+            this.changedValue = ((+this.latestRecord.value) - this.currentUser.weight).toFixed(1)
           }
         }
         //judge which segment is active and then update chart
