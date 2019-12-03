@@ -12,32 +12,6 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <div *ngIf="!challengeCategory">
-    <ion-card>
-      <ion-card-content>
-        <ion-label>
-          <h3>
-            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-          </h3>
-          <p>
-            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-          </p>
-          <p>
-            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-          </p>
-          <h3>
-            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
-          </h3>
-          <p>
-            <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
-          </p>
-          <p>
-            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-          </p>
-        </ion-label>
-      </ion-card-content>
-    </ion-card>
-  </div>
   <div *ngIf="challengeCategory">
     <ion-card>
       <ion-img [src]="challengeCategory?.image"></ion-img>
@@ -53,6 +27,33 @@
       </ion-card-content>
     </ion-card>
   </div>
+   <!-- Skeleton screen -->
+   <div *ngIf="!challengeCategory">
+      <ion-card>
+        <ion-card-content>
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            </p>
+            <h3>
+              <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-card-content>
+      </ion-card>
+    </div>
 </ion-content>
 <ion-footer>
   <ion-toolbar>
