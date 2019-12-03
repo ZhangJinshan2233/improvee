@@ -127,7 +127,7 @@ export class CoacheeHomePage implements OnInit {
    * 
    */
   goto_chat() {
-    this.chatService.remove_unread_nmessages(this.currentUser._coach._id).subscribe(res => {
+    this.chatService.remove_unread_messages(this.currentUser._coach._id).subscribe(res => {
       this.unReadMessageNumber = 0;
       this.router.navigateByUrl(`coachee/coachee-home/chat/${this.currentUser._id}`)
     })

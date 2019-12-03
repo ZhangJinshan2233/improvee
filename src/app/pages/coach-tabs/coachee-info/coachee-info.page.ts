@@ -59,7 +59,7 @@ export class CoacheeInfoPage implements OnInit {
    */
   goToCoacheeDetails(id) {
     this.status = 'move'
-    this.chatService.remove_unread_nmessages(this.coachee._id, "message").subscribe(res => {
+    this.chatService.remove_unread_messages(this.coachee._id, "post").subscribe(res => {
       if (res) {
         this.coachee.unreadPostItems = 0;
         this.router.navigateByUrl(`/coach/home/${id}`)
@@ -76,7 +76,7 @@ export class CoacheeInfoPage implements OnInit {
    * @param coachee id 
    */
   chat_with_coachee(id) {
-    this.chatService.remove_unread_nmessages(this.coachee._id, "message").subscribe(res => {
+    this.chatService.remove_unread_messages(this.coachee._id, "message").subscribe(res => {
       if (res) {
         this.coachee.unreadMessageItems = 0;
         this.router.navigateByUrl(`/coach/home/chat/${id}`)

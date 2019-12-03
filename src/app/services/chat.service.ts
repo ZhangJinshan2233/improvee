@@ -78,7 +78,7 @@ export class ChatService {
       })
     )
    } 
-   remove_unread_nmessages(author,type="message") {
+   remove_unread_messages(author,type="message") {
     return this.http.delete(`${this.url}/unreadNotifications/?author=${author}&type=${type}`).pipe(
       mapTo(true),
       catchError(e => {

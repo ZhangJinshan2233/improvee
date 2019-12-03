@@ -1,16 +1,21 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-avatar slot='start'>
+      <ion-img [src]="coachProfile"></ion-img>
+    </ion-avatar>
+    <ion-label>
+      {{currentUser?.firstName}}{{currentUser?.lastName}}<br>
+      <small>{{currentUser?.email}}</small>
+    </ion-label>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="refresh_coachees($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
   <div *ngIf="isImageLoaded">
-    <ion-header>
-      <ion-toolbar color="secondary">
-        <ion-avatar slot='start'>
-          <ion-img [src]="coachProfile"></ion-img>
-        </ion-avatar>
-        <ion-label>
-          {{currentUser?.firstName}}{{currentUser?.lastName}}<br>
-          <small>{{currentUser?.email}}</small>
-        </ion-label>
-      </ion-toolbar>
-    </ion-header>
     <ion-grid>
       <ion-row class='ion-align-items-center'>
         <ion-col class='ion-no-padding' size='9'>

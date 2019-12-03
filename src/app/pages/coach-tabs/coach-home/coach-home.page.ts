@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CoachService } from "../../../services/coach.service";
 import { compareAsc } from 'date-fns'
+import { IonRefresher } from '@ionic/angular';
 
 @Component({
   selector: 'app-coach-home',
@@ -8,6 +9,7 @@ import { compareAsc } from 'date-fns'
   styleUrls: ['./coach-home.page.scss'],
 })
 export class CoachHomePage implements OnInit {
+  @ViewChild(IonRefresher, { static: false }) refresher: IonRefresher
   coachProfile = ""
   isImageLoaded = false
   coachees = []
@@ -93,6 +95,35 @@ export class CoachHomePage implements OnInit {
         return compareAsc(new Date(item1[this.filtedTerm]), new Date(item2[this.filtedTerm]))
       } else {
         return item1[this.filtedTerm] - item2[this.filtedTerm]
+      }
+    })
+  }
+
+  /**
+   * refresh
+   */
+  refresh_coachees(refreshEvent) {
+    this.coachees = [];
+    this.skipNum = 0;
+    this.allCoachees = [];
+    this.searchTerm = "";
+    this.searching = false;
+    this.coachService.get_coachees(this.skipNum).subscribe(res => {
+      if (res['coachees'].length >= 1) {
+        this.skipNum += res['coachees'].length
+        this.allCoachees = this.allCoachees.concat(res['coachees'])
+        this.coachees = this.coachees.concat(res['coachees'])
+        refreshEvent.target.complete();;
+        this.coachees.sort((item1, item2) => {
+          if (this.filtedTerm === 'unreadMessageEarliestDate' || this.filtedTerm === 'unreadPostEarliestDate') {
+            return compareAsc(new Date(item1[this.filtedTerm]), new Date(item2[this.filtedTerm]))
+          } else {
+            return item1[this.filtedTerm] - item2[this.filtedTerm]
+          }
+        })
+      } else {
+        refreshEvent.target.complete();
+        this.refresher.disabled = true
       }
     })
   }
