@@ -4,7 +4,7 @@ import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
-import { AuthService } from './services/auth.service';
+import { Network } from '@ionic-native/network/ngx';
 import { environment } from "../environments/environment";
 @Component({
   selector: 'app-root',
@@ -15,17 +15,24 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
+    private network: Network,
     private oneSignal: OneSignal,
-    private appVersion: AppVersion
+    private appVersion: AppVersion,
+    private alertController: AlertController
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
+
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       if (this.platform.is('cordova')) {
+        this.network.onDisconnect().subscribe(() => {
+          console.log('network was disconnected :-(');
+          this.show_alert('network was disconnected :-(')
+        })
         console.log(this.appVersion.getVersionNumber())
         this.setupPush();
       }
@@ -46,6 +53,13 @@ export class AppComponent {
     });
 
     this.oneSignal.endInit();
+  }
+  async show_alert(msg) {
+    let alert = await this.alertController.create({
+      message: msg,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }
 

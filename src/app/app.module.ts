@@ -24,6 +24,7 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
+import { Network } from '@ionic-native/network/ngx';
 const config: SocketIoConfig = { url: `${environment.url}/chat`, options: {} };
 export function jwtOptionsFactory(storage) {
   return {
@@ -66,6 +67,7 @@ export function jwtOptionsFactory(storage) {
     WheelSelector,
     OneSignal,
     AppVersion,
+    Network,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
