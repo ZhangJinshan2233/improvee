@@ -50,7 +50,6 @@ export class AuthService {
             this.http.get(`${this.url}/memberRecords/?coacheeId=${user._id}`).subscribe(res => {
               if (!res['isMember']) {
                 this.http.post(`${this.url}/profile`, { isMember: false }).subscribe(res => {
-                  console.log(res)
                 })
               }
             })
@@ -152,7 +151,7 @@ export class AuthService {
   get_user_profile() {
     return this.http.get(`${this.url}/profile`).pipe(
       catchError(e => {
-        let { message } = e.error.message ? e.error.message : "fail to sign in"
+        let { message } = e.error.message
         this.show_alert(message);
         throw message;
       })
