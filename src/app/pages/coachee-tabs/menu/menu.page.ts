@@ -7,6 +7,7 @@ import { AuthService } from "../../../services/auth.service";
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { Router } from '@angular/router';
+import { CategoryService } from "../../../services/category.service";
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
@@ -19,23 +20,33 @@ export class MenuPage implements OnInit {
   appUrlAddress = "";
   constructor(private authService: AuthService,
     private loadingCtrl: LoadingController,
-    private router:Router,
+    private router: Router,
     private actionSheet: ActionSheet,
     private camera: Camera,
     private platform: Platform,
     private alertCtrl: AlertController,
     private iab: InAppBrowser,
-    private emailComposer: EmailComposer
+    private emailComposer: EmailComposer,
+    private categoryService: CategoryService
   ) {
 
   }
 
   ngOnInit() {
-    if (this.platform.is('android')) {
-      this.appUrlAddress = "https://forum.ionicframework.com/t/how-to-detect-platform-using-ionic-4/138189"
-    } else {
-      this.appUrlAddress = "https://apps.apple.com/sg/app/improvee/id1371389352"
-    }
+    this.categoryService.get_challenge_categories("AppCategory").subscribe(res => {
+      let UrlAddress = []
+      if (this.platform.is('android')) {
+        UrlAddress = res['categories'].filter(item => {
+          return item.name = "android"
+        })
+      } else {
+        UrlAddress = res['categories'].filter(item => {
+          return item.name = "ios"
+        })
+      }
+     this.appUrlAddress=UrlAddress[0].storeUrl
+      console.log( this.appUrlAddress)
+    })
   }
   ionViewWillEnter() {
     let tabBar = document.querySelector('ion-tab-bar');
@@ -104,24 +115,24 @@ export class MenuPage implements OnInit {
     }
   }
 
-rate_app(){
-  const browser = this.iab.create(this.appUrlAddress);
-}
-send_email(){
-   let email = {
-     to: 'support@improvee.co',
-     subject: 'Feedback',
-     isHtml: true
-   } 
-   // Send a text message using default options
-   this.emailComposer.open(email);
-}
+  rate_app() {
+    const browser = this.iab.create(this.appUrlAddress);
+  }
+  send_email() {
+    let email = {
+      to: 'support@uphealth.sg',
+      subject: 'Feedback',
+      isHtml: true
+    }
+    // Send a text message using default options
+    this.emailComposer.open(email);
+  }
 
-log_out(){
+  log_out() {
 
-  this.authService.logout()
-  this.router.navigateByUrl('/')
-}
+    this.authService.logout()
+    this.router.navigateByUrl('/')
+  }
   /**
    * @function showAlert
    * @param msg 

@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  // url: 'http://192.168.1.235:3000',
+  url: 'http://192.168.1.235:3000',
   // url: 'http://192.168.1.124:3000'
-  url: 'http://35.240.206.248',
+  // url: 'http://35.240.206.248',
   ONESIGNAL_ID:"83cea0f8-1467-4ecd-a670-ccd8d94c56c8",
   ANDROID_ID:"753824683630"
 

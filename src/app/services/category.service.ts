@@ -43,7 +43,7 @@ export class CategoryService {
    */
   get_challenge_categories(kind) {
     this.show_loading()
-    return this.http.get(`${this.url}/?$kind=${kind}`).pipe(
+    return this.http.get(`${this.url}/?kind=${kind}`).pipe(
       tap(() => {
         this.loading.then(loading => {
           loading.dismiss()
