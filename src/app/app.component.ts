@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { Network } from '@ionic-native/network/ngx';
-import { environment } from "../environments/environment";
+import { environment } from "../environments/environment.prod";
 import { CategoryService } from "./services/category.service";
 @Component({
   selector: 'app-root',

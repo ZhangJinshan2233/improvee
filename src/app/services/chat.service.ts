@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { mapTo, catchError, tap, merge, map, } from 'rxjs/operators';
 import { Socket } from 'ngx-socket-io';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { AlertController, LoadingController } from '@ionic/angular';
 @Injectable({

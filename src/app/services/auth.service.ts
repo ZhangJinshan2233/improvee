@@ -4,7 +4,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { Storage } from "@ionic/storage";
 import { BehaviorSubject, from, of } from "rxjs";
 import { tap, catchError, mapTo, mergeMap, switchMap } from "rxjs/operators";
-import { environment } from "../../environments/environment";
+import { environment } from "../../environments/environment.prod";
 import { HttpClient } from "@angular/common/http";
 import { User } from '../model/user';
 import { OneSignal } from '@ionic-native/onesignal/ngx';

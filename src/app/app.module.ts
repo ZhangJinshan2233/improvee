@@ -8,7 +8,7 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
-import { environment } from "../environments/environment";
+import { environment } from "../environments/environment.prod";
 /* import new Module component ... */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JWT_OPTIONS, JwtModule } from "@auth0/angular-jwt";
@@ -31,7 +31,7 @@ export function jwtOptionsFactory(storage) {
     tokenGetter: () => {
       return storage.get("JWT_TOKEN")
     },
-    whitelistedDomains: ["192.168.1.124:3000","192.168.1.235:3000","35.240.206.248"]
+    whitelistedDomains: ["34.87.94.22"]
   };
 }
 @NgModule({
