@@ -54,13 +54,13 @@ export class AppComponent {
               .get_challenge_categories("AppCategory")
               .subscribe(res => {
                 let appVersions = []
-                if (this.platform.is('android')) {
+                if (this.platform.is('ios')) {
                   appVersions = res['categories'].filter(item => {
-                    return item.name = "android"
+                    return item.name == "ios"
                   })
                 } else {
                   appVersions = res['categories'].filter(item => {
-                    return item.name = "ios"
+                    return item.name == "android"
                   })
                 }
                 this.applationVersion = appVersions[0].version
