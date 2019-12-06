@@ -1,12 +1,7 @@
-<ion-content #scrollArea [fullscreen]="true" [scrollEvents]='true' class="ion-padding-top">
+<ion-content class="ion-padding-top">
   <ion-header>
     <ion-toolbar *ngIf="isImageLoaded">
-      <ion-buttons slot="start">
-        <ion-button color="primary">
-          <ion-back-button></ion-back-button>
-        </ion-button>
-      </ion-buttons>
-      <div [appScrollVanish]="scrollArea" class='ion-text-center'>
+      <div class='ion-text-center'>
         <ion-avatar>
           <img [src]="coacheeProfile">
         </ion-avatar>
