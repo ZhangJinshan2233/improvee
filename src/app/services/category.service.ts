@@ -53,8 +53,10 @@ export class CategoryService {
         this.loading.then(loading => {
           loading.dismiss()
         })
-        let error = e.error.message;
-        this.show_alert(error);
+        let error = e.error.message ||"disconnected";
+        if(error!="disconnected"){
+          this.show_alert(error);
+        }
         throw error;
       })
     )
@@ -75,8 +77,10 @@ export class CategoryService {
         this.loading.then(loading => {
           loading.dismiss()
         })
+        console.log(e)
         let error = e.error.message;
         this.show_alert(error);
+        
         throw error;
       })
     )

@@ -26,7 +26,7 @@ export function set_weight_status (value, height) {
             break;
         case (BMI >= 30): status = 'Obese'
             break;
-        default: status = 'Normal'
+        default: status = ''
             break
     }
     return status
@@ -42,7 +42,7 @@ let set_Waist_status = (value, height, gender) => {
                 break;
             case (value > 88): status = 'Very High Risk'
                 break;
-            default: status = 'Ideal'
+            default: status = ''
                 break
         }
     } else {
@@ -53,7 +53,7 @@ let set_Waist_status = (value, height, gender) => {
                 break;
             case (value > 102): status = 'Very High Risk'
                 break;
-            default: status = 'Ideal'
+            default: status = ''
                 break
         }
     }
@@ -72,7 +72,7 @@ let set_Muscle_status = (value, height, gender, age) => {
                 break;
             case (age > 80): status = set_status_based_on_value(value, 23.9, 29.9, 34.9, 35.0)
                 break;
-            default: status = 'normal'
+            default: status = ''
                 break
         }
     } else {
@@ -85,7 +85,7 @@ let set_Muscle_status = (value, height, gender, age) => {
                 break;
             case (age > 80): status = set_status_based_on_value(value, 32.9, 38.9, 43.6, 43.7)
                 break;
-            default: status = 'normal'
+            default: status = ''
                 break
         }
     }
@@ -104,7 +104,7 @@ let set_Fat_status = (value, height, gender, age) => {
                 break;
             case (age > 80): status = set_status_based_on_value(value, 24, 35, 41, 42)
                 break;
-            default: status = 'normal'
+            default: status = ''
                 break
         }
     } else {
@@ -117,7 +117,7 @@ let set_Fat_status = (value, height, gender, age) => {
                 break;
             case (age > 80): status = set_status_based_on_value(value, 13, 24, 29, 30)
                 break;
-            default: status = 'normal'
+            default: status = ''
                 break
         }
     }
@@ -134,7 +134,7 @@ let set_status_based_on_value = (value, lowValue, normalValue, heighValue, veryH
             break;
         case (value >= veryHighValue): status = 'Very high'
             break;
-        default: status = 'Normal'
+        default: status = ''
             break;
     }
     return status
@@ -152,7 +152,7 @@ let set_SystolicBP_status = (value) => {
             break;
         case (value > 160): status = 'Very high'
             break;
-        default: status = 'Normal BP'
+        default: status = ''
             break
     }
     return status
@@ -169,7 +169,7 @@ let set_DiastolicBP_status = (value) => {
             break;
         case (value > 100): status = 'Very high'
             break;
-        default: status = 'Normal BP'
+        default: status = ''
             break
     }
     return status
@@ -184,7 +184,7 @@ let set_TotalCholesterol_status = (value) => {
             break;
         case (value > 6.2): status = 'High'
             break;
-        default: status = 'Desirable'
+        default: status = ''
             break
     }
     return status
@@ -196,7 +196,7 @@ let set_HDLCholesterol_status = (value) => {
             break;
         case (value >= 1.6): status = 'High'
             break;
-        default: status = 'Desirable'
+        default: status = ''
             break
     }
     return status
@@ -212,7 +212,7 @@ let set_LDLCholesterol_status = (value) => {
             break;
         case (value >=4.9): status = 'Very high'
             break;
-        default: status = 'Desirable'
+        default: status = ''
             break
     }
     return status
@@ -227,7 +227,7 @@ let set_Triglyceride_status = (value) => {
             break;
         case (value >=4.5): status = 'Very high'
             break;
-        default: status = 'Desirable'
+        default: status = ''
             break
     }
     return status
@@ -244,7 +244,7 @@ let set_BloodGlucose_status = (value) => {
             break;
         case (value >10.0): status = 'Poor'
             break;
-        default: status = 'Desirable'
+        default: status = ''
             break
     }
     return status

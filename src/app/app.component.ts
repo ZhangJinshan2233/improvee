@@ -4,9 +4,11 @@ import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
-import { Network } from '@ionic-native/network/ngx';
 import { environment } from "../environments/environment.prod";
 import { CategoryService } from "./services/category.service";
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { NetworkService } from './services/network.service';
+import { debounceTime } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
@@ -17,11 +19,12 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private network: Network,
     private oneSignal: OneSignal,
     private appVersion: AppVersion,
     private alertController: AlertController,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private iab: InAppBrowser,
+    private networkService: NetworkService
   ) {
     this.initializeApp();
   }
@@ -31,32 +34,60 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       if (this.platform.is('cordova')) {
-        this.network.onDisconnect().subscribe(() => {
-          this.show_alert('network was disconnected :-(')
-        })
-
-        this.appVersion.getVersionNumber().then((value) => {
-          let versionNumber = value.trim().slice(4)
-          this.categoryService.get_challenge_categories("AppCategory").subscribe(res => {
-            let appVersions = []
-            if (this.platform.is('android')) {
-              appVersions = res['categories'].filter(item => {
-                return item.name = "android"
-              })
-            } else {
-              appVersions = res['categories'].filter(item => {
-                return item.name = "ios"
-              })
-            }
-            this.applationVersion = appVersions[0].version
-            if (parseInt(versionNumber) < parseInt(this.applationVersion)) {
-              this.show_alert('update new version:-(')
-            }
-          })
-        }).catch(err => {
-          throw err
-        })
+        //detect network
+        this.networkService
+          .getNetworkStatus()
+          .pipe(debounceTime(300))
+          .subscribe((connected: boolean) => {
+            this.show_alert('network was disconnected :-(')
+          });
+        
+        //initialize notification
         this.setupPush();
+        
+        //update new version
+        this.appVersion
+          .getVersionNumber()
+          .then((value) => {
+            let versionNumber = value.trim().slice(4)
+            this.categoryService
+              .get_challenge_categories("AppCategory")
+              .subscribe(res => {
+                let appVersions = []
+                if (this.platform.is('android')) {
+                  appVersions = res['categories'].filter(item => {
+                    return item.name = "android"
+                  })
+                } else {
+                  appVersions = res['categories'].filter(item => {
+                    return item.name = "ios"
+                  })
+                }
+                this.applationVersion = appVersions[0].version
+                if (parseInt(versionNumber) < parseInt(this.applationVersion)) {
+                  const alert = this.alertController.create({
+                    header: 'update new version!',
+                    buttons: [
+                      {
+                        text: 'Cancel',
+                        cssClass: 'secondary'
+                      }, {
+                        text: 'Update',
+                        handler: () => {
+                          const browser = this.iab.create(appVersions[0].storeUrl);
+                          browser.close()
+                        }
+                      }
+                    ]
+                  });
+                  alert.then(alert => {
+                    alert.present()
+                  })
+                }
+              })
+          }).catch(err => {
+            throw err
+          })
       }
     });
   }
@@ -76,6 +107,7 @@ export class AppComponent {
 
     this.oneSignal.endInit();
   }
+
   async show_alert(msg) {
     let alert = await this.alertController.create({
       message: msg,
