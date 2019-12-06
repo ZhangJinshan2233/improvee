@@ -20,16 +20,16 @@ ion-list{
 
 .section-inactive {
     --ion-item-background:var(--ion-color-secondary);
-    --ion-item-color: #000;
+    --ion-item-color: #fff;
 }
 
 .section-active {
     --ion-item-background:var(--ion-color-primary);
-    --ion-item-color: #fff;
+    --ion-item-color: #000;
     font-weight: 600;
 
     ion-icon {
-        color: #fff
+        color: #000
     }
 }
 .indicator-value-font{
