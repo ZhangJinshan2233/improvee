@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class='ion-text-center' color="dark">
+    <ion-title class='ion-text-center'>
       UP COACH
     </ion-title>
   </ion-toolbar>
@@ -36,14 +36,14 @@
     </ion-card>
     <!-- challenges -->
     <ion-item-group>
-      <div class='ion-title-container ion-text-start'>
-        <ion-title color="dark">
-          MY DAILY CHALLENGES
-        </ion-title>
-      </div>
-      <div *ngIf="activeChallenges.length>0" class='ion-margin'>
+      <ion-row class='ion-content-justify-start'>
+        <ion-col size='8' class='ion-text-start'>
+          <h5>MY DAILY CHALLENGES</h5>
+        </ion-col>
+      </ion-row>
+      <div *ngIf="activeChallenges.length>0">
         <ion-card>
-          <ion-item *ngFor='let activeChallenge of activeChallenges' detail lines='none' class='ion-text-wrap'
+          <ion-item *ngFor='let activeChallenge of activeChallenges' detail=true lines='none' class='ion-text-wrap'
             (click)="goto_challenge_detail(activeChallenge._id)">
             <ion-thumbnail slot="start">
               <img [src]='activeChallenge.categoryImage'>
@@ -64,17 +64,16 @@
     </ion-item-group>
     <!-- healthy tips -->
     <ion-item-group>
-
-      <div class='ion-title-container ion-text-start'>
-        <ion-title color="dark">
-          UP TIPS
-        </ion-title>
-      </div>
+      <ion-row class='ion-content-justify-start'>
+        <ion-col size='8' class='ion-text-start'>
+          <h5>UP TIPS</h5>
+        </ion-col>
+      </ion-row>
       <div *ngIf="healthyTips.length">
         <ion-card *ngFor="let tip of healthyTips">
           <img [src]="tip.image">
           <ion-card-header>
-            <ion-card-title class='ion-text-capitalize' color='primary'>
+            <ion-card-title  color='primary'>
               {{tip?.title}}
             </ion-card-title>
           </ion-card-header>
