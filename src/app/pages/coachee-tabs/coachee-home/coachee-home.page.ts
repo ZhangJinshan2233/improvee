@@ -118,8 +118,7 @@ export class CoacheeHomePage implements OnInit {
    * @param url 
    */
   goto_healthy_tip(url) {
-    if (!url) return
-    const browser = this.iab.create(url);
+    const browser = this.iab.create(url, '_system', 'location=no');
     browser.close()
   }
 

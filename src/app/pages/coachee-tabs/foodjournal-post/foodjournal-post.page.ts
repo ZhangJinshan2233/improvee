@@ -59,6 +59,7 @@ export class FoodjournalPostPage implements OnInit {
       if (postLength <= 0 && !this.nonActive && this.isCoachee) this.add_post()
       if (postLength > 0) this.skipNum += postLength;
       this.foodJournalPosts = res['foodJournalPosts']
+      console.log(res['foodJournalPosts'])
       first_loading.dismiss()
     })
   }

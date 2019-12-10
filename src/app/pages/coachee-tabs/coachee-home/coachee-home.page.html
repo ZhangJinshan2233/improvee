@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-toolbar slot='start'>
-    <ion-title class='ion-text-center ion-no-padding' color="dark">
+  <ion-toolbar>
+    <ion-title class='ion-text-center' color="dark">
       UP COACH
     </ion-title>
   </ion-toolbar>
@@ -10,7 +10,7 @@
     <!-- habit list  -->
     <ion-card>
       <ion-item-group>
-        <ion-item lines='none' class='ion-margin'>
+        <ion-item lines='none'>
           <ion-avatar style='display: inline-block'>
             <img [src]="coachProfile">
           </ion-avatar>
@@ -24,7 +24,7 @@
             Chat
           </ion-button>
         </ion-item>
-        <ion-item lines='none' class='ion-margin-horizontal'>
+        <ion-item lines='none'>
           <circle-progress [percent]=completedHabitPercent>
           </circle-progress>
           <ion-button slot='end' size="default" fill='outline' shape="round"
@@ -36,13 +36,13 @@
     </ion-card>
     <!-- challenges -->
     <ion-item-group>
-      <ion-item-divider color="secondary">
-        <h5>
+      <div class='ion-title-container ion-text-start'>
+        <ion-title color="dark">
           MY DAILY CHALLENGES
-        </h5>
-      </ion-item-divider>
-      <ion-card>
-        <div *ngIf="activeChallenges.length>0" class='ion-margin'>
+        </ion-title>
+      </div>
+      <div *ngIf="activeChallenges.length>0" class='ion-margin'>
+        <ion-card>
           <ion-item *ngFor='let activeChallenge of activeChallenges' detail lines='none' class='ion-text-wrap'
             (click)="goto_challenge_detail(activeChallenge._id)">
             <ion-thumbnail slot="start">
@@ -50,25 +50,26 @@
             </ion-thumbnail>
             <ion-label>{{activeChallenge.categoryName}}</ion-label>
           </ion-item>
-        </div>
-        <div *ngIf="!activeChallenges.length>0">
-          <ion-card [routerLink]="['/coachee/challenges']">
-            <ion-card-content>
-              <ion-label class='ion-text-center'>
-                <ion-icon name="add-circle-outline"></ion-icon>
-              </ion-label>
-            </ion-card-content>
-          </ion-card>
-        </div>
-      </ion-card>
+        </ion-card>
+      </div>
+      <div *ngIf="!activeChallenges.length>0">
+        <ion-card [routerLink]="['/coachee/challenges']">
+          <ion-card-content>
+            <ion-label class='ion-text-center'>
+              <ion-icon name="add-circle-outline"></ion-icon>
+            </ion-label>
+          </ion-card-content>
+        </ion-card>
+      </div>
     </ion-item-group>
     <!-- healthy tips -->
     <ion-item-group>
-      <ion-item-divider color="secondary">
-        <h5>
+
+      <div class='ion-title-container ion-text-start'>
+        <ion-title color="dark">
           UP TIPS
-        </h5>
-      </ion-item-divider>
+        </ion-title>
+      </div>
       <div *ngIf="healthyTips.length">
         <ion-card *ngFor="let tip of healthyTips">
           <img [src]="tip.image">

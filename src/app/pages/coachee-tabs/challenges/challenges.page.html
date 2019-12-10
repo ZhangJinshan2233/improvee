@@ -1,16 +1,15 @@
 <ion-content>
   <ion-grid>
-    <ion-row class='ion-padding'>
+    <ion-row class='ion-no-padding'>
       <ion-col>
-        <ion-label class='ion-text-center'>
-          <h1>
-            IT'S TIME TO STEP UP TO<br />
-            THE CHALLENGE
-          </h1>
-        </ion-label>
+        <ion-title class='ion-text-center'>
+          IT'S TIME TO STEP UP<br/>
+          TO<br/>
+          THE CHALLENGE
+        </ion-title>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row class='ion-no-padding'>
       <ion-col>
         <ion-label class='ion-text-center'>
           <p>
@@ -22,9 +21,11 @@
     </ion-row>
   </ion-grid>
   <ion-item-group *ngIf="activeChallenges?.length>0">
-    <ion-item-divider>
-      <h5>MY DAILY CHALLENGES</h5>
-    </ion-item-divider>
+    <div class='ion-title-container ion-text-start'>
+      <ion-title color="dark">
+        MY DAILY CHALLENGES
+      </ion-title>
+    </div>
     <div class='ion-margin'>
       <ion-card *ngFor='let activeChallenge of activeChallenges' class='ion-text-wrap'
         (click)="goto_challenge_detail(activeChallenge._id)">
@@ -77,9 +78,11 @@
     </div>
   </ion-item-group>
   <ion-item-group>
-    <ion-item-divider>
-      <h5>NEW CHALLENGES</h5>
-    </ion-item-divider>
+    <div class='ion-title-container ion-text-start'>
+      <ion-title color="dark">
+        CHALLENGES
+      </ion-title>
+    </div>
     <ion-card *ngFor='let challenge of allChallenges' class='ion-text-wrap'
       [routerLink]="['./challengeCategories',challenge?._id]">
       <ion-card-header class='ion-padding'>

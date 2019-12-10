@@ -5,30 +5,30 @@
         <ion-avatar>
           <img [src]="coacheeProfile">
         </ion-avatar>
-        <ion-button fill="outline" shape="round" size="small" (click)=" update_profileImage()" color='dark'>
+        <ion-button fill="outline" shape="round" size="small" (click)=" update_profileImage()" color='primary'>
           Edit
         </ion-button>
       </div>
     </ion-toolbar>
   </ion-header>
   <ion-list *ngIf="isImageLoaded">
-    <ion-item [routerLink]="['/coachee/menu/profile']" routerDirection="forward">
+    <ion-item [routerLink]="['/coachee/menu/profile']" routerDirection="forward" button=true detail=true>
       <ion-icon slot="start" name="person" color='primary'></ion-icon>
       <ion-label>My profile</ion-label>
     </ion-item>
-    <ion-item routerDirection="forward" (click)="send_email()">
+    <ion-item routerDirection="forward" (click)="send_email()" button=true detail=true>
       <ion-icon slot="start" name="mail"></ion-icon>
       <ion-label>Contact us</ion-label>
     </ion-item>
-    <ion-item routerDirection="forward" (click)="rate_app()">
+    <ion-item routerDirection="forward" (click)="rate_app()" button=true detail=true>
       <ion-icon slot="start" name="star"></ion-icon>
       <ion-label>Rating us</ion-label>
     </ion-item>
-    <ion-item [routerLink]="['/coachee/menu/changePassword']" routerDirection="forward">
+    <ion-item [routerLink]="['/coachee/menu/changePassword']" routerDirection="forward" button=true detail=true>
       <ion-icon slot="start" name="lock"></ion-icon>
       <ion-label>Change password</ion-label>
     </ion-item>
-    <ion-item (click)="log_out()">
+    <ion-item (click)="log_out()" button=true detail=true>
       <ion-icon slot="start" name="log-out"></ion-icon>
       <ion-label>Log out</ion-label>
     </ion-item>

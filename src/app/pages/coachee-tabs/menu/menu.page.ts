@@ -37,11 +37,11 @@ export class MenuPage implements OnInit {
       let UrlAddress = []
       if (this.platform.is('android')) {
         UrlAddress = res['categories'].filter(item => {
-          return item.name = "android"
+          return item.name == "android"
         })
       } else {
         UrlAddress = res['categories'].filter(item => {
-          return item.name = "ios"
+          return item.name == "ios"
         })
       }
      this.appUrlAddress=UrlAddress[0].storeUrl
@@ -116,7 +116,7 @@ export class MenuPage implements OnInit {
   }
 
   rate_app() {
-    const browser = this.iab.create(this.appUrlAddress);
+    const browser = this.iab.create(this.appUrlAddress,'_system');
   }
   send_email() {
     let email = {

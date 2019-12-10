@@ -34,7 +34,7 @@
             <ion-col class="ion-text-center">
               <div>
                 <ionic4-star-rating activeIcon="heart" defaultIcon="heart-empty" activeColor="#ffb647"
-                  defaultColor="#989aa2" readonly={{isReadonly}} fontSize="20px" rating={{post.rating}}
+                  defaultColor="#989aa2" readonly={{isReadonly}} fontSize="20px" rating={{post?.rating}}
                   (ratingChanged)="logRatingChange(post._id,$event)">
                 </ionic4-star-rating>
               </div>

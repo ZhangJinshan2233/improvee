@@ -2,12 +2,10 @@
   <ion-grid>
     <ion-row class='ion-padding'>
       <ion-col>
-        <ion-label class='ion-text-center'>
-          <h1>
-            KNOW YOURSELF<br />
-            BETTER
-          </h1>
-        </ion-label>
+        <ion-title class='ion-text-center'>
+          KNOW YOURSELF<br />
+          BETTER
+        </ion-title>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -23,7 +21,7 @@
   </ion-grid>
   <ion-list class="accordion-list ion-no-padding">
     <ion-item-group *ngFor="let indicatorRecord of indicatorRecords let i=index" class='ion-margin-top'>
-      <ion-item (click)="toggle_section(i)"
+      <ion-item (click)="toggle_section(i)" mode="ios"
         [ngClass]="{'section-active': indicatorRecord.open,'section-inactive':!indicatorRecord.open}" lines="none">
         <ion-label class="ion-text-capitalize">{{indicatorRecord.group}}</ion-label>
         <ion-icon name="add" slot="end" *ngIf="!indicatorRecord.open"></ion-icon>
