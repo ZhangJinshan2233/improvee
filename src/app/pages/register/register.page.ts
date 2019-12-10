@@ -67,7 +67,7 @@ export class RegisterPage implements OnInit {
     this.isSubmitted = true;
     if (this.registerForm.invalid) return
     console.log(this.registerForm.value)
-    let date = new Date(addYears(this.registerForm.controls['dateOfBirth'].value, 10))
+    let date = new Date(addYears(new Date(this.registerForm.controls['dateOfBirth'].value), 10))
     if (compareAsc(date, new Date()) === 1) {
       this.show_alert("choose right date of birth")
       return
