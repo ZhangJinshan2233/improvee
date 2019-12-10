@@ -195,8 +195,8 @@ export class IndicatorRecordsPage implements OnInit {
           label: `Unit:${this.indicator.unit}`,
           pointRadius: 3,
           fill: false,
-          backgroundColor: '#3880ff',
-          borderColor: '#3880ff',
+          backgroundColor: '#c9d2ff',
+          borderColor: '#c9d2ff',
           data: dataset,
           borderWidth: 1
         }]
@@ -214,7 +214,7 @@ export class IndicatorRecordsPage implements OnInit {
         legend: {
           display: true,
           labels: {
-            fontColor: '#3880ff',
+            fontColor: '#c9d2ff',
           }
         },
       }
@@ -260,8 +260,8 @@ export class IndicatorRecordsPage implements OnInit {
           label: `Unit:${this.indicator.unit}`,
           pointRadius: 3,
           fill: false,
-          backgroundColor: '#3880ff',
-          borderColor: '#3880ff',
+          backgroundColor: '#c9d2ff',
+          borderColor: '#c9d2ff',
           data: dataset,
           borderWidth: 1
         }]
@@ -279,7 +279,7 @@ export class IndicatorRecordsPage implements OnInit {
         legend: {
           display: true,
           labels: {
-            fontColor: '#3880ff',
+            fontColor: '#c9d2ff',
           }
         },
       }

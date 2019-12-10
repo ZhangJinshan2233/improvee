@@ -15,11 +15,6 @@
   <div *ngIf="challengeCategory">
     <ion-card>
       <ion-img [src]="challengeCategory?.image"></ion-img>
-      <ion-card-header>
-        <ion-card-title>
-          Description
-        </ion-card-title>
-      </ion-card-header>
       <ion-card-content>
         <ion-text>
           {{challengeCategory?.description}}
@@ -59,7 +54,7 @@
   <ion-toolbar>
     <ion-row>
       <ion-col size='12' class='ion-text-center ion-text-uppercase ion-no-padding'>
-        <ion-button fill='outline' (click)='create_new_challenge()' [disabled]='isActive||!isMember'>
+        <ion-button (click)='create_new_challenge()' [disabled]='isActive||!isMember'>
           Join
         </ion-button>
       </ion-col>

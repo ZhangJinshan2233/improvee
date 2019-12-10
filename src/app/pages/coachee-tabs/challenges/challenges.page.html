@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content class=ion-margin>
   <ion-grid>
     <ion-row class='ion-no-padding'>
       <ion-col class='ion-text-center'>
@@ -51,26 +51,26 @@
                 <ion-label color='dark'>{{activeChallenge.endDate|date}}</ion-label>
               </ion-col>
             </ion-row>
-            <ion-row class='ion-align-items-center'>
+            <ion-row class='ion-align-items-center' *ngIf="activeChallenge.averageRating>0">
               <ion-col size='7'>
                 <div>
                   <ion-label>
-                    Average score:
+                    Average coach rating:
                   </ion-label>
                 </div>
               </ion-col>
-              <ion-col *ngIf="activeChallenge.averageRating>0">
+              <ion-col>
                 <div>
                   <ion-label class='ion-label-font-size' color='dark'>
                     {{activeChallenge.averageRating}}
                   </ion-label>
                 </div>
               </ion-col>
-              <ion-col>
+              <!-- <ion-col>
                 <div>
                   <ion-icon name="heart" color='primary'></ion-icon>
                 </div>
-              </ion-col>
+              </ion-col> -->
             </ion-row>
           </ion-grid>
         </ion-card-content>

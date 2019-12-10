@@ -8,7 +8,7 @@ export function set_month_record_value(indicatorRecordArray, currentMonth) {
   let recordValues = new Array(daysOfMonth);
   recordValues.fill(null);
   indicatorRecordArray.forEach(indicatorRecord => {
-    recordValues[(+indicatorRecord.createDate.slice(8, 10)) - 1] = indicatorRecord.value
+    recordValues[(+indicatorRecord.createDate.slice(8, 10)) - 1] = parseFloat((indicatorRecord.value)).toFixed(1)
   });
   return recordValues
 }

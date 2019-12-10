@@ -51,7 +51,7 @@
           <div *ngIf="f.height.errors.pattern">height is invalid</div>
         </div>
         <ion-item>
-          <ion-input type='text' formControlName='weight' placeholder='Weight (Kg)'></ion-input>
+          <ion-input type='text' formControlName='weight' placeholder='Current weight (Kg)'></ion-input>
         </ion-item>
         <div *ngIf="isSubmitted && f.weight.errors" class='invalid-feedback ion-padding'>
           <div *ngIf="f.weight.errors.required">Weight is required</div>

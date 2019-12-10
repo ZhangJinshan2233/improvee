@@ -20,11 +20,11 @@ export function set_weight_status (value, height) {
     switch (true) {
         case (BMI < 18.5): status = "Underweight";
             break;
-        case (BMI <= 24.9): status = "Normal"
+        case (BMI <= 22.9): status = "Low risk"
             break;
-        case (BMI <= 29.9): status = 'Overweight'
+        case (BMI <= 27.4): status = 'Moderate risk'
             break;
-        case (BMI >= 30): status = 'Obese'
+        case (BMI >= 27.5): status = 'High risk'
             break;
         default: status = ''
             break

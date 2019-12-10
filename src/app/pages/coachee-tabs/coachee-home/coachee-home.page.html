@@ -20,15 +20,15 @@
               {{currentUser?._coach.firstName}} {{currentUser?._coach.lastName}}
             </small>
           </ion-label>
-          <ion-button slot='end' fill='outline' shape="round" size="default" color='primary' (click)="goto_chat()">
+          <ion-button slot='end' shape="round" size="default" color='primary' (click)="goto_chat()">
             Chat
           </ion-button>
         </ion-item>
         <ion-item lines='none'>
           <circle-progress [percent]=completedHabitPercent>
           </circle-progress>
-          <ion-button slot='end' size="default" fill='outline' shape="round"
-            [routerLink]="['/coachee/coachee-home/habitlist']" routerDirection="forward">
+          <ion-button slot='end' size="default" shape="round" [routerLink]="['/coachee/coachee-home/habitlist']"
+            routerDirection="forward">
             Log habits
           </ion-button>
         </ion-item>
@@ -43,8 +43,8 @@
       </ion-row>
       <div *ngIf="activeChallenges.length>0">
         <ion-card>
-          <ion-item *ngFor='let activeChallenge of activeChallenges' detail=true lines='none' class='ion-text-wrap ion-margin-vertical'
-            (click)="goto_challenge_detail(activeChallenge._id)">
+          <ion-item *ngFor='let activeChallenge of activeChallenges' detail=true lines='none'
+            class='ion-text-wrap ion-margin-vertical' (click)="goto_challenge_detail(activeChallenge._id)">
             <ion-thumbnail slot="start">
               <img [src]='activeChallenge.categoryImage'>
             </ion-thumbnail>
@@ -55,9 +55,15 @@
       <div *ngIf="!activeChallenges.length>0">
         <ion-card [routerLink]="['/coachee/challenges']">
           <ion-card-content>
-            <ion-label class='ion-text-center'>
-              <ion-icon name="add-circle-outline"></ion-icon>
-            </ion-label>
+            <ion-row>
+              <ion-col class='ion-text-center'>
+                <div>
+                    <ion-button slot='icon-only'>
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                      </ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
           </ion-card-content>
         </ion-card>
       </div>
@@ -73,7 +79,7 @@
         <ion-card *ngFor="let tip of healthyTips">
           <img [src]="tip.image">
           <ion-card-header>
-            <ion-card-title  color='primary'>
+            <ion-card-title color='primary'>
               {{tip?.title}}
             </ion-card-title>
           </ion-card-header>
@@ -93,8 +99,8 @@
   </div>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="goto_chat()" #cart>
-      <div *ngIf='unReadMessageNumber>0' class="volume-high-length">{{ unReadMessageNumber}}</div>
-      <ion-icon name="volume-high" class="volume-high-icon"></ion-icon>
+      <div *ngIf='unReadMessageNumber>0' class="mail-length">{{ unReadMessageNumber}}</div>
+      <ion-icon name="mail" class="mail-icon"></ion-icon>
     </ion-fab-button>
   </ion-fab>
   <!-- Skeleton screen -->
