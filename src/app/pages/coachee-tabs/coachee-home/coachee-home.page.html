@@ -43,7 +43,7 @@
       </ion-row>
       <div *ngIf="activeChallenges.length>0">
         <ion-card>
-          <ion-item *ngFor='let activeChallenge of activeChallenges' detail=true lines='none' class='ion-text-wrap'
+          <ion-item *ngFor='let activeChallenge of activeChallenges' detail=true lines='none' class='ion-text-wrap ion-margin-vertical'
             (click)="goto_challenge_detail(activeChallenge._id)">
             <ion-thumbnail slot="start">
               <img [src]='activeChallenge.categoryImage'>
