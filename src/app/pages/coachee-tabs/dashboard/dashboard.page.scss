@@ -1,12 +1,13 @@
-ion-content{
-    --background: linear-gradient(30deg, rgb(253, 246, 246) 40%,#fdf1df 40%,#fdf1df 100%) !important;
-} 
-ion-list{
-    background-color:transparent !important;
+ion-content {
+    --background: linear-gradient(30deg, rgb(253, 246, 246) 40%, #fdf1df 40%, #fdf1df 100%) !important;
+}
+
+ion-list {
+    background-color: transparent !important;
 }
 
 .accordion-list {
-    --ion-item-background:transparent;
+    --ion-item-background: transparent;
 
     .section-inactive,
     .section-active {
@@ -19,12 +20,12 @@ ion-list{
 }
 
 .section-inactive {
-    --ion-item-background:var(--ion-color-secondary);
+    --ion-item-background: var(--ion-color-secondary);
     --ion-item-color: #fff;
 }
 
 .section-active {
-    --ion-item-background:var(--ion-color-primary);
+    --ion-item-background: var(--ion-color-primary);
     --ion-item-color: #000;
     font-weight: 600;
 
@@ -32,17 +33,22 @@ ion-list{
         color: #000
     }
 }
-.indicator-value-font{
-    font-size:1.5em
+
+.indicator-value-font {
+    font-size: 1.5em
 }
 
-ion-card-content{
-    padding-top:0px !important;
-    padding-bottom:0px !important;
+ion-card-content {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
 }
 
 ion-item {
     // --inner-padding-start: 10px;
     --border-radius: 5px;
-    --box-shadow:4px
+    --box-shadow: 4px
+}
+
+ion-header {
+    position: static;
 }
