@@ -26,7 +26,6 @@
         <h5> MY DAILY CHALLENGES</h5>
       </ion-col>
     </ion-row>
-    <div class='ion-margin'>
       <ion-card *ngFor='let activeChallenge of activeChallenges' class='ion-text-wrap'
         (click)="goto_challenge_detail(activeChallenge._id)">
         <ion-card-header class='ion-padding-start'>
@@ -75,7 +74,6 @@
           </ion-grid>
         </ion-card-content>
       </ion-card>
-    </div>
   </ion-item-group>
   <ion-item-group>
     <ion-row class='ion-content-justify-start'>
