@@ -77,7 +77,7 @@
         <div *ngIf="isSubmitted&& f.dateOfBirth.errors" class="invalid-feedback ion-padding">
           <div *ngIf="f.dateOfBirth.errors.required">date of birth is required</div>
         </div>
-        <ion-item *ngIf="!isIndividual">
+        <ion-item *ngIf="isCompanyUser">
           <ion-input type="text" formControlName="companyCode" placeholder="company code"></ion-input>
         </ion-item>
         <ion-item>
@@ -104,7 +104,7 @@
   </ion-card>
   <ion-list class='ion-no-margin'>
     <ion-item lines="none">
-      <ion-checkbox slot="start" size="small" (ionChange)="choose_group()"></ion-checkbox>
+      <ion-checkbox slot="start" size="small"  [(ngModel)]="isCompanyUser"></ion-checkbox>
       <small>
         Company user
       </small>

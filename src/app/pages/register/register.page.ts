@@ -20,7 +20,7 @@ import { AlertController } from '@ionic/angular';
 export class RegisterPage implements OnInit {
   registerForm: FormGroup;
   isSubmitted = false;
-  isIndividual=true;
+  isCompanyUser=false
   termsAndConditionsUrl = "http://improvee.strikingly.com/terms-and-conditions"
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -35,7 +35,7 @@ export class RegisterPage implements OnInit {
     return this.registerForm.controls
   }
   goto_terms_and_conditions() {
-    let browser = this.iab.create(this.termsAndConditionsUrl);
+    let browser = this.iab.create(this.termsAndConditionsUrl,'_system');
   }
   create_register_form_group() {
     this.registerForm = this.formBuilder.group(
@@ -66,7 +66,12 @@ export class RegisterPage implements OnInit {
   async onSubmit() {
     this.isSubmitted = true;
     if (this.registerForm.invalid) return
-    console.log(this.registerForm.value)
+    if(this.isCompanyUser&&!this.registerForm.controls['companyCode'].value) return
+    if(!this.isCompanyUser){
+      this.registerForm.patchValue({
+        companyCode:""
+      })
+    }
     let date = new Date(addYears(new Date(this.registerForm.controls['dateOfBirth'].value), 10))
     if (compareAsc(date, new Date()) === 1) {
       this.show_alert("choose right date of birth")
@@ -87,15 +92,5 @@ export class RegisterPage implements OnInit {
       buttons: ['OK']
     });
     await alert.present();
-  }
-
-  choose_group(){
-    this.isIndividual=!this.isIndividual
-    if(!this.isIndividual){
-      this.registerForm.patchValue({
-        companyCode:''
-      })
-    }
-    console.log(this.f.companyCode.value)
   }
 }
