@@ -16,11 +16,12 @@
           <ion-col>
             <div>
               <p>
-                A great place where friendships meet
+                This is a place where friendships meet
                 professional coaching so that
-                becomming healthy becomes more fun and desirable.
-                because we believe that empowering healthy programmes
-                should be accessible to everyone.
+                becoming healthy can be fun and desirable.<br/>
+                We believe that empowering healthy programmes
+                should be accessible<br/>
+                to everyone.
               </p>
             </div>
           </ion-col>
@@ -45,11 +46,11 @@
             <ion-label class='ion-margin-bottom'><b>Do you participate in physical activity?</b></ion-label>
             <ion-radio-group [(ngModel)]="physicalActivityState">
               <ion-grid>
-                <ion-row class="ion-align-items-center ">
+                <ion-row class="ion-align-items-center">
                   <ion-col size='2'>
                     <ion-radio mode="md" value="yes" (ionSelect)="getPhysicalActivityState($event)"></ion-radio>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="ion-text-start">
                     <div>
                       Yes
                     </div>
@@ -59,7 +60,7 @@
                   <ion-col size='2'>
                     <ion-radio mode="md" value="no" (ionSelect)="getPhysicalActivityState($event)"></ion-radio>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="ion-text-start">
                     <div>
                       No
                     </div>
@@ -79,7 +80,7 @@
                     <ion-radio mode="md" value="walking around all day" (ionSelect)="getDailyActivityLevel($event)">
                     </ion-radio>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="ion-text-start">
                     <div>
                       I am on my feet or walking around all day.
                     </div>
@@ -91,7 +92,7 @@
                       (ionSelect)="getDailyActivityLevel($event)">
                     </ion-radio>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="ion-text-start">
                     <div>
                       It's a mix between sitting and walking or standing.
                     </div>
@@ -102,9 +103,9 @@
                     <ion-radio mode="md" value="walking in the evening" (ionSelect)="getDailyActivityLevel($event)">
                     </ion-radio>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="ion-text-start">
                     <div>
-                      I am seated down for the majority of the day, but walk in the evening.
+                      I am seated down for the majority of the day but walk in the evening.
                     </div>
                   </ion-col>
                 </ion-row>
@@ -114,9 +115,9 @@
                       (ionSelect)="getDailyActivityLevel($event)">
                     </ion-radio>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="ion-text-start">
                     <div>
-                      I am seated down all day and for the majorityof the evening.
+                      I am seated down all day and for the majority of the evening.
                     </div>
                   </ion-col>
                 </ion-row>
@@ -137,7 +138,7 @@
                   <ion-col size='2'>
                     <ion-radio mode="md" value="yes" (ionSelect)="getNutriotionHabitsState($event)"></ion-radio>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="ion-text-start">
                     <div>
                       Yes
                     </div>
@@ -147,7 +148,7 @@
                   <ion-col size='2'>
                     <ion-radio mode="md" value="no" (ionSelect)="getNutriotionHabitsState($event)"></ion-radio>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="ion-text-start">
                     <div>
                       No
                     </div>
@@ -157,7 +158,7 @@
                   <ion-col size='2'>
                     <ion-radio mode="md" value="not sure" (ionSelect)="getNutriotionHabitsState($event)"></ion-radio>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="ion-text-start">
                     <div>
                       Not sure
                     </div>
@@ -177,7 +178,7 @@
                     <ion-radio mode="md" value="not need to lose weight" (ionSelect)="getMotivationStage($event)">
                     </ion-radio>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="ion-text-start">
                     <div>
                       I don't think I need to lose weight.
                     </div>
@@ -189,7 +190,7 @@
                       (ionSelect)="getMotivationStage($event)">
                     </ion-radio>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="ion-text-start">
                     <div>
                       I plan to lose weight but I haven't thought about what I would do.
                     </div>
@@ -200,9 +201,9 @@
                     <ion-radio mode="md" value="start to my weight lost journey by next month" (ionSelect)="getMotivationStage($event)">
                     </ion-radio>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="ion-text-start">
                     <div>
-                      I plan to start to my weight lost journey by next month.
+                      I plan to start my weight loss journey by next month.
                     </div>
                   </ion-col>
                 </ion-row>
@@ -212,9 +213,9 @@
                       (ionSelect)="getMotivationStage($event)">
                     </ion-radio>
                   </ion-col>
-                  <ion-col>
+                  <ion-col class="ion-text-start">
                     <div>
-                      I have started making changes to my lifestyle.
+                      I have started making changes to my lifestyle to lose weight.
                     </div>
                   </ion-col>
                 </ion-row>
@@ -238,25 +239,26 @@
             </div>
           </ion-col>
         </ion-row>
-        <ion-row class='ion-padding'>
+        <ion-row class='ion-padding-top'>
           <ion-col>
             <div>
               <p>
                 We're sure you'll enjoy journalling about your health
-                programme or reading this articles selected by our UP
-                Coaches
+                journey or reading<br/>
+                articles specially selected<br/>
+                by our UP Coaches.
               </p>
             </div>
           </ion-col>
         </ion-row>
-        <ion-row class='ion-padding'>
+        <ion-row class='ion-no-padding'>
           <ion-col>
             <div>
               <p>
-                If you've signed up for an UP
-                Programme,keep a look out for
-                our friendly UP Coached who will be
-                in contract with you in no time
+                If you've signed up for an
+                UP Programme, keep a look out for
+                our friendly UP Coaches who will be
+                in contact with you in no time.
               </p>
             </div>
           </ion-col>
@@ -265,7 +267,7 @@
           <ion-col>
             <div>
               <ion-label>
-                CHEERING YOU ON.
+                CHEERING YOU ON,<br/>
                 YOUR UP COMMUNITY
               </ion-label>
             </div>
